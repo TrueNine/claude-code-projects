@@ -1,6 +1,8 @@
 # CLAUDE.md
 
-这个文件为 Claude Code (claude.ai/code) 在处理此代码库时提供指导和规范。
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this Repository.
+
+---
 
 ## 提示词编写规范
 
@@ -16,14 +18,13 @@
 
 ## 翻译规范
 
-**重要说明:**
-
 - 所有的 `*.locale.md` 文件都需要翻译为同名去除了 `.locale` 的文件
 - 翻译目标统一使用美式英文
-  <example>
+
+<example>
   `CLAUDE.locale.md` → `CLAUDE.md`
   `TEST.locale.md` -> `TEST.md`
-  </example>
+</example>
 
 ## 代码库文档架构示例
 
