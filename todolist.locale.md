@@ -1,2 +1,3 @@
 - [ ] 学习 slash command
 - [ ] 找一部分最佳实践放到项目里作为参考并时间
+- [ ] 改进 `docs/qa` 下的 claude code 的工作流程
