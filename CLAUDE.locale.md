@@ -35,7 +35,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### 文档架构
 - **`docs/`** - 主文档目录
   - `prompts/` - 提示词模板（本地化和英文版本）
-    - `locale/` - 中文本地化提示词
+    - `locale/` - 本地化提示词
     - `output/` - 英文翻译提示词
   - `qa/` - 开发工作流程的问答文档
   - `references/` - 技术参考文档

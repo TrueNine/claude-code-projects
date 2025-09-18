@@ -2,8 +2,6 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this Repository.
 
----
-
 ### 核心使命
 帮助表达能力有限的用户将模糊想法转化为清晰有效的提示词
 
