@@ -22,14 +22,20 @@ Translate Chinese localization documentation files (`.locale.md`) to correspondi
 2. **解析文件名** / Parse filename:
   - Input: `filename.locale.extension`
   - Output: `filename.extension`
-3. **执行翻译** / Perform translation:
+3. **检查目标文件** / Check target file:
+  - 使用 Glob 工具检查目标文件是否已存在 / Use Glob tool to check if target file exists
+  - Pattern: `filename.extension`
+4. **删除现有文件** / Delete existing file:
+  - 如果目标文件存在，使用 Bash 工具删除 / If target file exists, use Bash tool to delete
+  - Command: `rm filename.extension` (Linux/Mac) 或 `del filename.extension` (Windows)
+5. **执行翻译** / Perform translation:
   - 保持 Markdown 格式和结构 / Preserve Markdown formatting and structure
   - 应用术语表中的一致翻译 / Apply consistent terminology from glossary
   - 保留代码块不变 / Keep code blocks unchanged
   - 适当翻译代码注释 / Translate code comments appropriately
-4. **写入目标文件** / Write target file:
-  - 如果目标文件已存在，直接替换全部内容 / If target file exists, replace all content
-  - 不要读取现有目标文件内容 / Do not read existing target file content
+6. **写入目标文件** / Write target file:
+  - 创建新的目标文件并写入翻译内容 / Create new target file and write translated content
+  - 无需读取现有目标文件内容（已在步骤4中删除）/ No need to read existing target file content (deleted in step 4)
 
 ## 质量标准 / Quality Standards
 

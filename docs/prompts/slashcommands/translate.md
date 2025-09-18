@@ -20,14 +20,20 @@ Translate Chinese localization documentation files (`.locale.md`) to correspondi
 2. **Parse filename**:
   - Input: `filename.locale.extension`
   - Output: `filename.extension`
-3. **Perform translation**:
+3. **Check target file**:
+  - Use Glob tool to check if target file exists
+  - Pattern: `filename.extension`
+4. **Delete existing file**:
+  - If target file exists, use Bash tool to delete
+  - Command: `rm filename.extension` (Linux/Mac) or `del filename.extension` (Windows)
+5. **Perform translation**:
   - Preserve Markdown formatting and structure
   - Apply consistent terminology from glossary
   - Keep code blocks unchanged
   - Translate code comments appropriately
-4. **Write target file**:
-  - If target file exists, replace all content
-  - Do not read existing target file content
+6. **Write target file**:
+  - Create new target file and write translated content
+  - No need to read existing target file content (deleted in step 4)
 
 ## Quality Standards
 
