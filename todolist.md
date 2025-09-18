@@ -1,0 +1,3 @@
+- [ ] Learn slash commands
+- [ ] Find some best practices to put in the project as reference and practice
+- [ ] Improve claude code workflow under `docs/qa`
