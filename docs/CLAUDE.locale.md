@@ -20,8 +20,14 @@
 ```md
 - docs/
   - CLAUDE.locale.md
-  - README.locale.md
+  - CLAUDE-prompts.locale.md
+  - CLAUDE-prompts-slashcommands.locale.md
+  - CLAUDE-qa.locale.md
+  - CLAUDE-references.locale.md
 - README.locale.md
 - CLAUDE.locale.md
+- CODE_OF_CONDUCT.locale.md
 - todolist.locale.md
 ```
+
+上方文件可能不存在
