@@ -20,11 +20,18 @@ Translate Chinese localization documentation files (`.locale.md`) to correspondi
 
 1. **读取源文件** / Read source file: `$1`
 2. **解析文件名** / Parse filename:
-  - Input: `filename.locale.extension`
-  - Output: `filename.extension`
+  - **特殊位置规则** / Special location rules (优先检查 / Check first):
+    - `docs/prompts/slashcommands/**.locale.md` → `.claude/commands/**.md`
+    - `docs/CLAUDE-prompts-slashcommands.locale.md` → `docs/prompts/slashcommands/CLAUDE.md`
+    - `docs/CLAUDE-prompts.locale.md` → `docs/prompts/CLAUDE.md`
+    - `docs/CLAUDE-qa.locale.md` → `docs/qa/CLAUDE.md`
+    - `docs/CLAUDE-references.locale.md` → `docs/references/CLAUDE.md`
+  - **标准规则** / Standard rule:
+    - Input: `filename.locale.extension`
+    - Output: `filename.extension`
 3. **检查目标文件** / Check target file:
   - 使用 Glob 工具检查目标文件是否已存在 / Use Glob tool to check if target file exists
-  - Pattern: `filename.extension`
+  - Pattern: 根据步骤2确定的目标路径 / Based on target path determined in step 2
 4. **删除现有文件** / Delete existing file:
   - 如果目标文件存在，使用 Bash 工具删除 / If target file exists, use Bash tool to delete
   - Command: `rm filename.extension` (Linux/Mac) 或 `del filename.extension` (Windows)
