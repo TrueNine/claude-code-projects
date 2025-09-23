@@ -113,3 +113,139 @@ function processUser(user) {
 
 - 完成代码编写后，必须使用 **`mcp__ide__getDiagnostics`** 工具检查每个文件的语法错误、类型错误等问题
 - 每次修改文件后，都要立即验证错误，确保代码质量，避免累积问题
+
+## 绝对**禁止重复造轮子**
+
+- **必须先充分调查项目**，深入了解现有功能和架构再开始开发
+- **强制复用现有功能**，绝不允许重新实现已有的组件、工具或函数
+- **优先扩展而非重写**，在现有基础上增强功能而不是从零开始
+
+<examples>
+<good-example>
+// 开发前先调查现有代码
+user: 帮我实现一个用户认证功能
+claude: I'll first search the codebase to understand existing authentication mechanisms before implementing.
+
+*使用 Grep 和 Glob 工具搜索认证相关代码*
+*发现已有 AuthService 和 UserValidator*
+
+Based on my investigation, I found existing authentication components:
+- `AuthService` in src/services/auth.ts handles login/logout
+- `UserValidator` in src/utils/validation.ts handles input validation
+
+I'll extend these existing components instead of creating new ones:
+
+```typescript
+// 扩展现有 AuthService
+export class AuthService {
+  // 现有方法保持不变
+  async login(credentials: LoginCredentials): Promise<AuthResult> { ... }
+
+  // 新增多因素认证功能
+  async enableTwoFactor(userId: string): Promise<TwoFactorSetup> {
+    // 基于现有login逻辑扩展
+    const user = await this.validateUser(userId);
+    return this.setupTwoFactor(user);
+  }
+}
+```
+</good-example>
+<bad-example>
+// 直接重新实现 - 错误做法
+user: 帮我实现一个用户认证功能
+claude: I'll create a new authentication system for you.
+
+```typescript
+// 重新造轮子 - 绝对禁止
+class NewAuthSystem {
+  async authenticateUser(username: string, password: string) {
+    // 重新实现已有功能
+  }
+}
+```
+</bad-example>
+</examples>
+
+### 调查现有功能的工作流程
+
+1. **使用搜索工具全面调查**
+   - `Grep` 搜索相关关键词和功能
+   - `Glob` 查找相关文件和目录结构
+   - `Read` 深入阅读关键文件了解实现细节
+
+2. **分析现有架构模式**
+   - 理解项目的设计模式和编码风格
+   - 识别可复用的组件和工具函数
+   - 找到最佳的扩展点和集成方式
+
+3. **制定复用策略**
+   - 优先选择扩展现有类/函数
+   - 其次选择组合现有组件
+   - 最后才考虑创建新的组件（需充分理由）
+
+## 尽量少地创建文件
+
+- **优先编辑现有文件**，而非创建新文件
+- **新文件创建需要充分理由**，且必须符合项目架构规范
+- **遵循项目文件组织模式**，保持代码结构的一致性
+
+<examples>
+<good-example>
+// 在现有文件中添加功能 - 推荐
+user: 添加一个新的工具函数来格式化日期
+claude: I'll add the date formatting function to the existing utils file.
+
+*编辑 src/utils/helpers.ts*
+```typescript
+// 在现有工具文件中添加新函数
+export const formatDate = (date: Date, format: string): string => {
+  // 实现日期格式化逻辑
+};
+
+// 与现有函数保持一致的命名和风格
+export const formatCurrency = (amount: number): string => { ... }
+export const formatPhoneNumber = (phone: string): string => { ... }
+```
+</good-example>
+<bad-example>
+// 不必要地创建新文件 - 避免
+user: 添加一个新的工具函数来格式化日期
+claude: I'll create a new file for date utilities.
+
+*创建 src/utils/dateUtils.ts* - 不必要的文件创建
+```typescript
+export const formatDate = (date: Date, format: string): string => {
+  // 本可以放在现有 helpers.ts 中
+};
+```
+</bad-example>
+</examples>
+
+### 文件创建的决策标准
+
+**创建新文件的合理情况：**
+- 功能模块足够大且独立（超过100行代码）
+- 与现有文件职责明显不同
+- 需要独立的测试文件
+- 符合项目的模块化架构要求
+
+**避免创建新文件的情况：**
+- 只有几个简单函数或常量
+- 功能与现有文件高度相关
+- 只是为了避免文件变长（除非确实过长）
+- 破坏了项目的文件组织逻辑
+
+### 文件组织最佳实践
+
+```
+// 遵循项目现有的文件结构模式
+src/
+  components/          # React组件
+    Button/
+      index.ts        # 导出文件
+      Button.tsx      # 主组件
+      Button.test.ts  # 测试文件
+  services/           # 业务逻辑服务
+  utils/              # 工具函数（尽量合并相关功能）
+  types/              # TypeScript类型定义
+```
