@@ -57,7 +57,7 @@ calude: 好的, 我将为此接口编写完整的单元测试
 </examples>
 
 
-## Always Use File Format
+## Unified Code Format Standards
 
 - Must always use **2 Space** as indentation
 
@@ -78,7 +78,7 @@ fun main(string: Array<String>) {
 - Must always use **LF** as line ending
 
 
-## Essential Coding Techniques
+## Recommended Coding Techniques
 
 - Always use **Guard Clauses** and **Early Return** techniques to reduce code nesting levels
 
@@ -108,3 +108,8 @@ function processUser(user) {
 }
 </bad-example>
 </examples>
+
+## Proactive Code Error Detection
+
+- After completing code writing, must use **`mcp__ide__getDiagnostics`** tool to check each file for syntax errors, type errors, and other issues
+- After every file modification, immediately verify errors to ensure code quality and avoid accumulating problems

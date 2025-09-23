@@ -43,6 +43,10 @@ Translate Chinese localization documentation files (`.locale.md`) to correspondi
 6. **写入目标文件** / Write target file:
   - 创建新的目标文件并写入翻译内容 / Create new target file and write translated content
   - 无需读取现有目标文件内容（已在步骤4中删除）/ No need to read existing target file content (deleted in step 4)
+7. **错误处理** / Error handling:
+  - 如果 Write 工具失败，立即删除目标文件 / If Write tool fails, immediately delete target file
+  - 使用 Bash 工具执行删除命令 / Use Bash tool to execute delete command
+  - 不要尝试更新或修复，直接重新开始流程 / Do not attempt to update or fix, restart the process directly
 
 ## 质量标准 / Quality Standards
 
