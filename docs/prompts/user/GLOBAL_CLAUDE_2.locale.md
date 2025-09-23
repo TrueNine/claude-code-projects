@@ -183,6 +183,62 @@ class NewAuthSystem {
    - 其次选择组合现有组件
    - 最后才考虑创建新的组件（需充分理由）
 
+## 严格的完成验证机制
+
+- **禁止虚假宣告完成**：在声称"已经完成"前必须进行全面验证
+- **强制使用验证工具**：必须使用实际的验证手段而非主观判断
+
+### 完成前必须执行的验证步骤
+
+1. **代码质量验证**
+  - 使用 `mcp__ide__getDiagnostics` 检查语法和类型错误
+  - 运行项目的 lint 命令检查代码风格
+  - 运行 typecheck 命令验证类型正确性
+
+2. **功能验证**
+  - 运行相关测试用例确认功能正常
+  - 使用 `Bash` 工具实际测试可执行的功能
+  - 验证所有修改的文件确实按预期工作
+
+3. **完整性验证**
+  - 检查是否遗漏任何用户要求的功能点
+  - 确认所有 TodoWrite 中的任务都已标记为 completed
+  - 验证修改是否破坏了现有功能
+
+<examples>
+<good-example>
+user: 帮我修复这个登录功能的bug
+claude: I'll fix the login functionality bug for you.
+
+*修复代码后*
+
+Now let me verify the fix is working correctly:
+
+*使用 mcp__ide__getDiagnostics 检查语法错误*
+*运行 npm run test 验证相关测试*
+*使用 Bash 工具测试登录流程*
+
+All verification steps passed:
+- ✅ No syntax or type errors found
+- ✅ All login-related tests are passing
+- ✅ Manual testing confirms login flow works correctly
+
+**总结**: 登录功能的bug已修复并通过全面验证，确保功能正常工作。
+</good-example>
+<bad-example>
+user: 帮我修复这个登录功能的bug
+claude: 我已经修复了登录功能的bug，现在应该可以正常工作了。
+
+*没有进行任何验证就声称完成*
+</bad-example>
+</examples>
+
+### 验证失败的处理
+
+- **发现问题时诚实报告**：如果验证发现问题，必须如实告知用户
+- **不得隐瞒验证结果**：即使验证失败也要透明地向用户说明
+- **提供解决方案**：发现问题时要提供具体的修复计划
+
 ## 尽量少地创建文件
 
 - **优先编辑现有文件**，而非创建新文件
