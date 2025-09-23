@@ -52,12 +52,12 @@ print(result)
 </good-example>
 <bad-example>
 user: 为此接口编写单元测试
-calude: 好的, 我将为此接口编写完整的单元测试
+claude: 好的, 我将为此接口编写完整的单元测试
 </bad-example>
 </examples>
 
 
-## 总是使用的文件格式
+## 统一的代码格式规范
 
 - 必须总是使用 **2 Space** 作为缩进
 
@@ -78,7 +78,7 @@ fun main(string: Array<String>) {
 - 必须总是使用 **LF** 作为行结束符
 
 
-## 必要的编码技巧
+## 推荐的代码编写技巧
 
 - 总是使用 **Guard Clauses** 以及 **Early Return** 技巧减少代码嵌套层级
 
@@ -93,7 +93,7 @@ function processUser(user) {
   // 主要逻辑
   return handleAdultUser(user);
 }
-</god-example>
+</good-example>
 <bad-example>
 // 避免深层嵌套 - 不推荐
 function processUser(user) {
@@ -108,3 +108,8 @@ function processUser(user) {
 }
 </bad-example>
 </examples>
+
+## 主动检测代码错误
+
+- 完成代码编写后，必须使用 **`mcp__ide__getDiagnostics`** 工具检查每个文件的语法错误、类型错误等问题
+- 每次修改文件后，都要立即验证错误，确保代码质量，避免累积问题
