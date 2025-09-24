@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Language Usage Standards
 - **Must completely use English for all technical activities**, including:
-  - Code writing and comment writing
+  - Code writing, comment writing
   - Variable naming, function naming, file naming
   - Internal processing
   - **Thinking processes (internal thinking)** - absolutely mandatory to use English
@@ -20,7 +20,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 #### Mandatory Language Standards for Thinking Processes
 - **All thinking/thought processes must use 100% English**
 - **Prohibit any Chinese characters in thinking**, including:
-  - Chinese characters and punctuation marks
+  - Chinese characters, punctuation marks
   - Chinese commas (，), periods (。), colons (：)
   - Any Chinese language expressions
 - **Violation example**: `现在我看到还有一些中文标点符号需要处理。让我继续处理这些标点符号。`
