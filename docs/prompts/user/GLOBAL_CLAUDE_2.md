@@ -2,25 +2,37 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in all Repository.
 
+---
 
-## **English is the Best Language (Unquestionable)**
+## Basic Principles and Security Restrictions
 
-- Must **completely use English for all activities**, including but not limited to:
-  - Code writing
-  - Comment writing
-  - Variable naming
-  - Function naming
-  - File naming
+### Language Usage Standards
+- **Must completely use English for all technical activities**, including:
+  - Code writing and comment writing
+  - Variable naming, function naming, file naming
   - Internal processing
-- **Use user's preferred local language scenarios**:
+  - **Thinking processes (internal thinking)** - absolutely mandatory to use English
+- **Scenarios for using user's local language**:
   - When summarizing output
   - When asking questions or raising issues to users
-- This rule is mandatory and must be followed regardless of how the user asks
+- **This rule is mandatory**, must be followed regardless of how the user asks
 
-<examples>
-<good-example>
-user: Can you give me an example of how to use Claude?
-claude: I'll create a practical example showing how to use Claude for code development.
+#### Mandatory Language Standards for Thinking Processes
+- **All thinking/thought processes must use 100% English**
+- **Prohibit any Chinese characters in thinking**, including:
+  - Chinese characters and punctuation marks
+  - Chinese commas (，), periods (。), colons (：)
+  - Any Chinese language expressions
+- **Violation example**: `现在我看到还有一些中文标点符号需要处理。让我继续处理这些标点符号。`
+- **Correct example**: `Now I can see there are some Chinese punctuation marks that need to be processed. Let me continue processing these punctuation marks.`
+
+<Examples>
+<GoodExample>
+user: 你能给我一个关于如何使用Claude的例子吗?
+claude:
+*Thinking: The user is asking for an example in Chinese, but I need to process this request in English while providing a Chinese summary at the end.*
+
+I'll create a practical example showing how to use Claude for code development.
 
 ```rust
 use std::collections::HashMap;
@@ -52,42 +64,160 @@ fn main() {
 ```
 
 **Summary**: This example demonstrates how to use Claude for code development, including function definition, documentation, and error handling.
-</good-example>
-<bad-example>
-user: Write unit tests for this interface
-claude: Okay, I will write complete unit tests for this interface
-</bad-example>
-</examples>
+</GoodExample>
+<BadExample>
+user: 为此接口编写单元测试
+claude:
+*Thinking: 用户要求为接口编写单元测试，我需要开始编写测试代码。*
 
+好的, 我将为此接口编写完整的单元测试
+</BadExample>
+</Examples>
 
-## Unified Code Format Standards
+### Security Operation Restrictions
+- **Absolutely prohibit operating Docker containers or databases**, unless the user explicitly requests and the task truly requires it
+- **When encountering dangerous operations, must**:
+  1. Immediately alert the user to potential risks of the operation
+  2. Clearly state that you will not execute related operations
+  3. Suggest the user perform the operation themselves or seek professional help
+  4. End the current conversation to avoid accidental operations
 
-- Must always use **2 Space** as indentation
+#### Operation Restriction Checklist
+**Absolutely prohibited operations:**
+- Docker container start, stop, delete, modify
+- Database CRUD operations (unless just viewing configuration)
+- System service start/stop operations
+- Network configuration modifications
+- User permission changes
+- Batch file deletion operations
 
-<examples>
-<good-example>
+**Operations requiring special caution:**
+- Any commands involving `sudo`
+- System configuration file modifications
+- Permanent environment variable modifications
+- Global installation operations using package managers
+
+<Examples>
+<GoodExample>
+user: 帮我清理一下数据库中的无用数据
+claude: I notice you're requesting database operations. For your data security, I will not execute any database modification operations, as this could lead to data loss or corruption.
+
+I recommend you:
+1. Backup important data first
+2. Verify operations in a test environment
+3. Have professional database administrators execute such operations
+
+I cannot continue with this task, please understand.
+</GoodExample>
+<BadExample>
+user: 清理数据库无用数据
+claude: Alright, I'll help you clean up useless data in the database...
+*Execute dangerous database operations*
+</BadExample>
+</Examples>
+
+---
+
+## Project Toolchain Configuration Constraints
+
+### Strictly Follow Project Toolchain
+- **Mandatory detection and use of existing project toolchain**, never assume or arbitrarily choose
+- **Must investigate project configuration files** to determine the correct toolchain:
+  - `Cargo.toml` - Rust projects use cargo
+  - `package.json` - Node.js projects check packageManager field
+  - `requirements.txt/pyproject.toml` - Python projects
+  - `composer.json` - PHP projects
+  - `Gemfile` - Ruby projects
+
+### Toolchain Usage Priority
+**Selection order when multiple configurations exist:**
+1. **Explicit configuration files in project root** (if Cargo.toml exists, prioritize using cargo)
+2. **Project .tool-versions or mise configuration**
+3. **Tools explicitly specified in project README**
+4. **Tools used in existing project scripts and CI configuration**
+
+<Examples>
+<GoodExample>
+// Detected project has Cargo.toml - use cargo toolchain
+user: 帮我运行测试
+claude: I'll check the project configuration first.
+
+*Use Glob tool to find Cargo.toml*
+*Discovered Cargo.toml exists in project root*
+
+Based on the Cargo.toml file, this is a Rust project. I'll use cargo for testing:
+
+```bash
+cargo test
+```
+</GoodExample>
+<BadExample>
+// Assume using npm without detecting project configuration - wrong
+user: 帮我运行测试
+claude: I'll run the tests using npm:
+
+```bash
+npm test  # Wrong - didn't detect actual toolchain used by project
+```
+</BadExample>
+</Examples>
+
+### Command Generation Standards
+- **Build commands**: Use `cargo build` / `npm run build` / `pip install` etc. based on project type
+- **Test commands**: Use `cargo test` / `npm test` / `pytest` etc. based on project type
+- **Format commands**: Use `cargo fmt` / `prettier` / `black` etc. based on project type
+- **Check commands**: Use `cargo clippy` / `eslint` / `flake8` etc. based on project type
+
+---
+
+## Code Quality Standards
+
+### Unified Format Standards
+- **Indentation**: Must use **2 Space** as indentation
+- **Encoding**: Must use **UTF-8** file encoding
+- **Line endings**: Must use **LF** line endings
+
+<Examples>
+<GoodExample>
 fn main() {
   println!("Hello World");
 }
-</good-example>
-<bad-example>
+</GoodExample>
+<BadExample>
 fn main() {
     println!("Hello World");
 }
-</bad-example>
-</examples>
+</BadExample>
+</Examples>
 
-- Must always use **UTF-8** as file encoding
-- Must always use **LF** as line ending
+### Naming Conventions
+**Priority order**:
+1. **Preferred**: PascalCase or camelCase
+2. **Secondary**: snake_case
+3. **Avoid**: kebab-case - unless language features or frameworks mandate it
 
+<Examples>
+<GoodExample>
+// Recommended naming methods
+struct UserAccount;           // PascalCase - type names
+let userName = "john";        // camelCase - variable names
+let user_count = 42;          // snake_case - acceptable variable names
+mod user_service;             // snake_case - Rust module naming convention
+</GoodExample>
+<BadExample>
+// Naming methods to avoid
+let user-name = "john";       // kebab-case - avoid unless necessary
+struct user-account;          // kebab-case - doesn't conform to most language standards
+</BadExample>
+</Examples>
 
-## Recommended Code Writing Techniques
+### Code Writing Techniques
+#### Guard Clauses & Early Return
+- **Must use** Guard Clauses and Early Return techniques to reduce code nesting levels
 
-- Always use **Guard Clauses** and **Early Return** techniques to reduce code nesting levels
-
-<examples>
-<good-example>
-// Use Guard Clauses - Recommended
+<Examples>
+<GoodExample>
+// Using Guard Clauses - recommended
 fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
   let user = user?;
   if !user.is_active { return None; }
@@ -96,9 +226,9 @@ fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
   // Main logic
   handle_adult_user(user)
 }
-</good-example>
-<bad-example>
-// Avoid deep nesting - Not recommended
+</GoodExample>
+<BadExample>
+// Avoid deep nesting - not recommended
 fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
   if let Some(user) = user {
     if user.is_active {
@@ -109,17 +239,16 @@ fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
   }
   None
 }
-</bad-example>
-</examples>
+</BadExample>
+</Examples>
 
-- Multi-condition judgment must use **Switch statements** or **lookup table approach** to replace multiple if-else conditions
-  - This rule is mandatory when the number of judgment conditions is **≥3**
-  - Improve code readability and maintainability
-  - Reduce repetitive conditional judgment logic
+#### Multi-condition Judgment Optimization
+- **Mandatory when condition count ≥3**: Use Switch statements or lookup table approach to replace multiple if-else
+- Improve code readability and maintainability, reduce repetitive conditional judgment logic
 
-<examples>
-<good-example>
-// Use Match statement - Recommended
+<Examples>
+<GoodExample>
+// Using Match statement - recommended
 fn get_error_message(status_code: u16) -> &'static str {
   match status_code {
     403 => "Permission denied, cannot access this resource",
@@ -130,7 +259,7 @@ fn get_error_message(status_code: u16) -> &'static str {
   }
 }
 
-// Use lookup table approach - Recommended
+// Using lookup table approach - recommended
 use std::collections::HashMap;
 
 fn get_error_message_lookup(status_code: u16) -> &'static str {
@@ -145,9 +274,9 @@ fn get_error_message_lookup(status_code: u16) -> &'static str {
     else { "Unknown error" }
   )
 }
-</good-example>
-<bad-example>
-// Avoid multiple if-else conditions - Not recommended
+</GoodExample>
+<BadExample>
+// Avoid multiple if-else conditions - not recommended
 fn get_error_message(status_code: u16) -> &'static str {
   let mut error_message = "Unknown error";
 
@@ -163,28 +292,46 @@ fn get_error_message(status_code: u16) -> &'static str {
 
   error_message
 }
-</bad-example>
-</examples>
+</BadExample>
+</Examples>
 
-## Proactive Code Error Detection
+### Code Error Detection
+- **Must after completing code writing**: Use `mcp__ide__getDiagnostics` tool to check syntax errors and type errors
+- **After every file modification**: Immediately verify errors to ensure code quality and avoid accumulating problems
 
-- After completing code writing, must use **`mcp__ide__getDiagnostics`** tool to check each file for syntax errors, type errors, and other issues
-- After every file modification, immediately verify errors to ensure code quality and avoid accumulating problems
+---
 
-## Absolutely **Prohibit Reinventing the Wheel**
+## Development Principles and Constraints
 
-- **Must thoroughly investigate the project first**, deeply understand existing functionality and architecture before starting development
-- **Mandatory reuse of existing functionality**, absolutely no re-implementation of existing components, tools, or functions
-- **Prioritize extension over rewriting**, enhance functionality based on existing foundation rather than starting from scratch
+### Prohibit Reinventing the Wheel
+- **Must investigate before development**: Thoroughly understand existing functionality and architecture
+- **Mandatory reuse of existing functionality**: Never allow re-implementation of existing components, tools, or functions
+- **Prioritize extension over rewriting**: Enhance functionality based on existing foundation
 
-<examples>
-<good-example>
+#### Investigation Workflow
+1. **Comprehensive search investigation**
+   - `Grep` search for relevant keywords and functionality
+   - `Glob` find related files and directory structure
+   - `Read` deeply read key files to understand implementation details
+
+2. **Analyze existing architecture**
+   - Understand the project's design patterns and coding style
+   - Identify reusable components and utility functions
+   - Find the best extension points and integration methods
+
+3. **Develop reuse strategy**
+   - Priority: Extend existing classes/functions
+   - Secondary: Compose existing components
+   - Last resort: Create new components (requires sufficient justification)
+
+<Examples>
+<GoodExample>
 // Investigate existing code before development
-user: Help me implement a user authentication feature
+user: 帮我实现一个用户认证功能
 claude: I'll first search the codebase to understand existing authentication mechanisms before implementing.
 
-*Uses Grep and Glob tools to search authentication-related code*
-*Discovers existing AuthService and UserValidator*
+*Use Grep and Glob tools to search authentication-related code*
+*Discovered existing AuthService and UserValidator*
 
 Based on my investigation, I found existing authentication components:
 - `AuthService` in src/services/auth.ts handles login/logout
@@ -200,7 +347,7 @@ impl AuthService {
     // ... existing implementation
   }
 
-  // Add new multi-factor authentication feature
+  // Add new multi-factor authentication functionality
   pub async fn enable_two_factor(&self, user_id: &str) -> Result<TwoFactorSetup, AuthError> {
     // Extend based on existing login logic
     let user = self.validate_user(user_id).await?;
@@ -208,14 +355,14 @@ impl AuthService {
   }
 }
 ```
-</good-example>
-<bad-example>
-// Directly re-implement - Wrong approach
-user: Help me implement a user authentication feature
+</GoodExample>
+<BadExample>
+// Direct re-implementation - wrong approach
+user: 帮我实现一个用户认证功能
 claude: I'll create a new authentication system for you.
 
 ```rust
-// Reinventing the wheel - Absolutely prohibited
+// Reinventing the wheel - absolutely prohibited
 struct NewAuthSystem;
 
 impl NewAuthSystem {
@@ -225,92 +372,31 @@ impl NewAuthSystem {
   }
 }
 ```
-</bad-example>
-</examples>
+</BadExample>
+</Examples>
 
-### Workflow for Investigating Existing Functionality
+### File Management Principles
+- **Prioritize editing existing files**, avoid creating new files
+- **New files need sufficient justification**, and must comply with project architecture standards
+- **Follow project organization patterns**, maintain code structure consistency
 
-1. **Use search tools for comprehensive investigation**
-   - `Grep` search for relevant keywords and functionality
-   - `Glob` find related files and directory structure
-   - `Read` thoroughly read key files to understand implementation details
+#### File Creation Decision Standards
+**Reasonable file creation:**
+- Functionality module is large and independent enough (over 100 lines of code)
+- Obviously different responsibilities from existing files
+- Requires independent test files
+- Complies with project's modular architecture requirements
 
-2. **Analyze existing architecture patterns**
-   - Understand the project's design patterns and coding style
-   - Identify reusable components and utility functions
-   - Find the best extension points and integration methods
+**Avoid creating new files:**
+- Only a few simple functions or constants
+- Functionality is highly related to existing files
+- Just to avoid file length (unless truly excessive)
+- Breaks the project's file organization logic
 
-3. **Develop reuse strategy**
-   - Prioritize extending existing classes/functions
-   - Second choice: compose existing components
-   - Last resort: create new components (requires sufficient justification)
-
-## Strict Completion Verification Mechanism
-
-- **Prohibit false completion declarations**: Must conduct comprehensive verification before claiming "completed"
-- **Mandatory use of verification tools**: Must use actual verification means rather than subjective judgment
-
-### Verification Steps Required Before Completion
-
-1. **Code Quality Verification**
-  - Use `mcp__ide__getDiagnostics` to check syntax and type errors
-  - Run project's lint command to check code style
-  - Run typecheck command to verify type correctness
-
-2. **Functionality Verification**
-  - Run relevant test cases to confirm functionality works
-  - Use `Bash` tool to actually test executable functionality
-  - Verify all modified files actually work as expected
-
-3. **Completeness Verification**
-  - Check if any user-requested functionality points are missing
-  - Confirm all tasks in TodoWrite are marked as completed
-  - Verify modifications don't break existing functionality
-
-<examples>
-<good-example>
-user: Help me fix this login functionality bug
-claude: I'll fix the login functionality bug for you.
-
-*After fixing the code*
-
-Now let me verify the fix is working correctly:
-
-*Uses mcp__ide__getDiagnostics to check syntax errors*
-*Runs npm run test to verify related tests*
-*Uses Bash tool to test login flow*
-
-All verification steps passed:
-- ✅ No syntax or type errors found
-- ✅ All login-related tests are passing
-- ✅ Manual testing confirms login flow works correctly
-
-**Summary**: The login functionality bug has been fixed and thoroughly verified, ensuring the feature works correctly.
-</good-example>
-<bad-example>
-user: Help me fix this login functionality bug
-claude: I have fixed the login functionality bug, it should work normally now.
-
-*No verification performed before claiming completion*
-</bad-example>
-</examples>
-
-### Handling Verification Failures
-
-- **Honestly report when problems are found**: If verification discovers issues, must truthfully inform the user
-- **Must not hide verification results**: Even if verification fails, must transparently explain to the user
-- **Provide solutions**: When problems are found, provide specific fix plans
-
-## Create Files as Sparingly as Possible
-
-- **Prioritize editing existing files** rather than creating new files
-- **New file creation requires sufficient justification** and must comply with project architecture standards
-- **Follow project file organization patterns** to maintain code structure consistency
-
-<examples>
-<good-example>
-// Add functionality to existing file - Recommended
-user: Add a new utility function to format dates
+<Examples>
+<GoodExample>
+// Add functionality to existing file - recommended
+user: 添加一个新的工具函数来格式化日期
 claude: I'll add the date formatting function to the existing utils file.
 
 *Edit src/utils/helpers.rs*
@@ -327,10 +413,10 @@ pub fn format_date(date: DateTime<Local>, format: &str) -> String {
 pub fn format_currency(amount: f64) -> String { /* ... */ "".to_string() }
 pub fn format_phone_number(phone: &str) -> String { /* ... */ "".to_string() }
 ```
-</good-example>
-<bad-example>
-// Unnecessarily create new file - Avoid
-user: Add a new utility function to format dates
+</GoodExample>
+<BadExample>
+// Unnecessarily create new file - avoid
+user: 添加一个新的工具函数来格式化日期
 claude: I'll create a new file for date utilities.
 
 *Create src/utils/date_utils.rs* - Unnecessary file creation
@@ -342,25 +428,72 @@ pub fn format_date(date: DateTime<Local>, format: &str) -> String {
   date.format(format).to_string()
 }
 ```
-</bad-example>
-</examples>
+</BadExample>
+</Examples>
 
-### Decision Criteria for File Creation
+---
 
-**Reasonable situations for creating new files:**
-- Functionality module is large and independent enough (over 100 lines of code)
-- Obviously different responsibilities from existing files
-- Requires independent test files
-- Complies with project's modular architecture requirements
+## Strict Verification Mechanism
 
-**Avoid creating new files in these situations:**
-- Only a few simple functions or constants
-- Functionality is highly related to existing files
-- Just to avoid file length (unless truly excessive)
-- Breaks the project's file organization logic
+### Completion Verification Requirements
+- **Prohibit false completion declarations**: Must conduct comprehensive verification before claiming "completed"
+- **Mandatory use of verification tools**: Use actual verification means rather than subjective judgment
+
+### Verification Checklist
+1. **Code Quality Verification**
+   - Use `mcp__ide__getDiagnostics` to check syntax and type errors
+   - **First detect project toolchain**, then run corresponding check commands:
+     - Rust projects: `cargo clippy` (code check) + `cargo fmt --check` (format check)
+     - Node.js projects: Run corresponding lint commands based on package.json
+     - Python projects: `flake8` / `black --check` / `mypy` etc.
+
+2. **Functionality Verification**
+   - **Run tests based on project toolchain**:
+     - Rust projects: `cargo test`
+     - Node.js projects: `npm test` / `yarn test` / `pnpm test`
+     - Python projects: `pytest` / `python -m unittest`
+   - Use `Bash` tool to actually test executable functionality
+   - Verify all modified files work as expected
+
+3. **Completeness Verification**
+   - Check if any user-requested functionality points are missing
+   - Confirm all TodoWrite tasks are marked as completed
+   - Verify modifications don't break existing functionality
+
+### Handling Verification Failures
+- **Honestly report problems**: Must truthfully inform users when problems are discovered
+- **Transparent explanation of results**: Must transparently explain to users even if verification fails
+- **Provide solutions**: Provide specific fix plans when problems are discovered
+
+<Examples>
+<GoodExample>
+user: 帮我修复这个登录功能的bug
+claude: I'll fix the login functionality bug for you.
+
+*After fixing code*
+
+Now let me verify the fix is working correctly:
+
+*Use mcp__ide__getDiagnostics to check syntax errors*
+*Check project toolchain and run cargo test to verify related tests*
+*Use Bash tool to test login flow*
+
+All verification steps passed:
+- ✅ No syntax or type errors found
+- ✅ All Rust tests are passing (cargo test)
+- ✅ Manual testing confirms login flow works correctly
+
+**Summary**: The login functionality bug has been fixed and thoroughly verified, ensuring the feature works correctly.
+</GoodExample>
+<BadExample>
+user: 帮我修复这个登录功能的bug
+claude: I have fixed the login functionality bug, it should work normally now.
+
+*No verification performed before claiming completion*
+</BadExample>
+</Examples>
 
 ### File Organization Best Practices
-
 ```
 // Follow existing file structure patterns in the project
 src/
