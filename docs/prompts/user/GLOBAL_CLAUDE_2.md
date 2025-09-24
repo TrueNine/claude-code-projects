@@ -109,6 +109,59 @@ function processUser(user) {
 </bad-example>
 </examples>
 
+- Multi-condition judgment must use **Switch statements** or **lookup table methods** to replace multiple if-else conditions
+  - This rule is mandatory when the number of judgment conditions **≥3**
+  - Improves code readability and maintainability
+  - Reduces repetitive conditional judgment logic
+
+<examples>
+<good-example>
+// Use Switch statement - Recommended
+function getErrorMessage(statusCode) {
+  switch (statusCode) {
+    case 403:
+      return 'Permission denied, cannot access this resource';
+    case 404:
+      return 'Requested resource does not exist';
+    case 500:
+      return 'Internal server error, please try again later';
+    default:
+      return statusCode >= 500 ? 'Server error, please try again later' : 'Unknown error';
+  }
+}
+
+// Use lookup table method - Recommended
+const ERROR_MESSAGES = {
+  403: 'Permission denied, cannot access this resource',
+  404: 'Requested resource does not exist',
+  500: 'Internal server error, please try again later'
+};
+
+function getErrorMessage(statusCode) {
+  return ERROR_MESSAGES[statusCode] ||
+    (statusCode >= 500 ? 'Server error, please try again later' : 'Unknown error');
+}
+</good-example>
+<bad-example>
+// Avoid multiple if-else conditions - Not recommended
+function getErrorMessage(statusCode) {
+  let errorMessage = 'Unknown error';
+
+  if (statusCode === 403) {
+    errorMessage = 'Permission denied, cannot access this resource';
+  } else if (statusCode === 404) {
+    errorMessage = 'Requested resource does not exist';
+  } else if (statusCode === 500) {
+    errorMessage = 'Internal server error, please try again later';
+  } else if (statusCode >= 500) {
+    errorMessage = 'Server error, please try again later';
+  }
+
+  return errorMessage;
+}
+</bad-example>
+</examples>
+
 ## Proactive Code Error Detection
 
 - After completing code writing, must use **`mcp__ide__getDiagnostics`** tool to check each file for syntax errors, type errors, and other issues
