@@ -12,7 +12,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - Function naming
   - File naming
   - Internal processing
-- Only use **user's preferred local language when summarizing output**
+- **Use user's preferred local language scenarios**:
+  - When summarizing output
+  - When asking questions or raising issues to users
 - This rule is mandatory and must be followed regardless of how the user asks
 
 <examples>
@@ -20,32 +22,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 user: Can you give me an example of how to use Claude?
 claude: I'll create a practical example showing how to use Claude for code development.
 
-```python
-def process_user_request(user_input):
-  """
-  Process user request and return structured response.
+```rust
+use std::collections::HashMap;
 
-  Args:
-    user_input (str): User's natural language request
-
-  Returns:
-    dict: Structured response with action and details
-  """
-  if not user_input:
-    return {"error": "Input cannot be empty"}
-
-  # Parse user intent using natural language processing
-  response = {
-    "original_request": user_input,
-    "action": "code_generation",
-    "status": "success"
+/// Process user request and return structured response
+fn process_user_request(user_input: Option<&str>) -> HashMap<&'static str, String> {
+  match user_input {
+    None | Some("") => {
+      let mut error_response = HashMap::new();
+      error_response.insert("error", "Input cannot be empty".to_string());
+      error_response
+    }
+    Some(input) => {
+      // Parse user intent using natural language processing
+      let mut response = HashMap::new();
+      response.insert("original_request", input.to_string());
+      response.insert("action", "code_generation".to_string());
+      response.insert("status", "success".to_string());
+      response
+    }
   }
+}
 
-  return response
-
-# Example usage
-result = process_user_request("Create a login function")
-print(result)
+// Example usage
+fn main() {
+  let result = process_user_request(Some("Create a login function"));
+  println!("{:?}", result);
+}
 ```
 
 **Summary**: This example demonstrates how to use Claude for code development, including function definition, documentation, and error handling.
@@ -63,13 +66,13 @@ claude: Okay, I will write complete unit tests for this interface
 
 <examples>
 <good-example>
-fun main(string: Array<String>) {
-  println("Hello World")
+fn main() {
+  println!("Hello World");
 }
 </good-example>
 <bad-example>
-fun main(string: Array<String>) {
-    println("Hello World")
+fn main() {
+    println!("Hello World");
 }
 </bad-example>
 </examples>
@@ -85,79 +88,80 @@ fun main(string: Array<String>) {
 <examples>
 <good-example>
 // Use Guard Clauses - Recommended
-function processUser(user) {
-  if (!user) return null;
-  if (!user.isActive) return null;
-  if (user.age < 18) return null;
+fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
+  let user = user?;
+  if !user.is_active { return None; }
+  if user.age < 18 { return None; }
 
   // Main logic
-  return handleAdultUser(user);
+  handle_adult_user(user)
 }
 </good-example>
 <bad-example>
 // Avoid deep nesting - Not recommended
-function processUser(user) {
-  if (user) {
-    if (user.isActive) {
-      if (user.age >= 18) {
-        return handleAdultUser(user);
+fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
+  if let Some(user) = user {
+    if user.is_active {
+      if user.age >= 18 {
+        return handle_adult_user(user);
       }
     }
   }
-  return null;
+  None
 }
 </bad-example>
 </examples>
 
-- Multi-condition judgment must use **Switch statements** or **lookup table methods** to replace multiple if-else conditions
-  - This rule is mandatory when the number of judgment conditions **≥3**
-  - Improves code readability and maintainability
-  - Reduces repetitive conditional judgment logic
+- Multi-condition judgment must use **Switch statements** or **lookup table approach** to replace multiple if-else conditions
+  - This rule is mandatory when the number of judgment conditions is **≥3**
+  - Improve code readability and maintainability
+  - Reduce repetitive conditional judgment logic
 
 <examples>
 <good-example>
-// Use Switch statement - Recommended
-function getErrorMessage(statusCode) {
-  switch (statusCode) {
-    case 403:
-      return 'Permission denied, cannot access this resource';
-    case 404:
-      return 'Requested resource does not exist';
-    case 500:
-      return 'Internal server error, please try again later';
-    default:
-      return statusCode >= 500 ? 'Server error, please try again later' : 'Unknown error';
+// Use Match statement - Recommended
+fn get_error_message(status_code: u16) -> &'static str {
+  match status_code {
+    403 => "Permission denied, cannot access this resource",
+    404 => "Requested resource does not exist",
+    500 => "Internal server error, please try again later",
+    code if code >= 500 => "Server error, please try again later",
+    _ => "Unknown error"
   }
 }
 
-// Use lookup table method - Recommended
-const ERROR_MESSAGES = {
-  403: 'Permission denied, cannot access this resource',
-  404: 'Requested resource does not exist',
-  500: 'Internal server error, please try again later'
-};
+// Use lookup table approach - Recommended
+use std::collections::HashMap;
 
-function getErrorMessage(statusCode) {
-  return ERROR_MESSAGES[statusCode] ||
-    (statusCode >= 500 ? 'Server error, please try again later' : 'Unknown error');
+fn get_error_message_lookup(status_code: u16) -> &'static str {
+  let error_messages: HashMap<u16, &'static str> = [
+    (403, "Permission denied, cannot access this resource"),
+    (404, "Requested resource does not exist"),
+    (500, "Internal server error, please try again later")
+  ].iter().cloned().collect();
+
+  error_messages.get(&status_code).unwrap_or(
+    &if status_code >= 500 { "Server error, please try again later" }
+    else { "Unknown error" }
+  )
 }
 </good-example>
 <bad-example>
 // Avoid multiple if-else conditions - Not recommended
-function getErrorMessage(statusCode) {
-  let errorMessage = 'Unknown error';
+fn get_error_message(status_code: u16) -> &'static str {
+  let mut error_message = "Unknown error";
 
-  if (statusCode === 403) {
-    errorMessage = 'Permission denied, cannot access this resource';
-  } else if (statusCode === 404) {
-    errorMessage = 'Requested resource does not exist';
-  } else if (statusCode === 500) {
-    errorMessage = 'Internal server error, please try again later';
-  } else if (statusCode >= 500) {
-    errorMessage = 'Server error, please try again later';
+  if status_code == 403 {
+    error_message = "Permission denied, cannot access this resource";
+  } else if status_code == 404 {
+    error_message = "Requested resource does not exist";
+  } else if status_code == 500 {
+    error_message = "Internal server error, please try again later";
+  } else if status_code >= 500 {
+    error_message = "Server error, please try again later";
   }
 
-  return errorMessage;
+  error_message
 }
 </bad-example>
 </examples>
@@ -188,17 +192,19 @@ Based on my investigation, I found existing authentication components:
 
 I'll extend these existing components instead of creating new ones:
 
-```typescript
+```rust
 // Extend existing AuthService
-export class AuthService {
+impl AuthService {
   // Keep existing methods unchanged
-  async login(credentials: LoginCredentials): Promise<AuthResult> { ... }
+  pub async fn login(&self, credentials: LoginCredentials) -> Result<AuthResult, AuthError> {
+    // ... existing implementation
+  }
 
   // Add new multi-factor authentication feature
-  async enableTwoFactor(userId: string): Promise<TwoFactorSetup> {
+  pub async fn enable_two_factor(&self, user_id: &str) -> Result<TwoFactorSetup, AuthError> {
     // Extend based on existing login logic
-    const user = await this.validateUser(userId);
-    return this.setupTwoFactor(user);
+    let user = self.validate_user(user_id).await?;
+    self.setup_two_factor(&user).await
   }
 }
 ```
@@ -208,11 +214,14 @@ export class AuthService {
 user: Help me implement a user authentication feature
 claude: I'll create a new authentication system for you.
 
-```typescript
+```rust
 // Reinventing the wheel - Absolutely prohibited
-class NewAuthSystem {
-  async authenticateUser(username: string, password: string) {
+struct NewAuthSystem;
+
+impl NewAuthSystem {
+  async fn authenticate_user(&self, username: &str, password: &str) -> Result<User, AuthError> {
     // Re-implementing existing functionality
+    unimplemented!()
   }
 }
 ```
@@ -304,16 +313,19 @@ claude: I have fixed the login functionality bug, it should work normally now.
 user: Add a new utility function to format dates
 claude: I'll add the date formatting function to the existing utils file.
 
-*Edit src/utils/helpers.ts*
-```typescript
+*Edit src/utils/helpers.rs*
+```rust
+use chrono::{DateTime, Local};
+
 // Add new function to existing utility file
-export const formatDate = (date: Date, format: string): string => {
+pub fn format_date(date: DateTime<Local>, format: &str) -> String {
   // Implement date formatting logic
-};
+  date.format(format).to_string()
+}
 
 // Maintain consistent naming and style with existing functions
-export const formatCurrency = (amount: number): string => { ... }
-export const formatPhoneNumber = (phone: string): string => { ... }
+pub fn format_currency(amount: f64) -> String { /* ... */ "".to_string() }
+pub fn format_phone_number(phone: &str) -> String { /* ... */ "".to_string() }
 ```
 </good-example>
 <bad-example>
@@ -321,11 +333,14 @@ export const formatPhoneNumber = (phone: string): string => { ... }
 user: Add a new utility function to format dates
 claude: I'll create a new file for date utilities.
 
-*Create src/utils/dateUtils.ts* - Unnecessary file creation
-```typescript
-export const formatDate = (date: Date, format: string): string => {
-  // Could have been placed in existing helpers.ts
-};
+*Create src/utils/date_utils.rs* - Unnecessary file creation
+```rust
+use chrono::{DateTime, Local};
+
+pub fn format_date(date: DateTime<Local>, format: &str) -> String {
+  // Could have been placed in existing helpers.rs
+  date.format(format).to_string()
+}
 ```
 </bad-example>
 </examples>
@@ -349,12 +364,13 @@ export const formatDate = (date: Date, format: string): string => {
 ```
 // Follow existing file structure patterns in the project
 src/
-  components/          # React components
-    Button/
-      index.ts        # Export file
-      Button.tsx      # Main component
-      Button.test.ts  # Test file
+  components/          # UI component modules
+    button/
+      mod.rs          # Export file
+      button.rs       # Main component
+      tests.rs        # Test file
   services/           # Business logic services
   utils/              # Utility functions (try to merge related functionality)
-  types/              # TypeScript type definitions
+  types/              # Type definitions
+  lib.rs              # Library entry file
 ```
