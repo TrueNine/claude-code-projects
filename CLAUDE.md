@@ -12,7 +12,7 @@ This is a documentation and configuration repository for Claude Code workflows, 
 
 ## Key Commands
 
-This repository doesn't have traditional build/test commands as it's primarily documentation-focused. The main development happens through:
+This repository is mainly documentation-focused and doesn't have traditional build/test commands. The main development happens through:
 
 ### Hook Development (TypeScript)
 - **Location**: `.claude/hooks/`
@@ -30,21 +30,21 @@ This repository doesn't have traditional build/test commands as it's primarily d
 - **`.claude/`** - Claude Code configuration and hooks
   - `settings.json` - Main Claude Code settings (model: opusplan, permissions, MCP servers)
   - `hooks/` - TypeScript hooks for file processing automation
-  - `hooks/main.ts` - Main hook entry point for frontend file linting/formatting
+  - `hooks/main.ts` - Main hook entry point for frontend file checking/formatting
 
 ### Documentation Architecture
 - **`docs/`** - Main documentation directory
-  - `prompts/` - Prompt templates (both locale and English versions)
-    - `locale/` - Chinese locale prompts
+  - `prompts/` - Prompt templates (locale and English versions)
+    - `locale/` - Locale prompts
     - `output/` - English translated prompts
-  - `qa/` - Q&A documentation for development workflows
+  - `qa/` - QA documentation for development workflows
   - `references/` - Technical reference documentation
   - `other/` - Various documentation (build, Git, database, etc.)
 
 ### Hook System
 The repository includes a sophisticated TypeScript hook system (`.claude/hooks/main.ts`) that:
 - Automatically processes frontend files on save/edit
-- Runs prettier, eslint, and TypeScript checks in parallel
+- Runs prettier, eslint and TypeScript checks in parallel
 - Provides detailed logging to `.claude/hook-debug.log`
 - Only processes files in `frontend/` directories
 
@@ -64,7 +64,7 @@ The repository includes a sophisticated TypeScript hook system (`.claude/hooks/m
 
 Since this is a documentation repository:
 
-1. **Editing Documentation**: Direct file editing, no build step required
+1. **Edit Documentation**: Direct file editing, no build steps required
 2. **Hook Development**: Edit TypeScript in `.claude/hooks/src/`, hooks auto-reload
 3. **Configuration Changes**: Update `.claude/settings.json` as needed
 4. **Content Management**: Follow existing locale/translation patterns
@@ -72,6 +72,6 @@ Since this is a documentation repository:
 ## Important Instructions
 
 Do what has been asked; nothing more, nothing less.
-NEVER create files unless they're absolutely necessary for achieving your goal.
-ALWAYS prefer editing an existing file to creating a new one.
-NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
+Never create files unless they're absolutely necessary to achieve your goal.
+Always prefer editing existing files rather than creating new ones.
+Never proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
