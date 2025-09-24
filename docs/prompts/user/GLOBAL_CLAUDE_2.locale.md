@@ -12,7 +12,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - 函数命名
   - 文件命名
   - 内部处理过程
-- 仅在**总结输出时使用用户习惯的本地语言**
+- **使用用户习惯的本地语言的场景**：
+  - 总结输出时
+  - 向用户提问或抛出问题时
 - 此规则是强制性的，不管用户如何询问都必须遵守
 
 <examples>
@@ -20,32 +22,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 user: 你能给我一个关于如何使用Claude的例子吗？
 claude: I'll create a practical example showing how to use Claude for code development.
 
-```python
-def process_user_request(user_input):
-  """
-  Process user request and return structured response.
+```rust
+use std::collections::HashMap;
 
-  Args:
-    user_input (str): User's natural language request
-
-  Returns:
-    dict: Structured response with action and details
-  """
-  if not user_input:
-    return {"error": "Input cannot be empty"}
-
-  # Parse user intent using natural language processing
-  response = {
-    "original_request": user_input,
-    "action": "code_generation",
-    "status": "success"
+/// Process user request and return structured response
+fn process_user_request(user_input: Option<&str>) -> HashMap<&'static str, String> {
+  match user_input {
+    None | Some("") => {
+      let mut error_response = HashMap::new();
+      error_response.insert("error", "Input cannot be empty".to_string());
+      error_response
+    }
+    Some(input) => {
+      // Parse user intent using natural language processing
+      let mut response = HashMap::new();
+      response.insert("original_request", input.to_string());
+      response.insert("action", "code_generation".to_string());
+      response.insert("status", "success".to_string());
+      response
+    }
   }
+}
 
-  return response
-
-# Example usage
-result = process_user_request("Create a login function")
-print(result)
+// Example usage
+fn main() {
+  let result = process_user_request(Some("Create a login function"));
+  println!("{:?}", result);
+}
 ```
 
 **总结**: 这个例子展示了如何使用Claude进行代码开发，包括函数定义、文档说明和错误处理。
@@ -63,13 +66,13 @@ claude: 好的, 我将为此接口编写完整的单元测试
 
 <examples>
 <good-example>
-fun main(string: Array<String>) {
-  println("Hello World")
+fn main() {
+  println!("Hello World");
 }
 </good-example>
 <bad-example>
-fun main(string: Array<String>) {
-    println("Hello World")
+fn main() {
+    println!("Hello World");
 }
 </bad-example>
 </examples>
@@ -85,26 +88,26 @@ fun main(string: Array<String>) {
 <examples>
 <good-example>
 // 使用 Guard Clauses - 推荐
-function processUser(user) {
-  if (!user) return null;
-  if (!user.isActive) return null;
-  if (user.age < 18) return null;
+fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
+  let user = user?;
+  if !user.is_active { return None; }
+  if user.age < 18 { return None; }
 
   // 主要逻辑
-  return handleAdultUser(user);
+  handle_adult_user(user)
 }
 </good-example>
 <bad-example>
 // 避免深层嵌套 - 不推荐
-function processUser(user) {
-  if (user) {
-    if (user.isActive) {
-      if (user.age >= 18) {
-        return handleAdultUser(user);
+fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
+  if let Some(user) = user {
+    if user.is_active {
+      if user.age >= 18 {
+        return handle_adult_user(user);
       }
     }
   }
-  return null;
+  None
 }
 </bad-example>
 </examples>
@@ -116,48 +119,49 @@ function processUser(user) {
 
 <examples>
 <good-example>
-// 使用 Switch 语句 - 推荐
-function getErrorMessage(statusCode) {
-  switch (statusCode) {
-    case 403:
-      return 'Permission denied, cannot access this resource';
-    case 404:
-      return 'Requested resource does not exist';
-    case 500:
-      return 'Internal server error, please try again later';
-    default:
-      return statusCode >= 500 ? 'Server error, please try again later' : 'Unknown error';
+// 使用 Match 语句 - 推荐
+fn get_error_message(status_code: u16) -> &'static str {
+  match status_code {
+    403 => "Permission denied, cannot access this resource",
+    404 => "Requested resource does not exist",
+    500 => "Internal server error, please try again later",
+    code if code >= 500 => "Server error, please try again later",
+    _ => "Unknown error"
   }
 }
 
 // 使用查表方式 - 推荐
-const ERROR_MESSAGES = {
-  403: 'Permission denied, cannot access this resource',
-  404: 'Requested resource does not exist',
-  500: 'Internal server error, please try again later'
-};
+use std::collections::HashMap;
 
-function getErrorMessage(statusCode) {
-  return ERROR_MESSAGES[statusCode] ||
-    (statusCode >= 500 ? 'Server error, please try again later' : 'Unknown error');
+fn get_error_message_lookup(status_code: u16) -> &'static str {
+  let error_messages: HashMap<u16, &'static str> = [
+    (403, "Permission denied, cannot access this resource"),
+    (404, "Requested resource does not exist"),
+    (500, "Internal server error, please try again later")
+  ].iter().cloned().collect();
+
+  error_messages.get(&status_code).unwrap_or(
+    &if status_code >= 500 { "Server error, please try again later" }
+    else { "Unknown error" }
+  )
 }
 </good-example>
 <bad-example>
 // 避免多个 if-else 条件 - 不推荐
-function getErrorMessage(statusCode) {
-  let errorMessage = 'Unknown error';
+fn get_error_message(status_code: u16) -> &'static str {
+  let mut error_message = "Unknown error";
 
-  if (statusCode === 403) {
-    errorMessage = 'Permission denied, cannot access this resource';
-  } else if (statusCode === 404) {
-    errorMessage = 'Requested resource does not exist';
-  } else if (statusCode === 500) {
-    errorMessage = 'Internal server error, please try again later';
-  } else if (statusCode >= 500) {
-    errorMessage = 'Server error, please try again later';
+  if status_code == 403 {
+    error_message = "Permission denied, cannot access this resource";
+  } else if status_code == 404 {
+    error_message = "Requested resource does not exist";
+  } else if status_code == 500 {
+    error_message = "Internal server error, please try again later";
+  } else if status_code >= 500 {
+    error_message = "Server error, please try again later";
   }
 
-  return errorMessage;
+  error_message
 }
 </bad-example>
 </examples>
@@ -188,17 +192,19 @@ Based on my investigation, I found existing authentication components:
 
 I'll extend these existing components instead of creating new ones:
 
-```typescript
+```rust
 // 扩展现有 AuthService
-export class AuthService {
+impl AuthService {
   // 现有方法保持不变
-  async login(credentials: LoginCredentials): Promise<AuthResult> { ... }
+  pub async fn login(&self, credentials: LoginCredentials) -> Result<AuthResult, AuthError> {
+    // ... existing implementation
+  }
 
   // 新增多因素认证功能
-  async enableTwoFactor(userId: string): Promise<TwoFactorSetup> {
+  pub async fn enable_two_factor(&self, user_id: &str) -> Result<TwoFactorSetup, AuthError> {
     // 基于现有login逻辑扩展
-    const user = await this.validateUser(userId);
-    return this.setupTwoFactor(user);
+    let user = self.validate_user(user_id).await?;
+    self.setup_two_factor(&user).await
   }
 }
 ```
@@ -208,11 +214,14 @@ export class AuthService {
 user: 帮我实现一个用户认证功能
 claude: I'll create a new authentication system for you.
 
-```typescript
+```rust
 // 重新造轮子 - 绝对禁止
-class NewAuthSystem {
-  async authenticateUser(username: string, password: string) {
+struct NewAuthSystem;
+
+impl NewAuthSystem {
+  async fn authenticate_user(&self, username: &str, password: &str) -> Result<User, AuthError> {
     // 重新实现已有功能
+    unimplemented!()
   }
 }
 ```
@@ -304,16 +313,19 @@ claude: 我已经修复了登录功能的bug，现在应该可以正常工作了
 user: 添加一个新的工具函数来格式化日期
 claude: I'll add the date formatting function to the existing utils file.
 
-*编辑 src/utils/helpers.ts*
-```typescript
+*编辑 src/utils/helpers.rs*
+```rust
+use chrono::{DateTime, Local};
+
 // 在现有工具文件中添加新函数
-export const formatDate = (date: Date, format: string): string => {
+pub fn format_date(date: DateTime<Local>, format: &str) -> String {
   // 实现日期格式化逻辑
-};
+  date.format(format).to_string()
+}
 
 // 与现有函数保持一致的命名和风格
-export const formatCurrency = (amount: number): string => { ... }
-export const formatPhoneNumber = (phone: string): string => { ... }
+pub fn format_currency(amount: f64) -> String { /* ... */ "".to_string() }
+pub fn format_phone_number(phone: &str) -> String { /* ... */ "".to_string() }
 ```
 </good-example>
 <bad-example>
@@ -321,11 +333,14 @@ export const formatPhoneNumber = (phone: string): string => { ... }
 user: 添加一个新的工具函数来格式化日期
 claude: I'll create a new file for date utilities.
 
-*创建 src/utils/dateUtils.ts* - 不必要的文件创建
-```typescript
-export const formatDate = (date: Date, format: string): string => {
-  // 本可以放在现有 helpers.ts 中
-};
+*创建 src/utils/date_utils.rs* - 不必要的文件创建
+```rust
+use chrono::{DateTime, Local};
+
+pub fn format_date(date: DateTime<Local>, format: &str) -> String {
+  // 本可以放在现有 helpers.rs 中
+  date.format(format).to_string()
+}
 ```
 </bad-example>
 </examples>
@@ -349,12 +364,13 @@ export const formatDate = (date: Date, format: string): string => {
 ```
 // 遵循项目现有的文件结构模式
 src/
-  components/          # React组件
-    Button/
-      index.ts        # 导出文件
-      Button.tsx      # 主组件
-      Button.test.ts  # 测试文件
+  components/          # UI组件模块
+    button/
+      mod.rs          # 导出文件
+      button.rs       # 主组件
+      tests.rs        # 测试文件
   services/           # 业务逻辑服务
   utils/              # 工具函数（尽量合并相关功能）
-  types/              # TypeScript类型定义
+  types/              # 类型定义
+  lib.rs              # 库入口文件
 ```
