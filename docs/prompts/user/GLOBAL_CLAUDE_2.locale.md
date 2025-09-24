@@ -17,8 +17,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - 向用户提问或抛出问题时
 - 此规则是强制性的，不管用户如何询问都必须遵守
 
-<examples>
-<good-example>
+<Examples>
+<GoodExample>
 user: 你能给我一个关于如何使用Claude的例子吗？
 claude: I'll create a practical example showing how to use Claude for code development.
 
@@ -52,41 +52,117 @@ fn main() {
 ```
 
 **总结**: 这个例子展示了如何使用Claude进行代码开发，包括函数定义、文档说明和错误处理。
-</good-example>
-<bad-example>
+</GoodExample>
+<BadExample>
 user: 为此接口编写单元测试
 claude: 好的, 我将为此接口编写完整的单元测试
-</bad-example>
-</examples>
+</BadExample>
+</Examples>
+
+
+## 严格禁止危险操作
+
+- **绝对禁止操作Docker容器或数据库**，除非用户明确要求且任务确实需要
+- **涉及危险操作时的处理流程**：
+  - 立即提醒用户操作的潜在风险
+  - 明确告知不会执行相关操作
+  - 建议用户自行操作或寻求专业帮助
+  - 结束当前对话以避免意外操作
+
+<Examples>
+<GoodExample>
+user: 帮我清理一下数据库中的无用数据
+claude: 我注意到您要求进行数据库操作。为了您的数据安全，我不会执行任何数据库修改操作，因为这可能导致数据丢失或损坏。
+
+建议您：
+1. 先备份重要数据
+2. 在测试环境中验证操作
+3. 由专业数据库管理员执行此类操作
+
+我无法继续执行此任务，请谅解。
+</GoodExample>
+<BadExample>
+user: 清理数据库无用数据
+claude: 好的，我来帮您清理数据库中的无用数据...
+*执行危险的数据库操作*
+</BadExample>
+<BadExample>
+user: 这个应用启动报错了
+claude: 我来查看docker是否已经启动...
+*主动检查docker状态*
+claude: 修复这个bug需要先启动docker容器...
+*主动操作docker服务*
+</BadExample>
+</Examples>
+
+### 受限操作类型
+
+**绝对禁止的操作：**
+- Docker容器的启动、停止、删除、修改
+- 数据库的增删改查操作（除非只是查看配置）
+- 系统服务的启停操作
+- 网络配置的修改
+- 用户权限的变更
+- 批量文件删除操作
+
+**需要特别谨慎的操作：**
+- 任何涉及`sudo`的命令
+- 系统配置文件的修改
+- 环境变量的永久性修改
+- 包管理器的全局安装操作
 
 
 ## 统一的代码格式规范
 
 - 必须总是使用 **2 Space** 作为缩进
 
-<examples>
-<good-example>
+<Examples>
+<GoodExample>
 fn main() {
   println!("Hello World");
 }
-</good-example>
-<bad-example>
+</GoodExample>
+<BadExample>
 fn main() {
     println!("Hello World");
 }
-</bad-example>
-</examples>
+</BadExample>
+</Examples>
 
 - 必须总是使用 **UTF-8** 作为文件编码
 - 必须总是使用 **LF** 作为行结束符
+
+
+## 命名规范
+
+- 文件命名、变量命名优先级顺序：
+  1. **首选**：大驼峰命名法 (PascalCase) 或小驼峰命名法 (camelCase)
+  2. **次选**：蛇形命名法 (snake_case)
+  3. **不推荐**：烤串命名法 (kebab-case)
+    - 除非语言特性或第三方框架强制要求使用
+
+<Examples>
+<GoodExample>
+// 推荐的命名方式
+struct UserAccount;           // 大驼峰 - 类型名
+let userName = "john";        // 小驼峰 - 变量名
+let user_count = 42;          // 蛇形 - 可接受的变量名
+mod user_service;             // 蛇形 - Rust模块名约定
+</GoodExample>
+<BadExample>
+// 避免的命名方式
+let user-name = "john";       // 烤串命名法 - 除非必要否则避免
+struct user-account;          // 烤串命名法 - 不符合大多数语言规范
+</BadExample>
+</Examples>
 
 
 ## 推荐的代码编写技巧
 
 - 总是使用 **Guard Clauses** 以及 **Early Return** 技巧减少代码嵌套层级
 
-<examples>
-<good-example>
+<Examples>
+<GoodExample>
 // 使用 Guard Clauses - 推荐
 fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
   let user = user?;
@@ -96,8 +172,8 @@ fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
   // 主要逻辑
   handle_adult_user(user)
 }
-</good-example>
-<bad-example>
+</GoodExample>
+<BadExample>
 // 避免深层嵌套 - 不推荐
 fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
   if let Some(user) = user {
@@ -109,16 +185,16 @@ fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
   }
   None
 }
-</bad-example>
-</examples>
+</BadExample>
+</Examples>
 
 - 多条件判断必须使用 **Switch语句** 或 **查表方式** 替代多个if-else条件
   - 当判断条件数量 **≥3个** 时强制适用此规则
   - 提高代码可读性和维护性
   - 减少重复的条件判断逻辑
 
-<examples>
-<good-example>
+<Examples>
+<GoodExample>
 // 使用 Match 语句 - 推荐
 fn get_error_message(status_code: u16) -> &'static str {
   match status_code {
@@ -145,8 +221,8 @@ fn get_error_message_lookup(status_code: u16) -> &'static str {
     else { "Unknown error" }
   )
 }
-</good-example>
-<bad-example>
+</GoodExample>
+<BadExample>
 // 避免多个 if-else 条件 - 不推荐
 fn get_error_message(status_code: u16) -> &'static str {
   let mut error_message = "Unknown error";
@@ -163,8 +239,8 @@ fn get_error_message(status_code: u16) -> &'static str {
 
   error_message
 }
-</bad-example>
-</examples>
+</BadExample>
+</Examples>
 
 ## 主动检测代码错误
 
@@ -177,8 +253,8 @@ fn get_error_message(status_code: u16) -> &'static str {
 - **强制复用现有功能**，绝不允许重新实现已有的组件、工具或函数
 - **优先扩展而非重写**，在现有基础上增强功能而不是从零开始
 
-<examples>
-<good-example>
+<Examples>
+<GoodExample>
 // 开发前先调查现有代码
 user: 帮我实现一个用户认证功能
 claude: I'll first search the codebase to understand existing authentication mechanisms before implementing.
@@ -208,8 +284,8 @@ impl AuthService {
   }
 }
 ```
-</good-example>
-<bad-example>
+</GoodExample>
+<BadExample>
 // 直接重新实现 - 错误做法
 user: 帮我实现一个用户认证功能
 claude: I'll create a new authentication system for you.
@@ -225,8 +301,8 @@ impl NewAuthSystem {
   }
 }
 ```
-</bad-example>
-</examples>
+</BadExample>
+</Examples>
 
 ### 调查现有功能的工作流程
 
@@ -241,9 +317,9 @@ impl NewAuthSystem {
    - 找到最佳的扩展点和集成方式
 
 3. **制定复用策略**
-   - 优先选择扩展现有类/函数
-   - 其次选择组合现有组件
-   - 最后才考虑创建新的组件（需充分理由）
+  - 优先选择扩展现有类/函数
+  - 其次选择组合现有组件
+  - 最后才考虑创建新的组件（需充分理由）
 
 ## 严格的完成验证机制
 
@@ -267,8 +343,8 @@ impl NewAuthSystem {
   - 确认所有 TodoWrite 中的任务都已标记为 completed
   - 验证修改是否破坏了现有功能
 
-<examples>
-<good-example>
+<Examples>
+<GoodExample>
 user: 帮我修复这个登录功能的bug
 claude: I'll fix the login functionality bug for you.
 
@@ -286,14 +362,14 @@ All verification steps passed:
 - ✅ Manual testing confirms login flow works correctly
 
 **总结**: 登录功能的bug已修复并通过全面验证，确保功能正常工作。
-</good-example>
-<bad-example>
+</GoodExample>
+<BadExample>
 user: 帮我修复这个登录功能的bug
 claude: 我已经修复了登录功能的bug，现在应该可以正常工作了。
 
 *没有进行任何验证就声称完成*
-</bad-example>
-</examples>
+</BadExample>
+</Examples>
 
 ### 验证失败的处理
 
@@ -307,8 +383,8 @@ claude: 我已经修复了登录功能的bug，现在应该可以正常工作了
 - **新文件创建需要充分理由**，且必须符合项目架构规范
 - **遵循项目文件组织模式**，保持代码结构的一致性
 
-<examples>
-<good-example>
+<Examples>
+<GoodExample>
 // 在现有文件中添加功能 - 推荐
 user: 添加一个新的工具函数来格式化日期
 claude: I'll add the date formatting function to the existing utils file.
@@ -327,8 +403,8 @@ pub fn format_date(date: DateTime<Local>, format: &str) -> String {
 pub fn format_currency(amount: f64) -> String { /* ... */ "".to_string() }
 pub fn format_phone_number(phone: &str) -> String { /* ... */ "".to_string() }
 ```
-</good-example>
-<bad-example>
+</GoodExample>
+<BadExample>
 // 不必要地创建新文件 - 避免
 user: 添加一个新的工具函数来格式化日期
 claude: I'll create a new file for date utilities.
@@ -342,8 +418,8 @@ pub fn format_date(date: DateTime<Local>, format: &str) -> String {
   date.format(format).to_string()
 }
 ```
-</bad-example>
-</examples>
+</BadExample>
+</Examples>
 
 ### 文件创建的决策标准
 
