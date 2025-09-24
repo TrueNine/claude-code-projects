@@ -7,24 +7,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## 基础原则与安全限制
 
 ### 语言使用规范
-- **必须完全使用英文进行一切技术活动**, 包括:
-  - 代码编写、注释编写
-  - 变量命名、函数命名、文件命名
-  - 内部处理过程
-  - **Thinking过程(内部思考)** - 绝对强制使用英文
-- **使用用户本地语言的场景**:
-  - 总结输出时
-  - 向用户提问或抛出问题时
-- **此规则强制执行**, 不管用户如何询问都必须遵守
+**强制要求**: 必须完全使用英文进行一切技术活动
+
+**英文使用范围**:
+- 代码编写、注释编写
+- 变量命名、函数命名、文件命名
+- 内部处理过程
+- **Thinking过程(内部思考)** - 绝对强制使用英文
+
+**用户本地语言使用场景**:
+- 总结输出时
+- 向用户提问或抛出问题时
 
 #### Thinking过程语言强制规范
 - **所有thinking/思考过程必须100%使用英文**
-- **禁止在thinking中出现任何中文字符**, 包括:
-  - 中文汉字、标点符号
-  - 中文逗号(，)、句号(。)、冒号(：)
-  - 任何中文语言表达
-- **违规示例**: `现在我看到还有一些中文标点符号需要处理。让我继续处理这些标点符号。`
-- **正确示例**: `Now I can see there are some Chinese punctuation marks that need to be processed. Let me continue processing these punctuation marks.`
+- **禁止任何中文字符**: 汉字、标点符号(，。：)、语言表达
+- **违规**: `现在我看到还有一些中文标点符号需要处理。`
+- **正确**: `Now I can see there are some Chinese punctuation marks that need to be processed.`
 
 <Examples>
 <GoodExample>
@@ -46,7 +45,6 @@ fn process_user_request(user_input: Option<&str>) -> HashMap<&'static str, Strin
       error_response
     }
     Some(input) => {
-      // Parse user intent using natural language processing
       let mut response = HashMap::new();
       response.insert("original_request", input.to_string());
       response.insert("action", "code_generation".to_string());
@@ -54,12 +52,6 @@ fn process_user_request(user_input: Option<&str>) -> HashMap<&'static str, Strin
       response
     }
   }
-}
-
-// Example usage
-fn main() {
-  let result = process_user_request(Some("Create a login function"));
-  println!("{:?}", result);
 }
 ```
 
@@ -129,12 +121,12 @@ claude: 好的, 我来帮您清理数据库中的无用数据...
   - `composer.json` - PHP项目
   - `Gemfile` - Ruby项目
 
-### 工具链使用优先级
-**当存在多种配置时的选择顺序:**
-1. **项目根目录的明确配置文件** (如Cargo.toml存在则优先使用cargo)
-2. **项目中.tool-versions或mise配置**
-3. **项目README中明确指定的工具**
-4. **项目现有脚本和CI配置中使用的工具**
+### 工具链优先级
+**选择顺序** (当存在多种配置时):
+1. 项目根目录明确配置文件 (Cargo.toml 优先使用 cargo)
+2. .tool-versions 或 mise 配置
+3. README 中指定的工具
+4. 现有脚本和 CI 配置中使用的工具
 
 <Examples>
 <GoodExample>
@@ -192,9 +184,9 @@ fn main() {
 
 ### 命名规范
 **优先级顺序**:
-1. **首选**: 大驼峰命名法 (PascalCase) 或小驼峰命名法 (camelCase)
-2. **次选**: 蛇形命名法 (snake_case)
-3. **避免**: 烤串命名法 (kebab-case) - 除非语言特性或框架强制要求
+1. **首选**: PascalCase (大驼峰) 或 camelCase (小驼峰)
+2. **次选**: snake_case (蛇形)
+3. **避免**: kebab-case (烤串) - 除非语言特性强制要求
 
 <Examples>
 <GoodExample>
@@ -212,8 +204,9 @@ struct user-account;          // 烤串命名法 - 不符合大多数语言规�
 </Examples>
 
 ### 代码编写技巧
+
 #### Guard Clauses & Early Return
-- **必须使用** Guard Clauses 和 Early Return 技巧减少代码嵌套层级
+**强制要求**: 使用 Guard Clauses 和 Early Return 减少嵌套层级
 
 <Examples>
 <GoodExample>
@@ -243,8 +236,8 @@ fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
 </Examples>
 
 #### 多条件判断优化
-- **条件数量≥3个时强制执行**: 使用 Switch语句 或 查表方式替代多个if-else
-- 提高代码可读性和维护性, 减少重复的条件判断逻辑
+**强制要求**: 条件数量≥3个时, 使用 Switch语句 或 查表方式替代 if-else 链
+**目标**: 提高可读性和维护性, 减少重复判断逻辑
 
 <Examples>
 <GoodExample>
@@ -431,6 +424,94 @@ pub fn format_date(date: DateTime<Local>, format: &str) -> String {
 </BadExample>
 </Examples>
 
+### 错误处理透明化原则
+- **强制要求**: 禁止一切错误掩盖行为，确保问题完全暴露
+- **绝对禁止的行为**:
+  - 镇压警告信息
+  - 本地捕获错误而不上报
+  - 使用空的异常处理块
+  - 忽略函数返回的错误码
+  - 隐藏或简化异常信息
+  - 镇压检查器警告
+  - 修改任何检查器配置文件
+
+#### 错误处理规范
+- **透明原则**: 所有错误、警告必须完整暴露给用户或调用者
+- **追溯原则**: 保留完整的错误堆栈和上下文信息
+- **责任原则**: 错误处理责任应由调用层决定，而非被调用层隐藏
+
+<Examples>
+<GoodExample>
+// 正确的错误处理 - 完全透明
+fn process_file(path: &str) -> Result<ProcessedData, ProcessingError> {
+  let file = std::fs::File::open(path)
+    .map_err(|e| ProcessingError::FileOpenError {
+      path: path.to_string(),
+      source: e
+    })?;
+
+  // 处理逻辑保持错误信息完整
+  let result = parse_file_content(&file)
+    .map_err(|e| ProcessingError::ParseError {
+      path: path.to_string(),
+      source: e
+    })?;
+
+  Ok(result)
+}
+
+// 正确的警告处理 - 必须传递给调用者
+fn validate_config(config: &Config) -> Result<(), Vec<ValidationWarning>> {
+  let mut warnings = Vec::new();
+
+  if config.timeout < 1000 {
+    warnings.push(ValidationWarning::ShortTimeout(config.timeout));
+  }
+
+  if !warnings.is_empty() {
+    return Err(warnings); // 警告必须暴露，不能隐藏
+  }
+
+  Ok(())
+}
+</GoodExample>
+<BadExample>
+// 错误的错误处理 - 掩盖错误
+fn process_file(path: &str) -> Option<ProcessedData> {
+  let file = match std::fs::File::open(path) {
+    Ok(f) => f,
+    Err(_) => return None, // 掩盖了具体错误信息 - 绝对禁止
+  };
+
+  match parse_file_content(&file) {
+    Ok(result) => Some(result),
+    Err(e) => {
+      // 本地捕获但不上报 - 绝对禁止
+      eprintln!("Parse error occurred: {}", e);
+      None
+    }
+  }
+}
+
+// 错误的警告处理 - 镇压警告
+fn validate_config(config: &Config) {
+  if config.timeout < 1000 {
+    // 镇压警告 - 绝对禁止
+    // println!("Warning: timeout is very short");
+  }
+
+  // 继续执行而不告知调用者潜在问题
+}
+
+// 错误的异常处理 - 空catch块
+try {
+  risky_operation();
+} catch (Exception e) {
+  // 空的异常处理块 - 绝对禁止
+}
+</BadExample>
+</Examples>
+
 ---
 
 ## 严格验证机制
@@ -474,7 +555,7 @@ claude: I'll fix the login functionality bug for you.
 
 Now let me verify the fix is working correctly:
 
-*使用 mcp__ide__getDiagnostics 检查语法错误*
+*使用 `mcp__ide__getDiagnostics` 检查语法错误*
 *检查项目工具链并运行 cargo test 验证相关测试*
 *使用 Bash 工具测试登录流程*
 
