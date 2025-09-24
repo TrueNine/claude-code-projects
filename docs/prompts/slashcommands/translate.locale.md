@@ -24,6 +24,8 @@ Translate Chinese localization documentation files (`.locale.md`) to correspondi
     - `docs/prompts/slashcommands/**.locale.md` → `.claude/commands/**.md`
     - `docs/CLAUDE-prompts-slashcommands.locale.md` → `docs/prompts/slashcommands/CLAUDE.md`
     - `docs/CLAUDE-prompts.locale.md` → `docs/prompts/CLAUDE.md`
+    - `docs/CLAUDE-prompts-user.locale.md` → `docs/prompts/user/CLAUDE.md`
+    - `docs/CLAUDE-prompts-project.locale.md` → `docs/prompts/project/CLAUDE.md`
     - `docs/CLAUDE-qa.locale.md` → `docs/qa/CLAUDE.md`
     - `docs/CLAUDE-references.locale.md` → `docs/references/CLAUDE.md`
   - **标准规则** / Standard rule:
