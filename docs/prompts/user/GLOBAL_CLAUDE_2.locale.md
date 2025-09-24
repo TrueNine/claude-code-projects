@@ -310,19 +310,19 @@ fn get_error_message(status_code: u16) -> &'static str {
 
 #### 调查工作流程
 1. **全面搜索调查**
-   - `Grep` 搜索相关关键词和功能
-   - `Glob` 查找相关文件和目录结构
-   - `Read` 深入阅读关键文件了解实现细节
+  - `Grep` 搜索相关关键词和功能
+  - `Glob` 查找相关文件和目录结构
+  - `Read` 深入阅读关键文件了解实现细节
 
 2. **分析现有架构**
-   - 理解项目的设计模式和编码风格
-   - 识别可复用的组件和工具函数
-   - 找到最佳的扩展点和集成方式
+  - 理解项目的设计模式和编码风格
+  - 识别可复用的组件和工具函数
+  - 找到最佳的扩展点和集成方式
 
 3. **制定复用策略**
-   - 优先: 扩展现有类/函数
-   - 次选: 组合现有组件
-   - 最后: 创建新组件(需充分理由)
+  - 优先: 扩展现有类/函数
+  - 次选: 组合现有组件
+  - 最后: 创建新组件(需充分理由)
 
 <Examples>
 <GoodExample>
@@ -441,24 +441,24 @@ pub fn format_date(date: DateTime<Local>, format: &str) -> String {
 
 ### 验证步骤清单
 1. **代码质量验证**
-   - 使用 `mcp__ide__getDiagnostics` 检查语法和类型错误
-   - **首先检测项目工具链**, 然后运行对应的检查命令:
-     - Rust项目: `cargo clippy` (代码检查) + `cargo fmt --check` (格式检查)
-     - Node.js项目: 根据package.json运行相应的 lint 命令
-     - Python项目: `flake8` / `black --check` / `mypy` 等
+  - 使用 `mcp__ide__getDiagnostics` 检查语法和类型错误
+  - **首先检测项目工具链**, 然后运行对应的检查命令:
+    - Rust项目: `cargo clippy` (代码检查) + `cargo fmt --check` (格式检查)
+    - Node.js项目: 根据package.json运行相应的 lint 命令
+    - Python项目: `flake8` / `black --check` / `mypy` 等
 
 2. **功能验证**
-   - **根据项目工具链运行测试**:
-     - Rust项目: `cargo test`
-     - Node.js项目: `npm test` / `yarn test` / `pnpm test`
-     - Python项目: `pytest` / `python -m unittest`
-   - 使用 `Bash` 工具实际测试可执行功能
-   - 验证所有修改的文件按预期工作
+  - **根据项目工具链运行测试**:
+    - Rust项目: `cargo test`
+    - Node.js项目: `npm test` / `yarn test` / `pnpm test`
+    - Python项目: `pytest` / `python -m unittest`
+  - 使用 `Bash` 工具实际测试可执行功能
+  - 验证所有修改的文件按预期工作
 
 3. **完整性验证**
-   - 检查是否遗漏任何用户要求的功能点
-   - 确认所有 TodoWrite 任务都已标记为 completed
-   - 验证修改未破坏现有功能
+  - 检查是否遗漏任何用户要求的功能点
+  - 确认所有 TodoWrite 任务都已标记为 completed
+  - 验证修改未破坏现有功能
 
 ### 验证失败处理
 - **诚实报告问题**: 发现问题必须如实告知用户
