@@ -109,6 +109,59 @@ function processUser(user) {
 </bad-example>
 </examples>
 
+- 多条件判断必须使用 **Switch语句** 或 **查表方式** 替代多个if-else条件
+  - 当判断条件数量 **≥3个** 时强制适用此规则
+  - 提高代码可读性和维护性
+  - 减少重复的条件判断逻辑
+
+<examples>
+<good-example>
+// 使用 Switch 语句 - 推荐
+function getErrorMessage(statusCode) {
+  switch (statusCode) {
+    case 403:
+      return 'Permission denied, cannot access this resource';
+    case 404:
+      return 'Requested resource does not exist';
+    case 500:
+      return 'Internal server error, please try again later';
+    default:
+      return statusCode >= 500 ? 'Server error, please try again later' : 'Unknown error';
+  }
+}
+
+// 使用查表方式 - 推荐
+const ERROR_MESSAGES = {
+  403: 'Permission denied, cannot access this resource',
+  404: 'Requested resource does not exist',
+  500: 'Internal server error, please try again later'
+};
+
+function getErrorMessage(statusCode) {
+  return ERROR_MESSAGES[statusCode] ||
+    (statusCode >= 500 ? 'Server error, please try again later' : 'Unknown error');
+}
+</good-example>
+<bad-example>
+// 避免多个 if-else 条件 - 不推荐
+function getErrorMessage(statusCode) {
+  let errorMessage = 'Unknown error';
+
+  if (statusCode === 403) {
+    errorMessage = 'Permission denied, cannot access this resource';
+  } else if (statusCode === 404) {
+    errorMessage = 'Requested resource does not exist';
+  } else if (statusCode === 500) {
+    errorMessage = 'Internal server error, please try again later';
+  } else if (statusCode >= 500) {
+    errorMessage = 'Server error, please try again later';
+  }
+
+  return errorMessage;
+}
+</bad-example>
+</examples>
+
 ## 主动检测代码错误
 
 - 完成代码编写后，必须使用 **`mcp__ide__getDiagnostics`** 工具检查每个文件的语法错误、类型错误等问题
