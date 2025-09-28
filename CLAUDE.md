@@ -1,77 +1,120 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working in this repository.
 
 ## Project Overview
 
-This is a documentation and configuration repository for Claude Code workflows, containing:
-- Claude Code configuration files and hooks
-- Documentation templates and prompts
-- QA documentation for development workflows
-- Reference materials for development best practices
+This is a documentation and configuration repository for Claude Code workflows, focusing on:
+- Claude Code configuration files and MCP server settings
+- Prompt engineering and template library
+- Q&A documentation for development workflows
+- Technical references and best practices
+- Multilingual documentation management (Chinese localization + English translation)
 
-## Key Commands
+## Project Features
 
-This repository is mainly documentation-focused and doesn't have traditional build/test commands. The main development happens through:
+- **Documentation-only repository**: No source code or build process
+- **Bilingual documentation**: Chinese content uses `.locale.md` suffix, English content uses `.md` suffix
+- **Modular organization**: Documents are hierarchically organized by function and use case
+- **Utility toolkit**: Contains various practical slash commands and prompt templates
 
-### Hook Development (TypeScript)
-- **Location**: `.claude/hooks/`
-- **Package Manager**: `pnpm` (specified in package.json)
-- **Run hooks**: Hooks are automatically triggered by Claude Code events
-- **Development**: Edit TypeScript files in `.claude/hooks/src/`
+## Documentation Structure
 
-### Documentation Management
-- **No build commands** - Documentation files are managed directly
-- **Structure**: Well-organized in `docs/` directory with locale-specific content
-
-## Architecture & Code Organization
-
-### Configuration Structure
-- **`.claude/`** - Claude Code configuration and hooks
-  - `settings.json` - Main Claude Code settings (model: opusplan, permissions, MCP servers)
-  - `hooks/` - TypeScript hooks for file processing automation
-  - `hooks/main.ts` - Main hook entry point for frontend file checking/formatting
-
-### Documentation Architecture
-- **`docs/`** - Main documentation directory
-  - `prompts/` - Prompt templates (locale and English versions)
-    - `locale/` - Locale prompts
-    - `output/` - English translated prompts
-  - `qa/` - QA documentation for development workflows
+docs/
+  - `prompts/` - Prompt templates
+    - `user/` - Global user prompts
+    - `project/` - Project-level prompts
+    - `slashcommands/` - Slash command prompts
+  - `qa/` - Q&A documentation
   - `references/` - Technical reference documentation
-  - `other/` - Various documentation (build, Git, database, etc.)
-
-### Hook System
-The repository includes a sophisticated TypeScript hook system (`.claude/hooks/main.ts`) that:
-- Automatically processes frontend files on save/edit
-- Runs prettier, eslint and TypeScript checks in parallel
-- Provides detailed logging to `.claude/hook-debug.log`
-- Only processes files in `frontend/` directories
+  - `other/` - Other documentation (build, Git, database, etc.)
 
 ## Important Configuration
 
-### Claude Code Settings
-- **Model**: `opusplan` (configured in `.claude/settings.json`)
-- **MCP Servers**: context7, sequential-thinking, memory, deepwiki, grep
-- **Permissions**: Restricted git/npm/docker commands, allows MCP and basic tools
+### Claude Code Settings (.claude/settings.json)
+- **Model**: `opusplan` - Dedicated planning model
+- **Permission policy**:
+  - Disabled: WebFetch, WebSearch, git/npm/docker commands
+  - Allowed: MCP servers, basic Bash and file operations
+- **MCP servers**:
+  - `context7` - Get latest library documentation
+  - `sequential-thinking` - Structured thinking
+  - `memory` - Memory management
+  - `deepwiki` - GitHub repository documentation
+  - `grep` - Code search
 
 ### Project Conventions
-- **Language**: Bilingual (Chinese locale files with English translations)
-- **File Naming**: Uses `.locale.md` suffix for Chinese content
-- **Documentation Structure**: Hierarchical organization in `docs/` directory
+- **File naming conventions**:
+  - Chinese documentation: `*.locale.md`
+  - English documentation: `*.md`
+  - Maintain bilingual correspondence
+- **Document organization principles**:
+  - Categorize by functional modules
+  - Maintain clear hierarchy
+  - Facilitate quick lookup
 
-## Development Workflow
+## Main Functional Modules
 
-Since this is a documentation repository:
+### 1. Prompt Template System (docs/prompts/)
+- **Global prompts**: General guidance applicable to all projects
+- **Project templates**: Standard configuration for new projects
+- **Slash commands**: Predefined tasks for quick execution
+  - `/translate` - Chinese document translation
+  - `/setup-project` - Project initialization
+  - `/organize-docs` - Document organization and optimization
+  - `/optimize-prompt` - Prompt optimization
+  - `/doc-cc` - Claude Code official documentation
+  - `/child-use` - Sub-project configuration
 
-1. **Edit Documentation**: Direct file editing, no build steps required
-2. **Hook Development**: Edit TypeScript in `.claude/hooks/src/`, hooks auto-reload
-3. **Configuration Changes**: Update `.claude/settings.json` as needed
-4. **Content Management**: Follow existing locale/translation patterns
+### 2. Q&A Documentation (docs/qa/)
+- Frequently asked questions for development workflows
+- Problem handling in real-world scenarios
+- Best practices and experience summaries
 
-## Important Instructions
+### 3. Technical References (docs/references/)
+- Reference documentation for various technologies and tools
+- Practical guides and operation manuals
+- Common solutions
 
-Do what has been asked; nothing more, nothing less.
-Never create files unless they're absolutely necessary to achieve your goal.
-Always prefer editing existing files rather than creating new ones.
-Never proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
+## Workflows
+
+### Documentation Management
+1. **Create documentation**: Choose appropriate location based on content
+2. **Localization**: Chinese content uses `.locale.md` suffix
+3. **Translation**: Corresponding English version placed in same directory
+4. **Update**: Keep bilingual content synchronized
+
+### Prompt Development
+1. **Design template**: Determine purpose and scope of prompts
+2. **Write content**: Follow best practices
+3. **Test and optimize**: Use in practice and collect feedback
+4. **Version management**: Record change history
+
+### Configuration Management
+- **Claude Code configuration**: Modify `.claude/settings.json`
+- **MCP servers**: Enable or disable as needed
+- **Permission settings**: Follow security principles
+
+## Usage Guide
+
+### For New Users
+1. Read `README.locale.md` to understand project overview
+2. Check `docs/qa/qa.md` for common questions
+3. Use slash commands as needed
+
+### For Developers
+1. Reference global configuration in `docs/prompts/user/`
+2. Use `/setup-project` to initialize new projects
+3. Regularly update and optimize prompts
+
+### For Documentation Authors
+1. Follow existing document structure
+2. Maintain consistency in bilingual content
+3. Use clear headings and categories
+
+## Important Reminders
+
+- **Focus on core**: Execute strictly as required, no more, no less
+- **File management**: Do not create new files unless absolutely necessary
+- **Prioritize editing**: Always prioritize editing existing files over creating new ones
+- **Documentation principle**: Only create documentation files when explicitly requested
