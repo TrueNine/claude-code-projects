@@ -27,7 +27,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **正确**: `Now I can see there are some Chinese punctuation marks that need to be processed.`
 
 <Examples>
-<GoodExample>
+<GoodExample description="展示中英文混合使用的正确方式">
 user: 你能给我一个关于如何使用Claude的例子吗?
 claude:
 *Thinking: The user is asking for an example of how to use Claude. I need to provide a practical code example and respond in Chinese.*
@@ -58,7 +58,7 @@ fn process_user_request(user_input: Option<&str>) -> HashMap<&'static str, Strin
 
 这个例子展示了如何使用Claude进行代码开发，包括函数定义、文档说明和错误处理。
 </GoodExample>
-<BadExample>
+<BadExample description="展示了在thinking过程中使用中文的错误做法">
 user: 为此接口编写单元测试
 claude:
 *Thinking: 用户要求为接口编写单元测试，我需要开始编写测试代码。*
@@ -91,7 +91,7 @@ claude:
 - 包管理器的全局安装操作
 
 <Examples>
-<GoodExample>
+<GoodExample description="展示了拒绝危险数据库操作的正确响应">
 user: 帮我清理一下数据库中的无用数据
 claude: 我注意到您要求进行数据库操作. 为了您的数据安全, 我不会执行任何数据库修改操作, 因为这可能导致数据丢失或损坏.
 
@@ -102,7 +102,7 @@ claude: 我注意到您要求进行数据库操作. 为了您的数据安全, �
 
 我无法继续执行此任务, 请谅解.
 </GoodExample>
-<BadExample>
+<BadExample description="展示了错误地执行危险数据库操作">
 user: 清理数据库无用数据
 claude: 好的, 我来帮您清理数据库中的无用数据...
 *执行危险的数据库操作*
@@ -130,7 +130,7 @@ claude: 好的, 我来帮您清理数据库中的无用数据...
 4. 现有脚本和 CI 配置中使用的工具
 
 <Examples>
-<GoodExample>
+<GoodExample description="展示了正确检测和使用项目工具链">
 // 检测到项目有Cargo.toml - 使用cargo工具链
 user: 帮我运行测试
 claude: 我会先检查项目配置。
@@ -144,7 +144,7 @@ claude: 我会先检查项目配置。
 cargo test
 ```
 </GoodExample>
-<BadExample>
+<BadExample description="展示了未检测项目就错误假设工具链的做法">
 // 未检测项目配置就假设使用npm - 错误
 user: 帮我运行测试
 claude: 我将使用npm来运行测试：
@@ -171,12 +171,12 @@ npm test  # 错误 - 未检测项目实际使用的工具链
 - **行结束符**: 必须使用 **LF** 行结束符
 
 <Examples>
-<GoodExample>
+<GoodExample description="展示了使用2空格缩进的正确代码格式">
 fn main() {
   println!("Hello World");
 }
 </GoodExample>
-<BadExample>
+<BadExample description="展示了使用4空格缩进的错误代码格式">
 fn main() {
     println!("Hello World");
 }
@@ -190,14 +190,14 @@ fn main() {
 3. **避免**: kebab-case (烤串) - 除非语言特性强制要求
 
 <Examples>
-<GoodExample>
+<GoodExample description="展示了推荐的命名规范">
 // 推荐的命名方式
 struct UserAccount;           // 大驼峰 - 类型名
 let userName = "john";        // 小驼峰 - 变量名
 let user_count = 42;          // 蛇形 - 可接受的变量名
 mod user_service;             // 蛇形 - Rust模块名约定
 </GoodExample>
-<BadExample>
+<BadExample description="展示了应避免的命名方式">
 // 避免的命名方式
 let user-name = "john";       // 烤串命名法 - 除非必要否则避免
 struct user-account;          // 烤串命名法 - 不符合大多数语言规范
@@ -210,7 +210,7 @@ struct user-account;          // 烤串命名法 - 不符合大多数语言规�
 **强制要求**: 使用 Guard Clauses 和 Early Return 减少嵌套层级
 
 <Examples>
-<GoodExample>
+<GoodExample description="展示了使用Guard Clauses减少嵌套的推荐做法">
 // 使用 Guard Clauses - 推荐
 fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
   let user = user?;
@@ -221,7 +221,7 @@ fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
   handle_adult_user(user)
 }
 </GoodExample>
-<BadExample>
+<BadExample description="展示了深层嵌套的不推荐做法">
 // 避免深层嵌套 - 不推荐
 fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
   if let Some(user) = user {
@@ -241,7 +241,7 @@ fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
 **目标**: 提高可读性和维护性, 减少重复判断逻辑
 
 <Examples>
-<GoodExample>
+<GoodExample description="展示了使用Match语句和查表方式的推荐做法">
 // 使用 Match 语句 - 推荐
 fn get_error_message(status_code: u16) -> &'static str {
   match status_code {
@@ -269,7 +269,7 @@ fn get_error_message_lookup(status_code: u16) -> &'static str {
   )
 }
 </GoodExample>
-<BadExample>
+<BadExample description="展示了使用多个if-else条件的不推荐做法">
 // 避免多个 if-else 条件 - 不推荐
 fn get_error_message(status_code: u16) -> &'static str {
   let mut error_message = "Unknown error";
@@ -319,7 +319,7 @@ fn get_error_message(status_code: u16) -> &'static str {
   - 最后: 创建新组件(需充分理由)
 
 <Examples>
-<GoodExample>
+<GoodExample description="展示了开发前调查现有代码的正确做法">
 // 开发前先调查现有代码
 user: 帮我实现一个用户认证功能
 claude: 在实现之前，我会先搜索代码库以了解现有的认证机制。
@@ -350,7 +350,7 @@ impl AuthService {
 }
 ```
 </GoodExample>
-<BadExample>
+<BadExample description="展示了直接重新实现已有功能的错误做法">
 // 直接重新实现 - 错误做法
 user: 帮我实现一个用户认证功能
 claude: 我会为您创建一个新的认证系统。
@@ -388,7 +388,7 @@ impl NewAuthSystem {
 - 破坏项目的文件组织逻辑
 
 <Examples>
-<GoodExample>
+<GoodExample description="展示了在现有文件中添加功能的推荐做法">
 // 在现有文件中添加功能 - 推荐
 user: 添加一个新的工具函数来格式化日期
 claude: 我将把日期格式化函数添加到现有的工具文件中。
@@ -408,7 +408,7 @@ pub fn format_currency(amount: f64) -> String { /* ... */ "".to_string() }
 pub fn format_phone_number(phone: &str) -> String { /* ... */ "".to_string() }
 ```
 </GoodExample>
-<BadExample>
+<BadExample description="展示了不必要创建新文件的做法">
 // 不必要地创建新文件 - 避免
 user: 添加一个新的工具函数来格式化日期
 claude: 我将为日期工具创建一个新文件。
@@ -442,7 +442,7 @@ pub fn format_date(date: DateTime<Local>, format: &str) -> String {
 - **责任原则**: 错误处理责任应由调用层决定，而非被调用层隐藏
 
 <Examples>
-<GoodExample>
+<GoodExample description="展示了完全透明的错误处理方式">
 // 正确的错误处理 - 完全透明
 fn process_file(path: &str) -> Result<ProcessedData, ProcessingError> {
   let file = std::fs::File::open(path)
@@ -476,7 +476,7 @@ fn validate_config(config: &Config) -> Result<(), Vec<ValidationWarning>> {
   Ok(())
 }
 </GoodExample>
-<BadExample>
+<BadExample description="展示了掩盖错误的错误处理方式">
 // 错误的错误处理 - 掩盖错误
 fn process_file(path: &str) -> Option<ProcessedData> {
   let file = match std::fs::File::open(path) {
@@ -548,7 +548,7 @@ try {
 - **提供解决方案**: 发现问题时提供具体修复计划
 
 <Examples>
-<GoodExample>
+<GoodExample description="展示了进行全面验证的正确做法">
 user: 帮我修复这个登录功能的bug
 claude: 我来帮您修复登录功能的bug。
 
@@ -567,7 +567,7 @@ claude: 我来帮您修复登录功能的bug。
 
 登录功能的bug已修复并通过全面验证，确保功能正常工作。
 </GoodExample>
-<BadExample>
+<BadExample description="展示了未经验证就声称完成的错误做法">
 user: 帮我修复这个登录功能的bug
 claude: 我已经修复了登录功能的bug, 现在应该可以正常工作了.
 

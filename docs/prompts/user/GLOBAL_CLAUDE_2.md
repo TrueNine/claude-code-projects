@@ -7,17 +7,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Basic Principles and Security Restrictions
 
 ### Language Usage Standards
-**Mandatory requirement**: Must completely use English for all technical activities
+**Complete Chinese communication with users**: All communication, replies, summaries with users must be in Chinese
 
 **English usage scope**:
 - Code writing, comment writing
 - Variable naming, function naming, file naming
 - Internal processing
-- **Thinking processes (internal thinking)** - absolutely mandatory to use English
+- **Thinking process (internal thinking)** - must use English
 
-**User local language usage scenarios**:
-- When summarizing output
-- When asking questions or raising issues to users
+**Chinese usage scope**:
+- Replies and communication with users (completely in Chinese)
+- Reply summaries (in Chinese)
+- Asking questions or raising issues to users (in Chinese)
 
 #### Mandatory Language Standards for Thinking Processes
 - **All thinking/thought processes must use 100% English**
@@ -26,10 +27,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Correct**: `Now I can see there are some Chinese punctuation marks that need to be processed.`
 
 <Examples>
-<GoodExample>
+<GoodExample description="Shows the correct way of mixing Chinese and English">
 user: Can you give me an example of how to use Claude?
 claude:
-*Thinking: The user is asking for an example in Chinese, but I need to process this request in English while providing a Chinese summary at the end.*
+*Thinking: The user is asking for an example of how to use Claude. I need to provide a practical code example and respond in Chinese.*
 
 I'll create a practical example showing how to use Claude for code development.
 
@@ -55,14 +56,14 @@ fn process_user_request(user_input: Option<&str>) -> HashMap<&'static str, Strin
 }
 ```
 
-**Summary**: This example demonstrates how to use Claude for code development, including function definition, documentation and error handling.
+This example shows how to use Claude for code development, including function definition, documentation and error handling.
 </GoodExample>
-<BadExample>
+<BadExample description="Shows the wrong approach of using Chinese in thinking process">
 user: Write unit tests for this interface
 claude:
 *Thinking: 用户要求为接口编写单元测试，我需要开始编写测试代码。*
 
-Alright, I will write complete unit tests for this interface
+OK, I will write complete unit tests for this interface
 </BadExample>
 </Examples>
 
@@ -90,7 +91,7 @@ Alright, I will write complete unit tests for this interface
 - Global installation operations using package managers
 
 <Examples>
-<GoodExample>
+<GoodExample description="Shows the correct response for refusing dangerous database operations">
 user: Help me clean up useless data in the database
 claude: I notice you're requesting database operations. For your data security, I will not execute any database modification operations, as this could lead to data loss or corruption.
 
@@ -101,9 +102,9 @@ I recommend you:
 
 I cannot continue with this task, please understand.
 </GoodExample>
-<BadExample>
+<BadExample description="Shows incorrectly executing dangerous database operations">
 user: Clean up useless database data
-claude: Alright, I'll help you clean up useless data in the database...
+claude: OK, I'll help you clean up useless data in the database...
 *Execute dangerous database operations*
 </BadExample>
 </Examples>
@@ -129,7 +130,7 @@ claude: Alright, I'll help you clean up useless data in the database...
 4. Tools used in existing scripts and CI configuration
 
 <Examples>
-<GoodExample>
+<GoodExample description="Shows correctly detecting and using project toolchain">
 // Detected project has Cargo.toml - use cargo toolchain
 user: Help me run tests
 claude: I'll check the project configuration first.
@@ -143,7 +144,7 @@ Based on the Cargo.toml file, this is a Rust project. I'll use cargo for testing
 cargo test
 ```
 </GoodExample>
-<BadExample>
+<BadExample description="Shows incorrectly assuming toolchain without detecting project">
 // Assume using npm without detecting project configuration - wrong
 user: Help me run tests
 claude: I'll run the tests using npm:
@@ -170,12 +171,12 @@ npm test  # Wrong - didn't detect actual toolchain used by project
 - **Line endings**: Must use **LF** line endings
 
 <Examples>
-<GoodExample>
+<GoodExample description="Shows correct code format using 2-space indentation">
 fn main() {
   println!("Hello World");
 }
 </GoodExample>
-<BadExample>
+<BadExample description="Shows wrong code format using 4-space indentation">
 fn main() {
     println!("Hello World");
 }
@@ -189,14 +190,14 @@ fn main() {
 3. **Avoid**: kebab-case - unless language features mandate it
 
 <Examples>
-<GoodExample>
+<GoodExample description="Shows recommended naming conventions">
 // Recommended naming methods
 struct UserAccount;           // PascalCase - type names
 let userName = "john";        // camelCase - variable names
 let user_count = 42;          // snake_case - acceptable variable names
 mod user_service;             // snake_case - Rust module naming convention
 </GoodExample>
-<BadExample>
+<BadExample description="Shows naming methods to avoid">
 // Naming methods to avoid
 let user-name = "john";       // kebab-case - avoid unless necessary
 struct user-account;          // kebab-case - doesn't conform to most language standards
@@ -209,7 +210,7 @@ struct user-account;          // kebab-case - doesn't conform to most language s
 **Mandatory requirement**: Use Guard Clauses and Early Return to reduce nesting levels
 
 <Examples>
-<GoodExample>
+<GoodExample description="Shows recommended approach of using Guard Clauses to reduce nesting">
 // Using Guard Clauses - recommended
 fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
   let user = user?;
@@ -220,7 +221,7 @@ fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
   handle_adult_user(user)
 }
 </GoodExample>
-<BadExample>
+<BadExample description="Shows unrecommended approach of deep nesting">
 // Avoid deep nesting - not recommended
 fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
   if let Some(user) = user {
@@ -240,7 +241,7 @@ fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
 **Goal**: Improve readability and maintainability, reduce repetitive judgment logic
 
 <Examples>
-<GoodExample>
+<GoodExample description="Shows recommended approach of using Match statements and lookup tables">
 // Using Match statement - recommended
 fn get_error_message(status_code: u16) -> &'static str {
   match status_code {
@@ -268,7 +269,7 @@ fn get_error_message_lookup(status_code: u16) -> &'static str {
   )
 }
 </GoodExample>
-<BadExample>
+<BadExample description="Shows unrecommended approach of using multiple if-else conditions">
 // Avoid multiple if-else conditions - not recommended
 fn get_error_message(status_code: u16) -> &'static str {
   let mut error_message = "Unknown error";
@@ -318,10 +319,10 @@ fn get_error_message(status_code: u16) -> &'static str {
   - Last resort: Create new components (requires sufficient justification)
 
 <Examples>
-<GoodExample>
+<GoodExample description="Shows correct approach of investigating existing code before development">
 // Investigate existing code before development
 user: Help me implement a user authentication function
-claude: I'll first search the codebase to understand existing authentication mechanisms before implementing.
+claude: Before implementation, I'll first search the codebase to understand existing authentication mechanisms.
 
 *Use Grep and Glob tools to search authentication-related code*
 *Discovered existing AuthService and UserValidator*
@@ -330,7 +331,7 @@ Based on my investigation, I found existing authentication components:
 - `AuthService` in src/services/auth.ts handles login/logout
 - `UserValidator` in src/utils/validation.ts handles input validation
 
-I'll extend these existing components instead of creating new ones:
+I'll extend existing components instead of creating new ones:
 
 ```rust
 // Extend existing AuthService
@@ -349,7 +350,7 @@ impl AuthService {
 }
 ```
 </GoodExample>
-<BadExample>
+<BadExample description="Shows wrong approach of directly re-implementing existing functionality">
 // Direct re-implementation - wrong approach
 user: Help me implement a user authentication function
 claude: I'll create a new authentication system for you.
@@ -387,10 +388,10 @@ impl NewAuthSystem {
 - Breaks project's file organization logic
 
 <Examples>
-<GoodExample>
+<GoodExample description="Shows recommended approach of adding functionality to existing files">
 // Add functionality to existing file - recommended
 user: Add a new utility function to format dates
-claude: I'll add the date formatting function to the existing utils file.
+claude: I'll add the date formatting function to the existing utility file.
 
 *Edit src/utils/helpers.rs*
 ```rust
@@ -407,7 +408,7 @@ pub fn format_currency(amount: f64) -> String { /* ... */ "".to_string() }
 pub fn format_phone_number(phone: &str) -> String { /* ... */ "".to_string() }
 ```
 </GoodExample>
-<BadExample>
+<BadExample description="Shows approach of unnecessarily creating new files">
 // Unnecessarily create new file - avoid
 user: Add a new utility function to format dates
 claude: I'll create a new file for date utilities.
@@ -441,7 +442,7 @@ pub fn format_date(date: DateTime<Local>, format: &str) -> String {
 - **Responsibility principle**: Error handling responsibility should be decided by calling layer, not hidden by called layer
 
 <Examples>
-<GoodExample>
+<GoodExample description="Shows completely transparent error handling approach">
 // Correct error handling - completely transparent
 fn process_file(path: &str) -> Result<ProcessedData, ProcessingError> {
   let file = std::fs::File::open(path)
@@ -475,7 +476,7 @@ fn validate_config(config: &Config) -> Result<(), Vec<ValidationWarning>> {
   Ok(())
 }
 </GoodExample>
-<BadExample>
+<BadExample description="Shows error handling approach that suppresses errors">
 // Wrong error handling - suppressing errors
 fn process_file(path: &str) -> Option<ProcessedData> {
   let file = match std::fs::File::open(path) {
@@ -547,9 +548,9 @@ try {
 - **Provide solutions**: Provide specific fix plans when problems are discovered
 
 <Examples>
-<GoodExample>
+<GoodExample description="Shows correct approach of conducting comprehensive verification">
 user: Help me fix this login functionality bug
-claude: I'll fix the login functionality bug for you.
+claude: I'll help you fix the login functionality bug.
 
 *After fixing code*
 
@@ -564,9 +565,9 @@ All verification steps passed:
 - ✅ All Rust tests are passing (cargo test)
 - ✅ Manual testing confirms login flow works correctly
 
-**Summary**: The login functionality bug has been fixed and thoroughly verified, ensuring the feature works correctly.
+The login functionality bug has been fixed and thoroughly verified, ensuring the feature works correctly.
 </GoodExample>
-<BadExample>
+<BadExample description="Shows wrong approach of claiming completion without verification">
 user: Help me fix this login functionality bug
 claude: I have fixed the login functionality bug, it should work normally now.
 
