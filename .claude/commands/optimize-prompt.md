@@ -3,31 +3,29 @@ allowed-tools: Read, Write, Edit, MultiEdit, Glob, Grep, Bash, TodoWrite, Task
 description: Optimize Claude memory files to make them more readable for AI and achieve better work results
 ---
 
-`optimize-prompt` optimizes Claude.ai `CLAUDE.md` memory prompt files. Parameters: `$1` (required): path to the prompt file to optimize, `$2` (optional): user's specific requirements or optimization direction.
-This task performs structural optimization, format standardization, and content simplification for memory prompts according to established rules.
+`optimize-prompt` is a task that optimizes Claude.ai `CLAUDE.md` memory prompt files. Parameters: `$1` (required): path to the prompt file to optimize, `$2` (optional): user's specific requirements or optimization direction.
+This task performs structural optimization, format standardization, and content simplification of memory prompts according to established rules.
 
 ## Optimization Rules
 
 ### Language Selection Rules
-- **Only optimize Chinese files**: Optimize only when the filename contains `.locale.`
-- **Don't optimize English files**: All non-`.locale.` files are translation-generated, exit directly without processing
+- **Optimize Chinese files only**: Optimize only when filename contains `.locale.`
+- **English files not optimized**: All non-`.locale.` files are translation generated, exit directly without processing
 
-### Content Optimization Rules
-
-#### Title Structure Optimization
+### Title Structure Optimization
 - Title nesting level must not exceed level 3
 - Remove redundant title nesting
 - Ensure clear title hierarchy
 
-#### Content Expression Standards
-- **Prohibit emojis**: Strictly prohibit using any emojis in documentation to maintain professionalism
+### Content Expression Standards
+- **Prohibit emojis**: Strictly prohibit any emojis in documentation to maintain professionalism
 - Use concise and clear written expression
 - Maintain documentation style consistency and professionalism
 
-#### Example Writing Standards
+### Example Writing Standards
 
 **XML Tag System**
-Adopt structured XML tags to wrap examples, optimizing AI parsing efficiency and reading experience:
+Use structured XML tags to wrap examples, optimizing AI parsing efficiency and reading experience:
 
 **Tag type definitions**:
 - `<Example>` - General example, showing standard usage
@@ -57,53 +55,87 @@ Adopt structured XML tags to wrap examples, optimizing AI parsing efficiency and
 - Examples should be short and effective, highlighting key points
 - Avoid lengthy implementation details, focus on demonstrating concepts
 - Code examples should not exceed 20 lines, text examples should not exceed 5 lines
-- Each example should only demonstrate one key concept or comparison point
+- Each example should demonstrate only one key concept or comparison point
 
-### Prompt Structure Optimization
+**BadExample optimization limitations**:
+- Do not format optimize content within `<BadExample>` tags during optimization
+- Keep BadExample content as-is unless it doesn't match the intended meaning
+- The purpose of BadExample is to show wrong practices, including wrong formats, punctuation, indentation, etc.
 
-#### Core Structural Elements
-- **Role definition**: Clarify AI's identity and professional background
+### Core Structural Elements
+- **Role definition**: Clearly define AI's identity and professional background
 - **Task description**: Clearly and specifically describe the task to complete
-- **Constraint conditions**: Clarify limitations and requirements
+- **Constraint conditions**: Clearly define restrictions and requirements
 - **Output format**: Specify the structure and format of output
 
-#### Attention Mechanism Optimization
+### Attention Mechanism Optimization
 - **Key point limit**: Each prompt should highlight at most 3 key points
 - **Avoid attention dilution**: Overusing emphasis formats (bold, code blocks, etc.) reduces effectiveness
 - **Position strategy**: Place the most critical information at the beginning and end
 
-#### Prompt Length Optimization
-- **Simplification principle**: Remove redundant descriptions, retain core information
+### Prompt Length Optimization
+- **Simplification principle**: Remove redundant descriptions, keep core information
 - **Necessary details**: Retain key technical details and constraint conditions
 - **Readability**: Reasonable paragraphing, avoid overly long paragraphs
+
+### Prompt File Structure Requirements
+- **YAML front matter**: File beginning may contain YAML configuration block, defining tool permissions and basic descriptions
+- **Descriptive text**: Besides YAML configuration, should also include text description explaining the prompt's purpose and functionality
+- **Structural completeness**: Ensure prompt files have both configuration information and functional descriptions
 
 ### Format Optimization Techniques
 - **Encoding standards**: Use UTF-8 encoding to ensure compatibility
 - **Indentation standards**: Uniformly use 2-space indentation
-- **Line ending**: Use LF line endings (not CRLF)
+- **Line endings**: Use LF line endings (not CRLF)
 - **Format consistency**: Ensure consistent document format style throughout
-- **Punctuation standards**: Prohibit Chinese punctuation marks (，。：；""''（））， uniformly use English punctuation marks (, . : ; " " ' ' ( ) )
+- **Punctuation standards**: Prohibit Chinese punctuation, uniformly use English punctuation
 
-### Content Quality Optimization
+### File Structure Representation Standards
+- **Prohibit tree structure diagrams**: Do not use ASCII art-style tree diagrams to represent file structure
+- **Use indentation method**: File structure must be represented using simple indentation format
+- **Clear and concise**: Ensure structure is clear and readable, avoid overly complex representation methods
 
-#### Clarity Optimization
+<Examples>
+<GoodExample description="Correct file structure representation (using indentation)">
+```text
+docs/
+  - `prompts/` - Prompt templates
+    - `user/` - Global user prompts
+    - `project/` - Project-level prompts
+    - `slashcommands/` - Slash command prompts
+  - `qa/` - Q&A documentation
+  - `references/` - Technical reference documentation
+  - `other/` - Other documentation (build, Git, database, etc.)
+```
+</GoodExample>
+<BadExample description="Incorrect file structure representation (using tree diagram)">
+docs/
+├── prompts/             # Prompt templates
+│   ├── user/            # Global user prompts
+│   ├── project/         # Project-level prompts
+│   └── slashcommands/   # Slash command prompts
+├── qa/                  # Q&A documentation
+├── references/          # Technical reference documentation
+└── other/               # Other documentation (build, Git, database, etc.)
+</BadExample>
+</Examples>
+
+### Clarity Optimization
 - **Avoid ambiguity**: Use precise vocabulary, avoid vague expressions
-- **Concretization**: Transform abstract concepts into specific requirements
+- **Be specific**: Transform abstract concepts into specific requirements
 - **Executability**: Ensure instructions can be accurately understood and executed
 
-#### Constraint Condition Clarification
-- **Must include**: Clearly list conditions that must be met
-- **Prohibited items**: Clearly specify what cannot be done
+### Constraint Condition Clarification
+- **Must include**: Clearly list conditions that must be satisfied
+- **Prohibited items**: Clearly explain what cannot be done
 - **Boundary conditions**: Define the scope and limitations of processing
 
-#### Output Standardization
+### Output Standardization
 - **Format specifications**: Specify specific output formats (tables, lists, code blocks, etc.)
-- **Structure requirements**: Clarify the organizational structure of output
-- **Example descriptions**: Provide examples of expected output
+- **Structure requirements**: Clearly define the organizational structure of output
+- **Example explanations**: Provide examples of expected output
 
-### Good vs Bad Example Comparison
-
-#### Punctuation Usage Examples
+### Punctuation Usage Examples
 
 <Examples>
 <GoodExample description="Correct use of English punctuation">
@@ -119,7 +151,7 @@ Focus on readability, maintainability, and performance aspects.
 <BadExample description="Incorrect use of Chinese punctuation">
 # Role: 代码审查助手
 
-你是一位拥有10年以上经验的专家代码审查员。你的任务是：
+你是一位拥有10年以上经验的专家代码审查员。你的任务是:
 1. 分析代码质量并识别潜在问题
 2. 提供可操作的改进建议
 3. 确保代码遵循最佳实践和安全准则
@@ -128,7 +160,7 @@ Focus on readability, maintainability, and performance aspects.
 </BadExample>
 </Examples>
 
-#### Code Format Examples
+### Code Format Examples
 
 <Examples>
 <GoodExample description="Correct 2-space indentation format">
@@ -217,7 +249,7 @@ pub fn process_data(data: &[HashMap<String, String>]) -> HashMap<String, Vec<Pro
 </BadExample>
 </Examples>
 
-#### Prompt Structure Examples
+### Prompt Structure Examples
 
 <Examples>
 <GoodExample description="Clear and concise prompt structure">
@@ -308,9 +340,9 @@ pub fn elaborate_function_name_with_verbose_description(
 
 ## Documentation Type Description
 
-### Characteristics and Positioning of Different Documentation Types
+### Characteristics and Positioning of Different Document Types
 
 - **docs/prompts/slashcommands/**.locale.md are shortcut command files, they focus on task efficiency optimization
 - **docs/prompts/user/**.locale.md are global memory files, they are usually more abstract
-- **docs/prompts/project/**.locale.md are project-specific templates, though abstract but with more project-specific characteristics
+- **docs/prompts/project/**.locale.md are project-specific templates, though abstract but more characteristic of each project
 - **docs/CLAUDE-**.locale.md are memory prompts for docs/, they help users continuously refine prompts to achieve better results
