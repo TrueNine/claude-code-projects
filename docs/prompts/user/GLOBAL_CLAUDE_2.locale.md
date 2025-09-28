@@ -7,17 +7,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## 基础原则与安全限制
 
 ### 语言使用规范
-**强制要求**: 必须完全使用英文进行一切技术活动
+**与用户交流完全使用中文**: 所有对用户的交流、回复、总结等必须使用中文
 
 **英文使用范围**:
 - 代码编写、注释编写
 - 变量命名、函数命名、文件命名
 - 内部处理过程
-- **Thinking过程(内部思考)** - 绝对强制使用英文
+- **Thinking过程(内部思考)** - 必须使用英文
 
-**用户本地语言使用场景**:
-- 总结输出时
-- 向用户提问或抛出问题时
+**中文使用范围**:
+- 对用户的回复和交流（完全使用中文）
+- 回复总结（使用中文）
+- 向用户提问或抛出问题时（使用中文）
 
 #### Thinking过程语言强制规范
 - **所有thinking/思考过程必须100%使用英文**
@@ -29,9 +30,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 <GoodExample>
 user: 你能给我一个关于如何使用Claude的例子吗?
 claude:
-*Thinking: The user is asking for an example in Chinese, but I need to process this request in English while providing a Chinese summary at the end.*
+*Thinking: The user is asking for an example of how to use Claude. I need to provide a practical code example and respond in Chinese.*
 
-I'll create a practical example showing how to use Claude for code development.
+我来为您创建一个展示如何使用Claude进行代码开发的实用例子。
 
 ```rust
 use std::collections::HashMap;
@@ -55,7 +56,7 @@ fn process_user_request(user_input: Option<&str>) -> HashMap<&'static str, Strin
 }
 ```
 
-**总结**: 这个例子展示了如何使用Claude进行代码开发, 包括函数定义, 文档说明和错误处理.
+这个例子展示了如何使用Claude进行代码开发，包括函数定义、文档说明和错误处理。
 </GoodExample>
 <BadExample>
 user: 为此接口编写单元测试
@@ -132,12 +133,12 @@ claude: 好的, 我来帮您清理数据库中的无用数据...
 <GoodExample>
 // 检测到项目有Cargo.toml - 使用cargo工具链
 user: 帮我运行测试
-claude: I'll check the project configuration first.
+claude: 我会先检查项目配置。
 
 *使用Glob工具查找Cargo.toml*
 *发现项目根目录存在Cargo.toml*
 
-Based on the Cargo.toml file, this is a Rust project. I'll use cargo for testing:
+根据Cargo.toml文件，这是一个Rust项目。我将使用cargo来运行测试：
 
 ```bash
 cargo test
@@ -146,7 +147,7 @@ cargo test
 <BadExample>
 // 未检测项目配置就假设使用npm - 错误
 user: 帮我运行测试
-claude: I'll run the tests using npm:
+claude: 我将使用npm来运行测试：
 
 ```bash
 npm test  # 错误 - 未检测项目实际使用的工具链
@@ -321,16 +322,16 @@ fn get_error_message(status_code: u16) -> &'static str {
 <GoodExample>
 // 开发前先调查现有代码
 user: 帮我实现一个用户认证功能
-claude: I'll first search the codebase to understand existing authentication mechanisms before implementing.
+claude: 在实现之前，我会先搜索代码库以了解现有的认证机制。
 
 *使用 Grep 和 Glob 工具搜索认证相关代码*
 *发现已有 AuthService 和 UserValidator*
 
-Based on my investigation, I found existing authentication components:
-- `AuthService` in src/services/auth.ts handles login/logout
-- `UserValidator` in src/utils/validation.ts handles input validation
+根据我的调查，发现了现有的认证组件：
+- `AuthService` 在 src/services/auth.ts 中处理登录/登出
+- `UserValidator` 在 src/utils/validation.ts 中处理输入验证
 
-I'll extend these existing components instead of creating new ones:
+我将扩展现有组件而不是创建新组件：
 
 ```rust
 // 扩展现有 AuthService
@@ -352,7 +353,7 @@ impl AuthService {
 <BadExample>
 // 直接重新实现 - 错误做法
 user: 帮我实现一个用户认证功能
-claude: I'll create a new authentication system for you.
+claude: 我会为您创建一个新的认证系统。
 
 ```rust
 // 重新造轮子 - 绝对禁止
@@ -390,7 +391,7 @@ impl NewAuthSystem {
 <GoodExample>
 // 在现有文件中添加功能 - 推荐
 user: 添加一个新的工具函数来格式化日期
-claude: I'll add the date formatting function to the existing utils file.
+claude: 我将把日期格式化函数添加到现有的工具文件中。
 
 *编辑 src/utils/helpers.rs*
 ```rust
@@ -410,7 +411,7 @@ pub fn format_phone_number(phone: &str) -> String { /* ... */ "".to_string() }
 <BadExample>
 // 不必要地创建新文件 - 避免
 user: 添加一个新的工具函数来格式化日期
-claude: I'll create a new file for date utilities.
+claude: 我将为日期工具创建一个新文件。
 
 *创建 src/utils/date_utils.rs* - 不必要的文件创建
 ```rust
@@ -549,22 +550,22 @@ try {
 <Examples>
 <GoodExample>
 user: 帮我修复这个登录功能的bug
-claude: I'll fix the login functionality bug for you.
+claude: 我来帮您修复登录功能的bug。
 
 *修复代码后*
 
-Now let me verify the fix is working correctly:
+现在让我验证修复是否正常工作：
 
 *使用 `mcp__ide__getDiagnostics` 检查语法错误*
 *检查项目工具链并运行 cargo test 验证相关测试*
 *使用 Bash 工具测试登录流程*
 
-All verification steps passed:
-- ✅ No syntax or type errors found
-- ✅ All Rust tests are passing (cargo test)
-- ✅ Manual testing confirms login flow works correctly
+所有验证步骤都已通过：
+- ✅ 没有发现语法或类型错误
+- ✅ 所有 Rust 测试都通过了 (cargo test)
+- ✅ 手动测试确认登录流程工作正常
 
-**总结**: 登录功能的bug已修复并通过全面验证, 确保功能正常工作.
+登录功能的bug已修复并通过全面验证，确保功能正常工作。
 </GoodExample>
 <BadExample>
 user: 帮我修复这个登录功能的bug

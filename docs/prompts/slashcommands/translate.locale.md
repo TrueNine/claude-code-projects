@@ -12,7 +12,7 @@ description: Translate Chinese locale documentation files to English, following 
 
 ## 功能说明 / Description
 
-将本地化文档文件（`.locale.md`）翻译为对应的英文文档文件，去除文件名中的 `.locale.` 部分。
+将本地化中文文档文件（`.locale.md`）翻译为对应的英文文档文件，去除文件名中的 `.locale.` 部分。
 
 Translate Chinese localization documentation files (`.locale.md`) to corresponding English documentation files, removing the `.locale.` part from the filename.
 
