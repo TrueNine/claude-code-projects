@@ -84,6 +84,36 @@ description: 优化 claude 记忆文件, 使得其记忆文件让AI更具可读�
 - **格式一致性**：确保整个文档格式风格统一
 - **标点符号规范**：禁止使用中文标点符号（，。：；""''（）），统一使用英文标点符号（, . : ; " " ' ' ( ) ）
 
+#### 文件结构表示规范
+- **禁止使用树形结构图**：不使用 ASCII 艺术风格的树形图来表示文件结构
+- **使用缩进方式**：文件结构必须使用简单的缩进格式表示
+- **清晰简洁**：确保结构清晰易读，避免过度复杂的表示方法
+
+<Examples>
+<GoodExample description="正确的文件结构表示方式（使用缩进）">
+```text
+docs/
+  - `prompts/` - 提示词模板
+    - `user/` - 全局用户提示词
+    - `project/` - 项目级提示词
+    - `slashcommands/` - 斜杠命令提示词
+  - `qa/` - 问答文档
+  - `references/` - 技术参考文档
+  - `other/` - 其他文档（构建、Git、数据库等）
+```
+</GoodExample>
+<BadExample description="错误的文件结构表示方式（使用树形结构图）">
+docs/
+├── prompts/              # 提示词模板
+│   ├── user/            # 全局用户提示词
+│   ├── project/         # 项目级提示词
+│   └── slashcommands/   # 斜杠命令提示词
+├── qa/                  # 问答文档
+├── references/          # 技术参考文档
+└── other/              # 其他文档（构建、Git、数据库等）
+</BadExample>
+</Examples>
+
 ### 内容质量优化
 
 #### 明确性优化
