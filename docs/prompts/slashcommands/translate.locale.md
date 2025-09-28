@@ -1,85 +1,76 @@
 ---
 allowed-tools: Read, Write, Edit, MultiEdit, Glob, Grep, Bash, TodoWrite, Task
-description: Translate Chinese locale documentation files to English, following consistent terminology and quality standards
+description: 将中文本地化文档文件翻译为英文，遵循一致的术语和质量标准
 ---
 
-# 翻译指令 / Translation Command
+# 文档翻译专家
 
-## 使用方法 / Usage
-```
-/translate @path/to/file.locale.md
-```
+将中文本地化文档文件 (.locale.md) 翻译为英文文档文件，同时保持质量标准和术语一致性。
 
-## 功能说明 / Description
+## 关键要求
 
-将本地化中文文档文件（`.locale.md`）翻译为对应的英文文档文件，去除文件名中的 `.locale.` 部分。
+### 任务执行流程
+1. **读取源文件**: `$1`
+2. **解析文件名**:
+   - **特殊位置规则** (优先检查):
+     - `docs/prompts/slashcommands/**.locale.md` → `.claude/commands/**.md`
+     - `docs/CLAUDE-prompts-slashcommands.locale.md` → `docs/prompts/slashcommands/CLAUDE.md`
+     - `docs/CLAUDE-prompts.locale.md` → `docs/prompts/CLAUDE.md`
+     - `docs/CLAUDE-prompts-user.locale.md` → `docs/prompts/user/CLAUDE.md`
+     - `docs/CLAUDE-prompts-project.locale.md` → `docs/prompts/project/CLAUDE.md`
+     - `docs/CLAUDE-qa.locale.md` → `docs/qa/CLAUDE.md`
+     - `docs/CLAUDE-references.locale.md` → `docs/references/CLAUDE.md`
+   - **标准规则**: `filename.locale.extension` → `filename.extension`
+3. **检查目标文件**:
+   - 使用 Glob 工具验证目标文件是否存在
+   - 模式: 基于步骤 2 确定的目标路径
+4. **删除现有文件**:
+   - 如果目标文件存在，使用 Bash 工具删除
+   - 命令: `rm filename.extension` (Linux/Mac) 或 `del filename.extension` (Windows)
+5. **执行翻译**:
+   - 保留 Markdown 结构和格式
+   - 应用词汇表中的一致术语
+   - 保持代码块不变
+   - 适当翻译代码注释
+6. **写入目标文件**:
+   - 创建新的目标文件并写入翻译内容
+   - 无需读取现有目标文件 (已在步骤 4 中删除)
+7. **错误处理**:
+   - 如果 Write 工具失败，立即删除目标文件
+   - 使用 Bash 工具执行删除
+   - 重新开始流程，不尝试修复
 
-Translate Chinese localization documentation files (`.locale.md`) to corresponding English documentation files, removing the `.locale.` part from the filename.
+### 质量标准
+- **术语一致性**: 严格遵循词汇表
+- **技术准确性**: 保持技术概念的精确性
+- **格式保持**: 保留所有 Markdown 格式
+- **链接处理**: 适当更新文档链接
+- **代码完整性**: 保持代码示例不变
 
-## 工作流程 / Workflow
-
-1. **读取源文件** / Read source file: `$1`
-2. **解析文件名** / Parse filename:
-  - **特殊位置规则** / Special location rules (优先检查 / Check first):
-    - `docs/prompts/slashcommands/**.locale.md` → `.claude/commands/**.md`
-    - `docs/CLAUDE-prompts-slashcommands.locale.md` → `docs/prompts/slashcommands/CLAUDE.md`
-    - `docs/CLAUDE-prompts.locale.md` → `docs/prompts/CLAUDE.md`
-    - `docs/CLAUDE-prompts-user.locale.md` → `docs/prompts/user/CLAUDE.md`
-    - `docs/CLAUDE-prompts-project.locale.md` → `docs/prompts/project/CLAUDE.md`
-    - `docs/CLAUDE-qa.locale.md` → `docs/qa/CLAUDE.md`
-    - `docs/CLAUDE-references.locale.md` → `docs/references/CLAUDE.md`
-  - **标准规则** / Standard rule:
-    - Input: `filename.locale.extension`
-    - Output: `filename.extension`
-3. **检查目标文件** / Check target file:
-  - 使用 Glob 工具检查目标文件是否已存在 / Use Glob tool to check if target file exists
-  - Pattern: 根据步骤2确定的目标路径 / Based on target path determined in step 2
-4. **删除现有文件** / Delete existing file:
-  - 如果目标文件存在，使用 Bash 工具删除 / If target file exists, use Bash tool to delete
-  - Command: `rm filename.extension` (Linux/Mac) 或 `del filename.extension` (Windows)
-5. **执行翻译** / Perform translation:
-  - 保持 Markdown 格式和结构 / Preserve Markdown formatting and structure
-  - 应用术语表中的一致翻译 / Apply consistent terminology from glossary
-  - 保留代码块不变 / Keep code blocks unchanged
-  - 适当翻译代码注释 / Translate code comments appropriately
-6. **写入目标文件** / Write target file:
-  - 创建新的目标文件并写入翻译内容 / Create new target file and write translated content
-  - 无需读取现有目标文件内容（已在步骤4中删除）/ No need to read existing target file content (deleted in step 4)
-7. **错误处理** / Error handling:
-  - 如果 Write 工具失败，立即删除目标文件 / If Write tool fails, immediately delete target file
-  - 使用 Bash 工具执行删除命令 / Use Bash tool to execute delete command
-  - 不要尝试更新或修复，直接重新开始流程 / Do not attempt to update or fix, restart the process directly
-
-## 质量标准 / Quality Standards
-
-- **术语一致性** / Terminology consistency: 严格遵循词汇表 / Strictly follow glossary
-- **技术准确性** / Technical accuracy: 保持技术概念的准确性 / Maintain accuracy of technical concepts
-- **格式保持** / Format preservation: 保留所有 Markdown 格式 / Preserve all Markdown formatting
-- **链接处理** / Link handling: 适当更新文档链接 / Update documentation links appropriately
-- **代码完整性** / Code integrity: 代码示例保持不变 / Keep code examples unchanged
-
-## 示例 / Examples
-
-### 文件名转换 / Filename Conversion
+<Examples>
+<Example description="文件名转换示例">
 - `translate.locale.md` → `translate.md`
 - `setup.locale.md` → `setup.md`
 - `config.locale.yaml` → `config.yaml`
+</Example>
 
-### 翻译示例 / Translation Examples
-- `请参阅文档` → `See documentation`
-- `配置文件` → `Configuration file`
-- `命令行工具` → `Command-line tool`
+<Examples>
+<GoodExample description="正确的翻译方法">
+user: 请参阅文档
+claude: See documentation
 
-## 参考资料 / References
+user: 配置文件
+claude: Configuration file
 
-请参阅 [slash_commands](https://docs.claude.com/zh-CN/docs/claude-code/slash-commands)
+user: 命令行工具
+claude: Command-line tool
+</GoodExample>
+</Examples>
 
-See [slash_commands](https://docs.claude.com/en/docs/claude-code/slash-commands)
+## 核心术语
 
-## 词汇表 / Glossary
-
-### 常用术语 / Common Terms
-- 请参阅 / 参见 - see, refer to
+### 常用术语
+- 请参阅/参见 - see, refer to
 - 配置 - configuration, config
 - 设置 - settings
 - 文档 - documentation, docs
@@ -93,7 +84,7 @@ See [slash_commands](https://docs.claude.com/en/docs/claude-code/slash-commands)
 - 目录 - directory
 - 路径 - path
 
-### Claude Code 专用术语 / Claude Code Specific Terms
+### Claude Code 术语
 - 钩子 - hook
 - 斜杠命令 - slash command
 - 工作区 - workspace
@@ -105,54 +96,8 @@ See [slash_commands](https://docs.claude.com/en/docs/claude-code/slash-commands)
 - 任务 - task
 - 工作流 - workflow
 
-### 技术术语 / Technical Terms
-- 版本控制 - version control
-- 构建 - build
-- 测试 - test
-- 部署 - deployment
-- 调试 - debug
-- 日志 - log
-- 错误 - error
-- 警告 - warning
-- 依赖 - dependency
-- 包管理器 - package manager
-- 环境变量 - environment variable
-- 接口 - interface, API
-- 端点 - endpoint
-- 请求 - request
-- 响应 - response
-- 数据库 - database
-- 查询 - query
-- 架构 - architecture
-- 框架 - framework
-- 库 - library
-- 模块 - module
-- 组件 - component
+## 参考资料
 
-### 文件和目录 / Files and Directories
-- 根目录 - root directory
-- 源代码 - source code
-- 资源 - assets, resources
-- 公共 - public
-- 静态 - static
-- 构建输出 - build output
-- 缓存 - cache
-- 临时文件 - temporary files
-- 备份 - backup
-- 归档 - archive
+请参阅 [slash_commands](https://docs.claude.com/zh-CN/docs/claude-code/slash-commands)
 
-### Git 相关 / Git Related
-- 仓库 - repository, repo
-- 分支 - branch
-- 提交 - commit
-- 合并 - merge
-- 拉取请求 - pull request
-- 问题 - issue
-- 标签 - tag
-- 发布 - release
-- 克隆 - clone
-- 推送 - push
-- 拉取 - pull
-- 获取 - fetch
-- 暂存 - stage
-- 变基 - rebase
+See [slash_commands](https://docs.claude.com/en/docs/claude-code/slash-commands)
