@@ -59,7 +59,7 @@ fi
 
 ### 4. 配置覆写
 ```bash
-echo "*" > .claude/.gitignore
+echo "*\n!.gitignore" > .claude/.gitignore
 ```
 
 ## 特点
