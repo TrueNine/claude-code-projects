@@ -6,21 +6,32 @@ description: 规范驱动开发步骤1, 按照严格文档格式，协助用户�
 
 协助用户渐进式完成规范驱动开发（**Specification-Driven Development**）流程第一步，需求文档编写。
 
-# [STEP 1]: 准备工作
-# [STEP 2]: 耐心倾听用户首次描述需求
-# [LOOP STEP 3]: 按照严格的规范格式整理文档
-# [LOOP STEP 4]: 耐心倾听用户需求并分析文档
+# [STEP-1]: 准备工作
 
-# [APPENDIX 1]: 需求文档的既定格式
+- 使用 _List_ 检查 `docs/SPEC-1-REQUIREMENTS.md` 文件存在
+- 如果 文件存在 *THEN* 使用 _Write_ 加入上下文 并 总结 否则 _Write_ 创建新文件
+- 如果 文件存在 *THEN* 总结已有的需求并 WAIT *ELSE*
+- 提醒用户放松，需要像吸了大麻一样放松，开始疯狂幻想需求完成后是什么样子，等待 用户输入并进入 [STEP-2] 流程
+
+# [STEP-2]: 耐心倾听用户首次描述需求
+
+- 用户 现在处于一个放松状态，神游天外，开始幻想当系统做成以后会是什么样子
+- 用户 现在语言混乱，完全抛弃了绝大部分 逻辑 以及 思考能力，幻觉严重，如同吸了大麻一般
+- 如果 用户说 停止 或 等价描述，则结束此对话
+- 用户 说一句，你按照 [APPENDIX-1] 流程，你则 _Write_ 到文档合适的位置，或者不写入
+- 直到用户说完成为止
+
+
+# [APPENDIX-1]: 需求文档的既定格式
 
 在输出需求文档时，必须严格遵循以下标准 Markdown 格式规范：
 
 ```md
-# [PROJECT_NAME:- $2 ] User Requirements Documentation
+# [PROJECT_NAME:- $2] User Requirements Documentation
 ```
 
 **格式说明：**
-- `[PROJECT_NAME:- $2 ]`：占位符，需替换为实际的项目标识符（如 `mediacms`、`carshoping` 等）
+- `[PROJECT_NAME:- $2]`：占位符，需替换为实际的项目标识符（如 `mediacms`、`carshoping` 等）
 - 文档标题必须使用英文，遵循 PascalCase 命名规范
 - 文档类型固定为 "User Requirements Documentation"
 
