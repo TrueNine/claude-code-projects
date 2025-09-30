@@ -8,10 +8,10 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 
 # [STEP-1]: 准备工作
 
-- 使用 _Search_ 检查 `docs/SPEC-1-REQUIREMENTS.locale.md` 是否存在
-- 如果文件存在则使用 _Read_ 载入内容并输出简明概述；否则使用 _Write_ 初始化新的规范文档骨架
+- 使用 `Search(pattern="docs/spec/SPEC-1-REQUIREMENT.locale.md")` 检查 `docs/spec/SPEC-1-REQUIREMENTS.locale.md` 是否存在
+- 如果文件存在则使用 `Read` 载入内容并输出简明概述；否则使用 `Write` 初始化一个空文件
 - 识别第一个参数 `$1` 所代表的用户首选语言，后续自由文本输出默认使用该语言；若用户另有指定，以最新指示为准
-- 在完成概述后，邀请用户保持放松、发挥想象，描绘理想的系统完成形态，然后 WAIT 用户输入以进入 [STEP-2]
+- 在完成概述后，邀请用户保持放松、发挥想象，描绘理想的系统完成形态，然后等待用户输入第一次想法以进入 [STEP-2]
 
 # [STEP-2]: 耐心倾听用户首次描述需求
 
@@ -25,6 +25,31 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - 在引导过程中按阶段性成果向用户复述推断，等待确认或纠正，避免一次性做出完整设计
 - 按照用户节奏持续迭代，直到用户明确表示“完成”为止
 - 用户确认完成后，提醒其使用 `/translate` 或其他工具将文档翻译为英文，并把译文外链记录在 `project/CLAUDE.md` 以提升后续编码体验
+
+<Examples>
+<GoodExample description="积极鼓励用户继续发散">
+user: 我想做一个帮助远程团队协作的系统，但暂时只想到要让大家沟通更顺畅。
+claude: `Update("docs/spec/SPEC-1-REQUIREMENT.locale.md", "- 让远程团队沟通更顺畅")`
+claude: 很棒的初衷！记录好了。可以先想象一下这个系统完美运行时的场景，例如团队成员在一天里会怎样协作？随意分享任何浮现的片段，我们再一起把它们补充成结构化要点。
+</GoodExample>
+<BadExample description="直接否定用户想法，缺乏鼓励">
+user: 我想做一个帮助远程团队协作的系统，但暂时只想到要让大家沟通更顺畅。
+claude: 你描述得太模糊了，这样没法写需求，想清楚再来吧。
+</BadExample>
+<GoodExample description="面对特别模糊的灵感仍保持友好引导">
+user: 就想做点酷的，可能是个帮朋友们玩游戏的东西？我还没想明白呢。
+claude: `Update("docs/spec/SPEC-1-REQUIREMENT.locale.md", "- 帮朋友们更顺利地一起玩游戏")`
+claude: 听起来很有趣！已经先记下这个目标。暂时不用急着定具体功能，可以先从你们玩游戏时遇到的小烦恼入手，比如语音沟通、组队流程或活动安排。随便说几个真实场景，我来帮你梳理哪些值得记录。
+</GoodExample>
+<GoodExample description="当线索过于抽象时先继续发散">
+user: 嗯……想做个跟 AI 有关的东西，但我还没想好具体做什么。
+claude: 这个方向很有潜力！眼下信息还比较抽象，我先不写入文档。可以先聊聊你想解决的痛点、谁会使用，或者你期待看到的理想画面。分享得越具体，我就越容易帮你提炼出可记录的要点。
+</GoodExample>
+<BadExample description="在用户尚未成形时逼问细节">
+user: 就想做点酷的，可能是个帮朋友们玩游戏的东西？我还没想明白呢。
+claude: 你必须先确定具体功能，否则没法继续，等你想好了再回来。
+</BadExample>
+</Examples>
 
 
 ## Locale 使用约定
