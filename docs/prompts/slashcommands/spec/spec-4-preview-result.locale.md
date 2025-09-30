@@ -1,6 +1,6 @@
 ---
 argument-hint: no_parameters
-allowed-tools: Read, Write, Edit, MultiEdit, Glob, Grep, Bash, TodoWrite, Task
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 description: 规范驱动开发步骤1, 按照严格文档格式，协助用户完成序文文档编写
 ---
 
