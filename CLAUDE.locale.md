@@ -24,7 +24,9 @@ docs/
   - `prompts/` - 提示词模板
     - `user/` - 全局用户提示词
     - `project/` - 项目级提示词
-    - `slashcommands/` - 斜杠命令提示词
+    - `slashcommands/` - 自定义命令提示词
+    - `subagents/` - 子代理提示词
+  - `metaprompts/` - 提示词编写标准
   - `qa/` - 问答文档
   - `references/` - 技术参考文档
   - `other/` - 其他文档（构建、Git、数据库等）

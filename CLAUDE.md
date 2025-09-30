@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
 
@@ -25,6 +25,8 @@ docs/
     - `user/` - Global user prompts
     - `project/` - Project-level prompts
     - `slashcommands/` - Slash command prompts
+    - `subagents/` - Sub-agent prompts
+  - `metaprompts/` - Prompt writing standards
   - `qa/` - Q&A documentation
   - `references/` - Technical reference documentation
   - `other/` - Other documentation (build, Git, database, etc.)

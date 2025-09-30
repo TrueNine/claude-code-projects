@@ -9,7 +9,7 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 # 关键要求
 
 ## 任务执行流程
-1. **读取源文件**: #$1
+1. **读取源文件**: `Read($1)`
 2. **解析文件名**:
   - **特殊位置规则** (优先检查):
     - `docs/prompts/slashcommands/**.locale.md` → `.claude/commands/**.md`
@@ -21,7 +21,7 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
     - `docs/CLAUDE-references.locale.md` → `docs/references/CLAUDE.md`
   - **标准规则**: `filename.locale.extension` → `filename.extension`
 3. **检查目标文件**:
-  - 使用 `Search(pattern="$1")` 验证目标文件是否存在
+  - 使用 `Search(pattern: "$1")` 验证目标文件是否存在
   - 模式: 基于步骤 2 确定的目标路径
 4. **删除现有文件**:
   - 如果目标文件存在，使用 Bash 工具删除

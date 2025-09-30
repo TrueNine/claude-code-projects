@@ -1,7 +1,7 @@
 ---
 argument-hint: [locale_markdown_file] [translation_description]
-allowed-tools: Read, Write, Edit, MultiEdit, Glob, Grep, Bash, TodoWrite, Task
-description: Translate Chinese localization memory prompt files to English memory prompt files, following consistent terminology and quality standards
+allowed-tools: Read, Write, Glob, Grep, Bash
+description: Translate Chinese localization memory prompt file to English memory prompt file while maintaining quality standards and terminology consistency
 ---
 
 Translate Chinese localization memory prompt file #$1 (.locale.md) to English memory prompt file while maintaining quality standards and terminology consistency.
@@ -9,7 +9,7 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
 # Key Requirements
 
 ## Task Execution Workflow
-1. **Read source file**: #$1
+1. **Read source file**: `Read($1)`
 2. **Parse filename**:
   - **Special location rules** (Check first):
     - `docs/prompts/slashcommands/**.locale.md` → `.claude/commands/**.md`
@@ -21,11 +21,11 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
     - `docs/CLAUDE-references.locale.md` → `docs/references/CLAUDE.md`
   - **Standard rule**: `filename.locale.extension` → `filename.extension`
 3. **Check target file**:
-  - Use Glob tool to verify if target file exists
+  - Use `Glob(pattern: "$1")` to verify if target file exists
   - Pattern: Based on target path determined in step 2
 4. **Delete existing file**:
   - If target file exists, use Bash tool to delete
-  - Command: `rm filename.extension` (Linux/Mac) or equivalent (Windows) command
+  - Command: `Bash(rm filename.extension)` (Linux/Mac) or equivalent (Windows) command
 5. **Perform translation**:
   - Preserve Markdown structure and formatting
   - Apply consistent terminology from glossary
