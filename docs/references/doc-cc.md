@@ -8,3 +8,5 @@
 
 - [MCP](https://docs.anthropic.com/en/docs/claude-code/mcp)
 - [MCP zh-CN](https://docs.anthropic.com/zh-CN/docs/claude-code/mcp)
+
+- [参考 ai tmpl](https://www.aitmpl.com/agents)
