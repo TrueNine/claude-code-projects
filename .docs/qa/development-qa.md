@@ -39,7 +39,7 @@
 
 ### 相关参考
 - [React Testing Library最佳实践](https://testing-library.com/docs/guiding-principles/)
-- docs/references/testing-guidelines.md
+- .docs/references/testing-guidelines.md
 
 ---
 
@@ -75,7 +75,7 @@
 ### 相关参考
 - [Pinia官方文档](https://pinia.vuejs.org/)
 - [Vue3状态管理指南](https://vuejs.org/guide/scaling-up/state-management.html)
-- docs/references/state-management.md
+- .docs/references/state-management.md
 
 ---
 
@@ -123,4 +123,4 @@
 ### 相关参考
 - [Web性能优化指南](https://web.dev/performance/)
 - [前端性能监控最佳实践](https://developer.mozilla.org/en-US/docs/Web/Performance)
-- docs/references/performance-optimization.md
+- .docs/references/performance-optimization.md

@@ -12,13 +12,13 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 1. **读取源文件**: `Read($1)`
 2. **解析文件名**:
   - **特殊位置规则** (优先检查):
-    - `docs/prompts/slashcommands/**.locale.md` → `.claude/commands/**.md`
-    - `docs/CLAUDE-prompts-slashcommands.locale.md` → `docs/prompts/slashcommands/CLAUDE.md`
-    - `docs/CLAUDE-prompts.locale.md` → `docs/prompts/CLAUDE.md`
-    - `docs/CLAUDE-prompts-user.locale.md` → `docs/prompts/user/CLAUDE.md`
-    - `docs/CLAUDE-prompts-project.locale.md` → `docs/prompts/project/CLAUDE.md`
-    - `docs/CLAUDE-qa.locale.md` → `docs/qa/CLAUDE.md`
-    - `docs/CLAUDE-references.locale.md` → `docs/references/CLAUDE.md`
+    - `.docs/prompts/slashcommands/**.locale.md` → `.claude/commands/**.md`
+    - `.docs/CLAUDE-prompts-slashcommands.locale.md` → `.docs/prompts/slashcommands/CLAUDE.md`
+    - `.docs/CLAUDE-prompts.locale.md` → `.docs/prompts/CLAUDE.md`
+    - `.docs/CLAUDE-prompts-user.locale.md` → `.docs/prompts/user/CLAUDE.md`
+    - `.docs/CLAUDE-prompts-project.locale.md` → `.docs/prompts/project/CLAUDE.md`
+    - `.docs/CLAUDE-qa.locale.md` → `.docs/qa/CLAUDE.md`
+    - `.docs/CLAUDE-references.locale.md` → `.docs/references/CLAUDE.md`
   - **标准规则**: `filename.locale.extension` → `filename.extension`
 3. **检查目标文件**:
   - 使用 `Search(pattern: "$1")` 验证目标文件是否存在

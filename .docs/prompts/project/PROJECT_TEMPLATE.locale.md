@@ -36,13 +36,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目结构
 
-- `docs/`: 项目文档,全部以 `markdown` 格式进行编写
-  + `docs/prompts/`: 提示词文件
-    - `docs/prompts/locale`: 用户习惯的本地语言的提示词
-    - `docs/prompts/output`: 正确翻译为英文可用的提示词
-  + `docs/qa/`: 当前项目可能的一些问题做出的 QA 以及答案
-  + `docs/other/`: 其他未经过整理的文档
-  + `docs/references`: 当前项目使用的技术栈的外部链接以及文档
+- `.docs/`: 项目文档,全部以 `markdown` 格式进行编写
+  + `.docs/prompts/`: 提示词文件
+    - `.docs/prompts/locale`: 用户习惯的本地语言的提示词
+    - `.docs/prompts/output`: 正确翻译为英文可用的提示词
+  + `.docs/qa/`: 当前项目可能的一些问题做出的 QA 以及答案
+  + `.docs/other/`: 其他未经过整理的文档
+  + `.docs/references`: 当前项目使用的技术栈的外部链接以及文档
 - `todolist.md`: 项目待办事项
 
 ## 专业代理调度

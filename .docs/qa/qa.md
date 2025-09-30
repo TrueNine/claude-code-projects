@@ -52,14 +52,14 @@ New projects need unified code formatting standards to ensure consistent code st
 
 ### Related References
 - [ESLint Configuration Guide](https://eslint.org/docs/user-guide/configuring)
-- docs/references/code-style.md
+- .docs/references/code-style.md
 
 ---
 
 ## [Git Workflow] When to Use Feature Branches vs Direct Main Branch Development
 
 **Tags**: `git` `branching` `workflow` `collaboration`
-**File Association**: .github/workflows/, docs/other/git-workflow.md
+**File Association**: .github/workflows/, .docs/other/git-workflow.md
 
 ### Question
 In personal and team projects, when should you create feature branches, and when can you develop directly on the main branch?
@@ -85,7 +85,7 @@ In personal and team projects, when should you create feature branches, and when
 
 ### Related References
 - [Git Flow Workflow](https://nvie.com/posts/a-successful-git-branching-model/)
-- docs/other/git-workflow.md
+- .docs/other/git-workflow.md
 
 ---
 
@@ -117,7 +117,7 @@ When adding new functionality to a project, how to evaluate and choose third-par
 
 ### Related References
 - [npm Security Best Practices](https://docs.npmjs.com/auditing-package-dependencies-for-security-vulnerabilities)
-- docs/references/dependency-guidelines.md
+- .docs/references/dependency-guidelines.md
 
 ---
 

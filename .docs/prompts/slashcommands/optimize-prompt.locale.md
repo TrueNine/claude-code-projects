@@ -106,7 +106,7 @@ description: 优化 "Claude Code" 记忆提示词文件, 使得其记忆提示�
 <Examples>
 <GoodExample description="正确的文件结构表示方式(使用缩进)">
 ```text
-docs/
+.docs/
   - `prompts/` - 提示词模板
     - `user/` - 全局用户提示词
     - `project/` - 项目级提示词
@@ -117,7 +117,7 @@ docs/
 ```
 </GoodExample>
 <BadExample description="错误的文件结构表示方式(使用树形结构图)">
-docs/
+.docs/
 ├── prompts/             # 提示词模板
 │   ├── user/            # 全局用户提示词
 │   ├── project/         # 项目级提示词
@@ -350,8 +350,8 @@ pub fn elaborate_function_name_with_verbose_description(
 
 ### 不同类型文档的特点和定位
 
-- `docs/prompts/slashcommands/**.locale.md` - 是快捷命令文件, 它们注重任务效率优化
-- `docs/prompts/user/**.locale.md` - 是全局记忆文件, 它们通常更抽象
-- `docs/prompts/project/**.locale.md` - 是针对项目的模板, 虽抽象但更具有各项目的特色
-- `docs/prompts/subagents/**.locale.md` - 是 "Clauee Code 子代理", 它们很专业且单有领域
-- `docs/CLAUDE-**.locale.md` - 是针对 docs/ 的记忆提示词, 它们来帮助用户不断精进提示词以获得更好的效果
+- `.docs/prompts/slashcommands/**.locale.md` - 是快捷命令文件, 它们注重任务效率优化
+- `.docs/prompts/user/**.locale.md` - 是全局记忆文件, 它们通常更抽象
+- `.docs/prompts/project/**.locale.md` - 是针对项目的模板, 虽抽象但更具有各项目的特色
+- `.docs/prompts/subagents/**.locale.md` - 是 "Clauee Code 子代理", 它们很专业且单有领域
+- `.docs/CLAUDE-**.locale.md` - 是针对 .docs/ 的记忆提示词, 它们来帮助用户不断精进提示词以获得更好的效果

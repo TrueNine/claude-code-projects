@@ -19,7 +19,7 @@
 着重注意以下文件:
 
 ```markdown
-- docs/
+- .docs/
   - CLAUDE.locale.md
   - CLAUDE-prompts.locale.md
   - CLAUDE-prompts-user.locale.md

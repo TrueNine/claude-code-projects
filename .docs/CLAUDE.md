@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Documentation Structure
 
-**docs/ Directory Organization:**
+**.docs/ Directory Organization:**
 - `references/` - Technical reference documentation
 - `other/` - Other documentation (build, Git, database, etc.)
 - `qa/` - 关于当前项目的一些问题的解答
@@ -14,7 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - `locale/` - Chinese locale prompts
     - `user/` - global user prompts
     - `project/` - project prompts
-  - `output/` - English prompts translated from `docs/prompts/locale/`
+  - `output/` - English prompts translated from `.docs/prompts/locale/`
     - `user/` - global user prompts
     - `project/` - project prompts
 
