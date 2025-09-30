@@ -1,18 +1,23 @@
 ---
-allowed-tools: Read, Write, Edit, MultiEdit, Glob, Grep, Bash, TodoWrite, Task
-description: 优化 claude 记忆文件, 使得其记忆文件让AI更具可读性,达到更好的工作效果
+argument-hint: [locale_file_at_path]
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+description: 优化 "Claude Code" 记忆提示词文件, 使得其记忆提示词文件让 "Claude Code" 更具可读性,达到更好的工作效果
 ---
 
-`optimize-prompt` 优化 Claude.ai `CLAUDE.md` 记忆提示词文件的任务. 参数: `$1` (必需): 需要优化的提示词文件路径, `$2` (可选): 用户的具体需求或优化方向.
+`optimize-prompt` 优化 Claude.ai `$1` 记忆提示词文件的任务. 参数: `$1` (必需): 需要优化的提示词文件路径, `$2` (可选): 用户的具体需求或优化方向.
 
-该任务会根据既定规则对记忆提示词进行结构优化、格式规范和内容精简. 对于非 .locale. 文件,会先翻译成中文 .locale. 文件再进行优化,确保用户始终能够理解和控制提示词内容.
+该任务会根据既定规则对 记忆提示词 进行结构优化、格式规范和内容精简. 对于非 `**.locale.*` 文件,会先翻译成中文 `**.locale.*` 文件再进行优化, 确保用户始终能够理解和控制提示词内容.
 
 ## 优化规则
 
 ### 语言选择规则
-- **优先处理 .locale. 文件**: 当文件名包含 `.locale.` 时,直接进行优化
-- **翻译非 .locale. 文件**: 如果用户传入的不是 .locale. 文件,则在其旁边翻译一份中文的 .locale. 文件,并对翻译后的 .locale. 文件进行优化
+- **优先处理 `**.locale.*` 文件**: 当文件名包含 `**.locale.*` 时,直接执行流程
+- **翻译非 .locale. 文件**: 如果用户传入的不是 `**.locale.*` 文件,则在其旁边翻译一份中文的 `**.locale.*` 文件,并对翻译后的 `**.locale.*` 文件进行优化
 - **始终保持用户对提示词的感知能力**: 通过自动翻译和优化机制,确保用户始终能够理解和控制提示词内容
+
+### 文档开头的简要描述
+- 记忆提示词文件第一段应当包含一段 2-5 句的对整个文档内容的描述
+- 简明扼要不艺术和表达
 
 ### 标题结构优化
 - 标题嵌套级别不得大于3级
@@ -61,8 +66,8 @@ description: 优化 claude 记忆文件, 使得其记忆文件让AI更具可读�
 
 **BadExample 优化限制**:
 - 优化时不对 `<BadExample>` 标签内的内容进行格式优化
-- 除非 BadExample 中的内容不符合真正要表达的意义,否则保持原样
-- BadExample 的目的是展示错误做法,包括错误的格式、标点、缩进等
+- 除非 `<BadExample>` 中的内容不符合真正要表达的意义,否则保持原样
+- `<BadExample>` 的目的是展示错误做法,包括错误的格式、标点、缩进等
 
 ### 核心结构要素
 - **角色定义**:明确AI的身份和专业背景
@@ -81,9 +86,10 @@ description: 优化 claude 记忆文件, 使得其记忆文件让AI更具可读�
 - **可读性**:合理分段,避免过长的段落
 
 ### 提示词文件结构要求
-- **YAML 前置配置**:文件开头可能包含 YAML 配置块,定义工具权限和基本描述
-- **描述性文本**:除了 YAML 配置外,还应包含一段文字描述,说明提示词的用途和功能
-- **结构完整**:确保提示词文件既有配置信息,又有功能说明
+- **YAML 前置配置**: 文件开头可能包含 YAML 配置块,定义工具权限和基本描述
+- **描述性文本**: 除了 YAML 配置外,还应包含一段文字描述,说明记忆提示词的用途和功能,大约 2-5 句
+- **结构完整**: 确保提示词文件既有配置信息,又有功能说明
+- ****: 
 
 ### 格式优化技巧
 - **编码规范**:使用 UTF-8 编码确保兼容性
@@ -344,7 +350,8 @@ pub fn elaborate_function_name_with_verbose_description(
 
 ### 不同类型文档的特点和定位
 
-- **docs/prompts/slashcommands/**.locale.md 是快捷命令文件, 它们注重任务效率优化
-- **docs/prompts/user/**.locale.md 是全局记忆文件, 它们通常更抽象
-- **docs/prompts/project/**.locale.md 是针对项目的模板, 虽抽象但更具有各项目的特色
-- **docs/CLAUDE-**.locale.md 是针对 docs/ 的记忆提示词, 它们来帮助用户不断精进提示词以获得更好的效果
+- `docs/prompts/slashcommands/**.locale.md` - 是快捷命令文件, 它们注重任务效率优化
+- `docs/prompts/user/**.locale.md` - 是全局记忆文件, 它们通常更抽象
+- `docs/prompts/project/**.locale.md` - 是针对项目的模板, 虽抽象但更具有各项目的特色
+- `docs/prompts/subagents/**.locale.md` - 是 "Clauee Code 子代理", 它们很专业且单有领域
+- `docs/CLAUDE-**.locale.md` - 是针对 docs/ 的记忆提示词, 它们来帮助用户不断精进提示词以获得更好的效果
