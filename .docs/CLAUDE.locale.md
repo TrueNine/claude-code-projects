@@ -68,7 +68,6 @@
   <BadExample description="展示未澄清需求的错误做法：直接跳过需求分析阶段"
               userInput="想要个工具来处理数据">
     好的，我来帮您创建一个数据处理工具的提示词...
-    （错误：未澄清具体需求就开始工作）
   </BadExample>
 </Examples>
 ```
@@ -176,7 +175,6 @@
          userInput="需要个管理系统的方案">
   管理系统涉及多个方面，让我分步了解您的需求：
   **第一步 - 管理对象**：
-
   - 人员管理（员工、客户、供应商等）
   - 物品管理（库存、设备、资产等）
   - 流程管理（审批、项目、任务等）
@@ -237,23 +235,3 @@
 </Example>
 ```
 
-## 示例驱动提示词
-
-**XML 标签体系**
-
-- 使用结构化 `XML` 标签包裹示例，便于解析与复用
-- 将整段示例置于 ` ```xml … ``` ` 代码块中，保持格式一致
-- 为标签添加合适的属性，例如 `description="…"`、`userInput="…"`
-
-**标签类型定义**
-
-- `<Example>`：通用示例，用于展示标准做法
-- `<GoodExample>`：正向示例，只能出现在 `<Examples>` 中
-- `<BadExample>`：反向示例，只能出现在 `<Examples>` 中
-- `<Examples>`：示例集合容器，用于组合 `<GoodExample>` 和 `<BadExample>`
-- `<Thinking>`：描述思考过程，只能出现在 `<Example>`、`<GoodExample>`、`<BadExample>` 中
-
-**属性使用规范**
-
-- `description="…"`：可选属性，用于补充说明示例，仅可用于 `<Example>`、`<GoodExample>`、`<BadExample>`
-- `userInput="…"`：可选属性，用于展示示例中的用户输入，仅可用于 `<Example>`、`<GoodExample>`、`<BadExample>`

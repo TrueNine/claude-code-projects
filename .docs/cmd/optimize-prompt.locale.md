@@ -8,6 +8,9 @@ description: 优化 "Claude Code" 记忆提示词文件, 使得其记忆提示�
 
 该任务会根据既定规则对 记忆提示词 进行结构优化、格式规范和内容精简. 对于非 `**.locale.*` 文件,会先翻译成中文 `**.locale.*` 文件再进行优化, 确保用户始终能够理解和控制提示词内容.
 
+
+
+
 ## 优化规则
 
 ### 语言选择规则
@@ -25,49 +28,63 @@ description: 优化 "Claude Code" 记忆提示词文件, 使得其记忆提示�
 - 确保标题层次清晰
 
 ### 内容表达规范
-- **禁止使用表情符号**:文档中严格禁止使用任何表情符号(emoji)保持专业性
+- **禁止使用表情符号**: 文档中严格禁止使用任何表情符号(emoji)保持专业性
 - 使用简洁明了的书面语表达
 - 保持文档风格一致性和专业性
 
+
+
+
+
 ### 示例编写规范
 
-**XML标签体系**
-采用结构化XML标签包裹示例, 优化AI解析效率和阅读体验:
+**XML 标签体系**
+- 使用结构化 `XML` 标签包裹示例，便于解析与复用
+- 将整段示例置于 ` ```xml … ``` ` 代码块中，保持格式一致
+- 为标签添加合适的属性，例如 `description="…"`、`userInput="…"`
 
-**标签类型定义**:
-- `<Example>` - 通用示例,展示标准用法
-- `<Examples>` - 示例集合容器,包含多个相关示例
-- `<GoodExample>` - 最佳实践示例,展示推荐做法
-- `<BadExample>` - 反面教材示例,展示应避免的做法
+**标签类型定义**
+- `<Example>`：通用示例，用于展示标准做法
+- `<GoodExample>`：正向示例，只能出现在 `<Examples>` 中
+- `<BadExample>`：反向示例，只能出现在 `<Examples>` 中
+- `<Examples>`：示例集合容器，用于组合 `<GoodExample>` 和 `<BadExample>`
+- `<Thinking>`：描述思考过程，只能出现在 `<Example>`、`<GoodExample>`、`<BadExample>` 中
 
-**描述属性规范**:
-- 所有示例标签支持 `description=""` 属性来说明示例的作用
-- 描述应该简洁明了,突出示例的核心价值和学习要点
+**属性使用规范**
+- `description="…"`：可选属性，用于补充说明示例，仅可用于 `<Example>`、`<GoodExample>`、`<BadExample>`
+- `userInput="…"`：可选属性，用于展示示例中的用户输入，仅可用于 `<Example>`、`<GoodExample>`、`<BadExample>`
 
-**对话机制规范**:
-- `user:` - 用户输入内容
-- `claude:` - Claude响应输出内容
-- 支持独立的 `claude:` 标识纯输出场景
+**例子原子化原则**
+- 每个例子必须是原子化的，极其不推荐在例子里面写注释，也不建议一个例子里包括多个代码段或不连续的输出。
+- **单一概念**：每个例子只展示一个明确的技术概念或做法
+- **无注释**：例子内部不包含任何注释说明
+- **单一代码段**：每个例子只包含一个连续的代码段
+- **独立完整**：例子本身应该是完整的，不依赖额外的解释
 
-**格式化约束**:
-- `<GoodExample>` 和 `<BadExample>` 标签仅可在 `<Examples>` 容器内使用
-- 所有XML标签及其内容保持零缩进格式
-- 标签与上方内容之间必须保留一个空行分隔,确保文档结构清晰
-- **代码示例格式**:所有代码示例必须使用语言标识的代码块包裹,如:
-  ```rust
-  // Rust 代码
-  ```
+```xml
+<Examples>
+  <GoodExample>
+    fn process_data(data: &str) -> Result<ProcessedData, Error> {
+      parse_data(data)
+    }
+  </GoodExample>
 
-**内容精简原则**:
-- 示例应当简短有效,突出核心要点
-- 避免冗长的实现细节,专注展示概念
-- 代码示例不超过20行,文本示例不超过5行
-- 每个示例只展示一个关键概念或对比点
+  <BadExample>
+    // 使用 Result 类型处理错误
+    fn process_data(data: &str) -> Result<ProcessedData, Error> {
+      parse_data(data)
+    }
 
-**BadExample 优化限制**:
-- 优化时不对 `<BadExample>` 标签内的内容进行格式优化
-- 除非 `<BadExample>` 中的内容不符合真正要表达的意义,否则保持原样
-- `<BadExample>` 的目的是展示错误做法,包括错误的格式、标点、缩进等
+    // 还可以使用 Option 处理可选值 - 违反单一概念原则
+    fn get_optional_value() -> Option<String> {
+      Some("value".to_string())
+    }
+  </BadExample>
+</Examples>
+```
+
+
+
 
 ### 核心结构要素
 - **角色定义**:明确AI的身份和专业背景
@@ -103,30 +120,32 @@ description: 优化 "Claude Code" 记忆提示词文件, 使得其记忆提示�
 - **使用缩进方式**:文件结构必须使用简单的缩进格式表示
 - **清晰简洁**:确保结构清晰易读,避免过度复杂的表示方法
 
+```xml
+
 <Examples>
-<GoodExample description="正确的文件结构表示方式(使用缩进)">
-```text
-.docs/
-  - `prompts/` - 提示词模板
+  <GoodExample>
+    .docs/
+    - `prompts/` - 提示词模板
     - `user/` - 全局用户提示词
     - `project/` - 项目级提示词
     - `slashcommands/` - 斜杠命令提示词
-  - `qa/` - 问答文档
-  - `references/` - 技术参考文档
-  - `other/` - 其他文档(构建、Git、数据库等)
-```
-</GoodExample>
-<BadExample description="错误的文件结构表示方式(使用树形结构图)">
-.docs/
-├── prompts/             # 提示词模板
-│   ├── user/            # 全局用户提示词
-│   ├── project/         # 项目级提示词
-│   └── slashcommands/   # 斜杠命令提示词
-├── qa/                  # 问答文档
-├── references/          # 技术参考文档
-└── other/               # 其他文档(构建、Git、数据库等)
-</BadExample>
+    - `qa/` - 问答文档
+    - `references/` - 技术参考文档
+    - `other/` - 其他文档(构建、Git、数据库等)
+  </GoodExample>
+
+  <BadExample description="使用树形结构图">
+    .docs/
+    ├── prompts/ # 提示词模板
+    │ ├── user/ # 全局用户提示词
+    │ ├── project/ # 项目级提示词
+    │ └── slashcommands/ # 斜杠命令提示词
+    ├── qa/ # 问答文档
+    ├── references/ # 技术参考文档
+    └── other/ # 其他文档(构建、Git、数据库等)
+  </BadExample>
 </Examples>
+```
 
 ### 明确性优化
 - **避免歧义**:使用精确的词汇,避免模糊表达
@@ -145,213 +164,37 @@ description: 优化 "Claude Code" 记忆提示词文件, 使得其记忆提示�
 
 ### 标点符号使用示例
 
+```xml
+
 <Examples>
-<GoodExample description="正确使用英文标点符号">
-# Role: Code Review Assistant
+  <GoodExample description="使用英文标点符号">
+    # Role: Code Review Assistant
 
-You are an expert code reviewer with 10+ years of experience. Your task is to:
-1. Analyze code quality and identify potential issues
-2. Provide actionable feedback for improvements
-3. Ensure code follows best practices and security guidelines
+    You are an expert code reviewer with 10+ years of experience. Your task is to:
+    1. Analyze code quality and identify potential issues
+    2. Provide actionable feedback for improvements
+    3. Ensure code follows best practices and security guidelines
 
-Focus on readability, maintainability, and performance aspects.
-</GoodExample>
-<BadExample description="错误使用中文标点符号">
-# Role: 代码审查助手
+    Focus on readability, maintainability, and performance aspects.
+  </GoodExample>
+  <BadExample description="使用中文标点符号">
+    # Role: 代码审查助手
 
-你是一位拥有10年以上经验的专家代码审查员。你的任务是:
-1. 分析代码质量并识别潜在问题
-2. 提供可操作的改进建议
-3. 确保代码遵循最佳实践和安全准则
+    你是一位拥有10年以上经验的专家代码审查员。你的任务是:
+    1. 分析代码质量并识别潜在问题
+    2. 提供可操作的改进建议
+    3. 确保代码遵循最佳实践和安全准则
 
-重点关注可读性、可维护性和性能方面。
-</BadExample>
+    重点关注可读性、可维护性和性能方面。
+  </BadExample>
 </Examples>
 
-### 代码格式示例
-
-<Examples>
-<GoodExample description="正确的2空格缩进格式">
-use std::collections::HashMap;
-
-#[derive(Debug, Clone)]
-pub struct ProcessedItem {
-  pub id: String,
-  pub name: String,
-  pub value: f64,
-}
-
-pub fn process_data(data: &[HashMap<String, String>]) -> HashMap<String, Vec<ProcessedItem>> {
-  let mut result = HashMap::new();
-
-  if data.is_empty() {
-    result.insert("status".to_string(), vec![]);
-    result.insert("count".to_string(), vec![]);
-    return result;
-  }
-
-  let mut processed = Vec::new();
-  for item in data {
-    if let Some(active) = item.get("active") {
-      if active == "true" {
-        if let (Some(id), Some(name), Some(value_str)) =
-            (&item.get("id"), &item.get("name"), &item.get("value")) {
-          if let Ok(value) = value_str.parse::<f64>() {
-            processed.push(ProcessedItem {
-              id: id.clone(),
-              name: name.trim().to_string(),
-              value,
-            });
-          }
-        }
-      }
-    }
-  }
-
-  result.insert("status".to_string(), vec![]);
-  result.insert("count".to_string(), vec![]);
-  result
-}
-</GoodExample>
-<BadExample description="错误的缩进和格式">
-use std::collections::HashMap;
-
-#[derive(Debug, Clone)]
-pub struct ProcessedItem {
-    pub id: String,
-    pub name: String,
-    pub value: f64,
-}
-
-pub fn process_data(data: &[HashMap<String, String>]) -> HashMap<String, Vec<ProcessedItem>> {
-    let mut result = HashMap::new();
-
-    if data.is_empty() {
-        result.insert("status".to_string(), vec![]);
-        result.insert("count".to_string(), vec![]);
-        return result;
-    }
-
-    let mut processed = Vec::new();
-    for item in data {
-        if let Some(active) = item.get("active") {
-            if active == "true" {
-                if let (Some(id), Some(name), Some(value_str)) =
-                    (&item.get("id"), &item.get("name"), &item.get("value")) {
-                    if let Ok(value) = value_str.parse::<f64>() {
-                        processed.push(ProcessedItem {
-                            id: id.clone(),
-                            name: name.trim().to_string(),
-                            value,
-                        });
-                    }
-                }
-            }
-        }
-    }
-
-    result.insert("status".to_string(), vec![]);
-    result.insert("count".to_string(), vec![]);
-    result
-}
-</BadExample>
-</Examples>
-
-### 提示词结构示例
-
-<Examples>
-<GoodExample description="清晰简洁的提示词结构">
-# Code Generation Assistant
-
-Generate clean, efficient, and well-documented code based on requirements.
-
-## Key Guidelines
-- Use meaningful variable and function names
-- Include type hints for better code clarity
-- Write docstrings for all public functions
-- Follow the project's established patterns
-
-## Output Format
-```rust
-/// Function implementation with proper documentation
-pub fn function_name(param: ParamType) -> ReturnType {
-  /// Brief description of the function.
-  ///
-  /// # Arguments
-  /// * `param` - Description of the parameter
-  ///
-  /// # Returns
-  /// Description of the return value
-  ///
-  /// # Examples
-  /// ```
-  /// let result = function_name(input_value);
-  /// assert_eq!(result, expected_value);
-  /// ```
-  // Implementation here
-}
 ```
-</GoodExample>
-<BadExample description="冗余复杂的提示词结构">
-## 🤖 AI Code Generation Assistant v2.0.1 ###
-
-### 📋 MISSION STATEMENT:
-You are an advanced AI-powered code generation system designed to create high-quality, production-ready code solutions for enterprise applications.
-
-### 🔧 TECHNICAL REQUIREMENTS:
-- **Variable Naming Convention**: MUST utilize meaningful, self-documenting variable names that clearly express intent
-- **Type Safety**: ALL function parameters MUST include comprehensive type annotations using the latest typing features
-- **Documentation Standards**: EVERY public function REQUIRES extensive docstring documentation following Google/NumPy conventions
-- **Pattern Consistency**: MUST rigidly adhere to existing architectural patterns without deviation
-
-### 📤 COMPLEX OUTPUT SPECIFICATION:
-The generated code should follow this exact structure:
-
-```rust
-// -*- coding: utf-8 -*-
-//! Enterprise-grade function implementation with comprehensive documentation.
-//! This module represents a critical business logic component.
-
-pub fn elaborate_function_name_with_verbose_description(
-    parameter_name: ParameterType,
-) -> Result<ReturnTypeType, Box<dyn std::error::Error>> {
-  /// This function performs the specified operation with high reliability.
-  ///
-  /// # Arguments
-  /// * `parameter_name` - A detailed explanation of what this parameter represents,
-  ///                     including its expected format, constraints, and usage patterns
-  ///
-  /// # Returns
-  /// * `Result<ReturnTypeType, Box<dyn std::error::Error>>` - A comprehensive description of
-  ///   the return value, including all possible return states, error conditions,
-  ///   and data structure details
-  ///
-  /// # Errors
-  /// * `ValueError` - Detailed explanation of when this error might occur
-  /// * `TypeError` - Comprehensive list of scenarios leading to type errors
-  ///
-  /// # Examples
-  /// ```
-  /// match elaborate_function_name_with_verbose_description(input) {
-  ///     Ok(result) => println!("Operation succeeded: {:?}", result),
-  ///     Err(e) => eprintln!("Operation failed: {}", e),
-  /// }
-  /// ```
-  // Implementation placeholder with extensive comments
-  unimplemented!()
-}
-```
-</BadExample>
-</Examples>
-
----
 
 ## 文档类型说明
 
-### 不同类型文档的特点和定位
-
-- `.docs/prompts/slashcommands/**.locale.md` - 是快捷命令文件, 它们注重任务效率优化
-- `.docs/prompts/user/**.locale.md` - 是全局记忆文件, 它们通常更抽象
-- `.docs/prompts/project/**.locale.md` - 是针对项目的模板, 虽抽象但更具有各项目的特色
-- `.docs/prompts/subagents/**.locale.md` - 是 "Clauee Code 子代理", 它们很专业且单有领域
+- `.docs/cmd/**.locale.md` - 是快捷命令文件, 它们注重任务效率优化
+- `.docs/user/**.locale.md` - 是全局记忆文件, 它们通常更抽象
+- `.docs/project/**.locale.md` - 是针对项目的模板, 虽抽象但更具有各项目的特色
+- `.docs/ss/**.locale.md` - 是 "Clauee Code 子代理", 它们很专业且单有领域
 - `.docs/CLAUDE-**.locale.md` - 是针对 .docs/ 的记忆提示词, 它们来帮助用户不断精进提示词以获得更好的效果
