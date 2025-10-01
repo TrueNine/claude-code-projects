@@ -10,8 +10,8 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
 
 1. **Parse filename**:
   - **Special location rules** (Check first):
-    - `.docs/cmd/**.locale.md` -> `.claude/commands/**.md`
-    - `.docs/sa/**.locale.md` -> `.claude/agents/**.md`
+    - `.docs/cmd/**/*.locale.md` -> `.claude/commands/**/*.md`
+    - `.docs/sa/**/*.locale.md` -> `.claude/agents/***/*.md`
     - `.docs/CLAUDE-cmd.locale.md` -> `.docs/cmd/CLAUDE.md`
     - `.docs/CLAUDE-sa.locale.md` -> `.docs/sa/CLAUDE.md`
     - `.docs/CLAUDE-user.locale.md` -> `.docs/user/CLAUDE.md`
@@ -20,7 +20,7 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
   - **Standard rule**: `filename.locale.extension` -> `filename.extension`
 
 2. **Check target file**:
-  - Use `Glob(pattern: "$1")` to verify if target file exists
+  - Use `Glob(pattern: "target_file")` to verify if target file exists
   - Pattern: Based on target path determined in step 2
 
 3. **Delete existing file**:
@@ -42,6 +42,7 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
   - If `Write` fails, immediately delete target file
   - Use `Bash(rm target_file)` to execute deletion
   - Restart process without attempting to fix
+
 
 
 
