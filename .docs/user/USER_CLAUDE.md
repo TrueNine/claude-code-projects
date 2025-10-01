@@ -1,50 +1,50 @@
-# CLAUDE 用户配置指南
+# CLAUDE User Configuration Guide
 
-> **项目级Claude配置文件** - 优先级高于全局配置
-> 此文件定义了在此仓库中使用Claude Code的核心原则和规范
-
----
-
-## 核心原则
-
-### 语言使用规范
-- **用户交流**: 100%中文回复
-- **代码开发**: 英文编写、注释、命名
-- **内部思考**: 100%英文thinking过程
-- **严格禁止**: thinking中使用任何中文字符
-
-### 安全操作限制
-**绝对禁止**:
-- Docker容器操作
-- 数据库修改操作
-- 系统服务启停
-- 批量文件删除
-
-**遇到危险操作时**:
-1. 立即警告用户风险
-2. 拒绝执行操作
-3. 建议专业处理
-4. 结束对话
+> **Project-level Claude configuration file** - Priority higher than global configuration
+> This file defines the core principles and specifications for using Claude Code in this repository
 
 ---
 
-## 项目工具链配置约束
+## Core Principles
 
-### 严格遵守项目工具链
-- **强制检测并使用项目现有工具链**, 绝不能假设或随意选择
-- **必须调查项目配置文件**来确定正确的工具链:
-  - `Cargo.toml` - Rust项目使用cargo
-  - `package.json` - Node.js项目检查packageManager字段
-  - `requirements.txt/pyproject.toml` - Python项目
-  - `composer.json` - PHP项目
-  - `Gemfile` - Ruby项目
+### Language Usage Standards
+- **User communication**: 100% Chinese replies
+- **Code development**: English writing, comments, naming
+- **Internal thinking**: 100% English thinking process
+- **Strictly prohibited**: Using any Chinese characters in thinking
 
-### 工具链优先级
-**选择顺序** (当存在多种配置时):
-1. 项目根目录明确配置文件 (Cargo.toml 优先使用 cargo)
-2. .tool-versions 或 mise 配置
-3. README 中指定的工具
-4. 现有脚本和 CI 配置中使用的工具
+### Security Operation Restrictions
+**Absolutely prohibited**:
+- Docker container operations
+- Database modification operations
+- System service start/stop
+- Batch file deletion
+
+**When encountering dangerous operations**:
+1. Immediately warn user of risks
+2. Refuse to execute operation
+3. Suggest professional handling
+4. End conversation
+
+---
+
+## Project Toolchain Configuration Constraints
+
+### Strictly Follow Project Toolchain
+- **Mandatory detection and use of existing project toolchain**, never assume or arbitrarily choose
+- **Must investigate project configuration files** to determine correct toolchain:
+  - `Cargo.toml` - Rust projects use cargo
+  - `package.json` - Node.js projects check packageManager field
+  - `requirements.txt/pyproject.toml` - Python projects
+  - `composer.json` - PHP projects
+  - `Gemfile` - Ruby projects
+
+### Toolchain Priority
+**Selection order** (when multiple configurations exist):
+1. Explicit configuration files in project root (Cargo.toml prioritize using cargo)
+2. .tool-versions or mise configuration
+3. Tools specified in README
+4. Tools used in existing scripts and CI configuration
 
 ```xml
 <Examples>
@@ -73,20 +73,20 @@
 </Examples>
 ```
 
-### 命令生成规范
-- **构建命令**: 根据项目类型使用 `cargo build` / `npm run build` / `pip install` 等
-- **测试命令**: 根据项目类型使用 `cargo test` / `npm test` / `pytest` 等
-- **格式化命令**: 根据项目类型使用 `cargo fmt` / `prettier` / `black` 等
-- **检查命令**: 根据项目类型使用 `cargo clippy` / `eslint` / `flake8` 等
+### Command Generation Standards
+- **Build commands**: Use `cargo build` / `npm run build` / `pip install` etc. based on project type
+- **Test commands**: Use `cargo test` / `npm test` / `pytest` etc. based on project type
+- **Format commands**: Use `cargo fmt` / `prettier` / `black` etc. based on project type
+- **Check commands**: Use `cargo clippy` / `eslint` / `flake8` etc. based on project type
 
 ---
 
-## 代码质量标准
+## Code Quality Standards
 
-### 统一格式规范
-- **缩进**: 必须使用 **2 Space** 作为缩进
-- **编码**: 必须使用 **UTF-8** 文件编码
-- **行结束符**: 必须使用 **LF** 行结束符
+### Unified Format Standards
+- **Indentation**: Must use **2 Space** as indentation
+- **Encoding**: Must use **UTF-8** file encoding
+- **Line endings**: Must use **LF** line endings
 
 ```xml
 <Examples>
@@ -104,11 +104,11 @@
 </Examples>
 ```
 
-### 命名规范
-**优先级顺序**:
-1. **首选**: PascalCase (大驼峰) 或 camelCase (小驼峰)
-2. **次选**: snake_case (蛇形)
-3. **避免**: kebab-case (烤串) - 除非语言特性强制要求
+### Naming Conventions
+**Priority order**:
+1. **Preferred**: PascalCase (upper camel) or camelCase (lower camel)
+2. **Secondary**: snake_case
+3. **Avoid**: kebab-case - unless language features mandate it
 
 ```xml
 <Examples>
@@ -128,10 +128,10 @@
 </Examples>
 ```
 
-### 代码编写技巧
+### Code Writing Techniques
 
 #### Guard Clauses & Early Return
-**强制要求**: 使用 Guard Clauses 和 Early Return 减少嵌套层级
+**Mandatory requirement**: Use Guard Clauses and Early Return to reduce nesting levels
 
 ```xml
 <Examples>
@@ -163,9 +163,9 @@
 </Examples>
 ```
 
-#### 多条件判断优化
-**强制要求**: 条件数量≥3个时, 使用 Switch语句 或 查表方式替代 if-else 链
-**目标**: 提高可读性和维护性, 减少重复判断逻辑
+#### Multi-condition Judgment Optimization
+**Mandatory requirement**: When condition count ≥3, use Switch statements or lookup table approach to replace if-else chains
+**Goal**: Improve readability and maintainability, reduce repetitive judgment logic
 
 ```xml
 <Examples>
@@ -219,34 +219,34 @@
 </Examples>
 ```
 
-### 代码错误检测
-- **完成代码编写后必须**: 使用 `mcp__ide__getDiagnostics` 工具检查语法错误, 类型错误
-- **每次修改文件后**: 立即验证错误, 确保代码质量, 避免累积问题
+### Code Error Detection
+- **Must after completing code writing**: Use `mcp__ide__getDiagnostics` tool to check syntax errors, type errors
+- **After every file modification**: Immediately verify errors to ensure code quality, avoid accumulating problems
 
 ---
 
-## 开发原则与约束
+## Development Principles and Constraints
 
-### 禁止重复造轮子
-- **开发前必须调查**: 充分了解现有功能和架构
-- **强制复用现有功能**: 绝不允许重新实现已有组件, 工具或函数
-- **优先扩展而非重写**: 在现有基础上增强功能
+### Prohibit Reinventing the Wheel
+- **Must investigate before development**: Thoroughly understand existing functionality and architecture
+- **Mandatory reuse of existing functionality**: Never allow re-implementation of existing components, tools or functions
+- **Prioritize extension over rewriting**: Enhance functionality based on existing foundation
 
-#### 调查工作流程
-1. **全面搜索调查**
-  - `Grep` 搜索相关关键词和功能
-  - `Glob` 查找相关文件和目录结构
-  - `Read` 深入阅读关键文件了解实现细节
+#### Investigation Workflow
+1. **Comprehensive search investigation**
+  - `Grep` search for relevant keywords and functionality
+  - `Glob` find related files and directory structure
+  - `Read` deeply read key files to understand implementation details
 
-2. **分析现有架构**
-  - 理解项目的设计模式和编码风格
-  - 识别可复用的组件和工具函数
-  - 找到最佳的扩展点和集成方式
+2. **Analyze existing architecture**
+  - Understand project's design patterns and coding style
+  - Identify reusable components and utility functions
+  - Find best extension points and integration methods
 
-3. **制定复用策略**
-  - 优先: 扩展现有类/函数
-  - 次选: 组合现有组件
-  - 最后: 创建新组件(需充分理由)
+3. **Develop reuse strategy**
+  - Priority: Extend existing classes/functions
+  - Secondary: Compose existing components
+  - Last resort: Create new components (requires sufficient justification)
 
 ```xml
 <Examples>
@@ -300,23 +300,23 @@
 </Examples>
 ```
 
-### 文件管理原则
-- **优先编辑现有文件**, 避免创建新文件
-- **新文件需充分理由**, 且必须符合项目架构规范
-- **遵循项目组织模式**, 保持代码结构一致性
+### File Management Principles
+- **Prioritize editing existing files**, avoid creating new files
+- **New files need sufficient justification**, and must comply with project architecture standards
+- **Follow project organization patterns**, maintain code structure consistency
 
-#### 文件创建决策标准
-**合理创建新文件:**
-- 功能模块足够大且独立(超过100行代码)
-- 与现有文件职责明显不同
-- 需要独立的测试文件
-- 符合项目的模块化架构要求
+#### File Creation Decision Standards
+**Reasonable file creation:**
+- Functionality module is large and independent enough (over 100 lines of code)
+- Obviously different responsibilities from existing files
+- Requires independent test files
+- Complies with project's modular architecture requirements
 
-**避免创建新文件:**
-- 只有几个简单函数或常量
-- 功能与现有文件高度相关
-- 仅为避免文件变长(除非确实过长)
-- 破坏项目的文件组织逻辑
+**Avoid creating new files:**
+- Only a few simple functions or constants
+- Functionality is highly related to existing files
+- Just to avoid file length (unless truly excessive)
+- Breaks project's file organization logic
 
 ```xml
 <Examples>
@@ -357,23 +357,23 @@
 </Examples>
 ```
 
-### 错误处理透明化原则
-- **强制要求**: 禁止一切错误掩盖行为，确保问题完全暴露
-- **绝对禁止的行为**:
-  - 镇压警告信息
-  - 本地捕获错误而不上报
-  - 使用空的异常处理块
-  - 忽略函数返回的错误码
-  - 隐藏或简化异常信息
-  - 镇压检查器警告
-  - 修改任何检查器配置文件
+### Error Handling Transparency Principle
+- **Mandatory requirement**: Prohibit all error suppression behavior, ensure problems are completely exposed
+- **Absolutely prohibited behaviors**:
+  - Suppressing warning messages
+  - Locally catching errors without reporting
+  - Using empty exception handling blocks
+  - Ignoring error codes returned by functions
+  - Hiding or simplifying exception information
+  - Suppressing checker warnings
+  - Modifying any checker configuration files
 
-#### 错误处理规范
-- **透明原则**: 所有错误、警告必须完整暴露给用户或调用者
-- **追溯原则**: 保留完整的错误堆栈和上下文信息
-- **责任原则**: 错误处理责任应由调用层决定，而非被调用层隐藏
+#### Error Handling Standards
+- **Transparency principle**: All errors and warnings must be fully exposed to users or callers
+- **Traceability principle**: Preserve complete error stack and context information
+- **Responsibility principle**: Error handling responsibility should be decided by calling layer, not hidden by called layer
 
-#### 错误处理示例
+#### Error Handling Examples
 
 ```xml
 <Examples>
@@ -415,7 +415,7 @@
 </Examples>
 ```
 
-#### 警告处理示例
+#### Warning Handling Examples
 
 ```xml
 <Examples>
@@ -448,7 +448,7 @@
 </Examples>
 ```
 
-#### 异常处理示例
+#### Exception Handling Examples
 
 ```xml
 <Example description="空catch块">
@@ -462,37 +462,37 @@
 
 ---
 
-## 严格验证机制
+## Strict Verification Mechanism
 
-### 完成验证要求
-- **禁止虚假完成声明**: 声称"已完成"前必须进行全面验证
-- **强制使用验证工具**: 使用实际验证手段而非主观判断
+### Completion Verification Requirements
+- **Prohibit false completion declarations**: Must conduct comprehensive verification before claiming "completed"
+- **Mandatory use of verification tools**: Use actual verification means rather than subjective judgment
 
-### 验证步骤清单
-1. **代码质量验证**
-  - 使用 `mcp__ide__getDiagnostics` 检查语法和类型错误
-  - **首先检测项目工具链**, 然后运行对应的检查命令:
-    - Rust项目: `cargo clippy` (代码检查) + `cargo fmt --check` (格式检查)
-    - Node.js项目: 根据package.json运行相应的 lint 命令
-    - Python项目: `flake8` / `black --check` / `mypy` 等
+### Verification Checklist
+1. **Code Quality Verification**
+  - Use `mcp__ide__getDiagnostics` to check syntax and type errors
+  - **First detect project toolchain**, then run corresponding check commands:
+    - Rust projects: `cargo clippy` (code check) + `cargo fmt --check` (format check)
+    - Node.js projects: Run corresponding lint commands based on package.json
+    - Python projects: `flake8` / `black --check` / `mypy` etc.
 
-2. **功能验证**
-  - **根据项目工具链运行测试**:
-    - Rust项目: `cargo test`
-    - Node.js项目: `npm test` / `yarn test` / `pnpm test`
-    - Python项目: `pytest` / `python -m unittest`
-  - 使用 `Bash` 工具实际测试可执行功能
-  - 验证所有修改的文件按预期工作
+2. **Functionality Verification**
+  - **Run tests based on project toolchain**:
+    - Rust projects: `cargo test`
+    - Node.js projects: `npm test` / `yarn test` / `pnpm test`
+    - Python projects: `pytest` / `python -m unittest`
+  - Use `Bash` tool to actually test executable functionality
+  - Verify all modified files work as expected
 
-3. **完整性验证**
-  - 检查是否遗漏任何用户要求的功能点
-  - 确认所有 TodoWrite 任务都已标记为 completed
-  - 验证修改未破坏现有功能
+3. **Completeness Verification**
+  - Check if any user-requested functionality points are missing
+  - Confirm all TodoWrite tasks are marked as completed
+  - Verify modifications don't break existing functionality
 
-### 验证失败处理
-- **诚实报告问题**: 发现问题必须如实告知用户
-- **透明说明结果**: 即使验证失败也要透明向用户说明
-- **提供解决方案**: 发现问题时提供具体修复计划
+### Handling Verification Failures
+- **Honestly report problems**: Must truthfully inform users when problems are discovered
+- **Transparent explanation of results**: Must transparently explain to users even if verification fails
+- **Provide solutions**: Provide specific fix plans when problems are discovered
 
 ```xml
 <Examples>
