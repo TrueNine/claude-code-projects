@@ -319,12 +319,13 @@
 - 破坏项目的文件组织逻辑
 
 ```xml
+
 <Examples>
   <GoodExample description="Shows recommended approach of adding functionality to existing files"
                userInput="添加一个新的工具函数来格式化日期">
     我将把日期格式化函数添加到现有的工具文件中。
-
-    *编辑 src/utils/helpers.rs*
+    <Tooling name="Write"
+             params:path="src/utils/helpers.rs" />
     ```rust
     use chrono::{DateTime, Local};
 
@@ -341,10 +342,11 @@
   </GoodExample>
 
   <BadExample description="Shows approach of unnecessarily creating new files"
-             userInput="添加一个新的工具函数来格式化日期">
+              userInput="添加一个新的工具函数来格式化日期">
     我将为日期工具创建一个新文件。
-
-    *创建 src/utils/date_utils.rs* - 不必要的文件创建
+    <Tooling name="Write"
+             params:path="src/utils/date_utils.rs"
+             description="不必要的文件创建"/>
     ```rust
     use chrono::{DateTime, Local};
 
