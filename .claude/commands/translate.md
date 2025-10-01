@@ -54,11 +54,17 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
 - **Code integrity**: Keep code examples unchanged
 
 ```xml
-<Example description="Filename conversion">
-  - `translate.locale.md` → `translate.md`
-  - `setup.locale.md` → `setup.md`
-  - `config.locale.yaml` → `config.yaml`
-</Example>
+<Examples description="Filename conversion">
+  <Example>
+    translate.locale.md -> translate.md
+  </Example>
+  <Example>
+    setup.locale.md` -> setup.md
+  </Example>
+  <Example>
+    config.locale.yaml -> config.yaml
+  </Example>
+</Examples>
 ```
 
 ```xml

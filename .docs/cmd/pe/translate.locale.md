@@ -10,8 +10,8 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 
 1. **解析文件名**：
   - **优先匹配特殊路径**，按照下列映射生成目标文件：
-    - `.docs/cmd/**.locale.md` -> `.claude/commands/**.md`
-    - `.docs/sa/**.locale.md` -> `.claude/agents/**.md`
+    - `.docs/cmd/**/*.locale.md` -> `.claude/commands/**/*.md`
+    - `.docs/sa/**/*.locale.md` -> `.claude/agents/***/*.md`
     - `.docs/CLAUDE-cmd.locale.md` -> `.docs/cmd/CLAUDE.md`
     - `.docs/CLAUDE-sa.locale.md` -> `.docs/sa/CLAUDE.md`
     - `.docs/CLAUDE-user.locale.md` -> `.docs/user/CLAUDE.md`
@@ -20,7 +20,7 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
   - **未命中特殊路径时**，使用通用规则：`filename.locale.extension` -> `filename.extension`
 
 2. **检查目标文件**:
-  - 使用 `Search(pattern: "$1")` 验证目标文件是否存在
+  - 使用 `Search(pattern: "target_file")` 验证目标文件是否存在
   - 模式: 基于步骤 2 确定的目标路径
 
 3. **删除现有文件**:
