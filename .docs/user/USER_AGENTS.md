@@ -36,25 +36,18 @@
 <Examples>
   <GoodExample description="Example: Correctly identify and use project toolchain"
                userInput="帮我运行测试">
-    First check repository configuration.
-
-    *Use `Glob` to find `Cargo.toml`*
-    *Confirm `Cargo.toml` exists in root directory*
-
-    `Rust` projects always use `cargo` to run tests:
-
-    ```bash
-    cargo test
-    ```
+    <Tooling name="Search" params:pattern="Cargo.toml">
+      Locate Cargo.toml within the workspace
+    </Tooling>
+    <Tooling name="Bash" params:command="test -f Cargo.toml">
+      Confirm Cargo.toml exists at the repository root
+    </Tooling>
   </GoodExample>
 
   <BadExample description="Counterexample: Assuming toolchain without investigation"
              userInput="帮我运行测试">
-    Directly assume `npm` without investigation, violating rules:
-
-    ```bash
-    npm test  # Error - didn't detect project's actual toolchain
-    ```
+    <Tooling name="Bash"
+             params:command="npm test" />
   </BadExample>
 </Examples>
 ```
@@ -74,7 +67,7 @@
 
 ```xml
 <Examples>
-  <GoodExample description="Example: Correct format with 2-space indentation">
+  <GoodExample description="Example: 2-space indentation correct format">
     fn main() {
       println!("Hello World");
     }
@@ -93,23 +86,58 @@
 
 ```xml
 <Examples>
-  <GoodExample description="Example: Recommended naming conventions">
-    // Recommended: Types use PascalCase
+  <GoodExample description="Types use PascalCase">
     struct UserAccount;
-    // Recommended: Variables use camelCase
+  </GoodExample>
+
+  <GoodExample description="Variables use camelCase">
     let userName = "john";
-    // Acceptable: snake_case
+  </GoodExample>
+
+  <GoodExample description="Variables acceptable snake_case">
     let user_count = 42;
-    // Rust modules follow snake_case
+  </GoodExample>
+
+  <GoodExample description="Rust modules use snake_case">
     mod user_service;
   </GoodExample>
 
-  <BadExample description="Counterexample: Naming methods to avoid">
-    // Avoid: kebab-case
+  <BadExample description="Variables use kebab-case">
     let user-name = "john";
-    // Avoid: kebab-case type names
+  </BadExample>
+
+  <BadExample description="Types use kebab-case">
     struct user-account;
   </BadExample>
+</Examples>
+```
+
+### Code Style Constraints
+
+- Comments should be placed above statements, prohibited inline supplements, to avoid elongating code lines and reducing readability
+- Conditional statements and loop bodies must explicitly use braces, to avoid introducing serious vulnerabilities due to omission
+
+```xml
+<Examples>
+  <GoodExample description="Conditional branches always use braces">
+    if (is_ready) {
+      handle_ready();
+    }
+  </GoodExample>
+
+  <BadExample description="Omitting braces leads to logic失控">
+    if (is_ready)
+      handle_ready();
+      finalize();
+  </BadExample>
+
+  <BadExample description="Inline comments elongate code lines">
+    let total = price * quantity; // skip tax for legacy orders
+  </BadExample>
+  <GoodExample description="Correct comment method">
+    // skip tax for legacy orders
+    let total = price * quantity;
+  </GoodExample>
 </Examples>
 ```
 
@@ -120,20 +148,16 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
 
 ```xml
 <Examples>
-  <GoodExample description="Example: Using guard clause to reduce nesting">
-    // Use Guard Clause
+  <GoodExample description="Use guard clause to reduce nesting">
     fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
       let user = user?;
       if !user.is_active { return None; }
       if user.age < 18 { return None; }
-
-      // Main logic
       handle_adult_user(user)
     }
   </GoodExample>
 
-  <BadExample description="Counterexample: Deep nesting writing style">
-    // Avoid deep nesting
+  <BadExample description="Deep nesting writing style">
     fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
       if let Some(user) = user {
         if user.is_active {
@@ -154,8 +178,7 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
 
 ```xml
 <Examples>
-  <GoodExample description="Example: Using match or lookup table to manage multiple conditions">
-    // Use match
+  <GoodExample description="match branches cover multiple conditions">
     fn get_error_message(status_code: u16) -> &'static str {
       match status_code {
         403 => "Permission denied, cannot access this resource",
@@ -165,8 +188,9 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
         _ => "Unknown error"
       }
     }
+  </GoodExample>
 
-    // Use lookup table
+  <GoodExample description="Lookup table replaces multiple branches">
     use std::collections::HashMap;
 
     fn get_error_message_lookup(status_code: u16) -> &'static str {
@@ -183,8 +207,7 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
     }
   </GoodExample>
 
-  <BadExample description="Counterexample: Large if-else chains handling multiple conditions">
-    // Avoid multiple if-else
+  <BadExample description="Large if-else chains handle multiple conditions">
     fn get_error_message(status_code: u16) -> &'static str {
       let mut error_message = "Unknown error";
 
@@ -222,29 +245,29 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
 - Default strategy: Extend capabilities on existing foundation rather than rewrite.
 
 ### Investigation Workflow
-1. Comprehensive search: Use `Grep` to explore keywords, use `Glob` to view directory structure, use `Read` to深入 key files.
+1. Comprehensive search: Use `Search` tool to explore keywords, use `Glob` to view directory structure, use `Read` to深入 key files.
 2. Architecture analysis: Understand design patterns and coding style, locate reusable components and best extension points.
 3. Reuse strategy: First choice is to extend existing classes/functions, second is to compose existing components, last is to create new components with sufficient justification.
 
 ```xml
 <Examples>
-  <GoodExample description="Example: Investigate and reuse existing code before development"
+  <GoodExample description="Investigate and reuse existing code before development"
                userInput="帮我实现一个用户认证功能">
-    First search for authentication-related code.
-
-    *Use `Grep` and `Glob` to search for `auth` keywords*
-    *Locate `AuthService` and `UserValidator`*
-
-    Choose to extend existing components, avoid reinventing the wheel:
+    先搜索认证相关代码。
+    <Tooling name="Search"
+             params:words="auth" />
+    <Tooling name="Read"
+             params:path="AuthService" />
+    选择扩展现有组件, 避免重造轮子:
 
     ```rust
-    // Extend existing AuthService
+    // 扩展现有 AuthService
     impl AuthService {
       pub async fn login(&self, credentials: LoginCredentials) -> Result<AuthResult, AuthError> {
         // ... existing implementation
       }
 
-      // Add multi-factor authentication capability
+      // 新增多因素认证能力
       pub async fn enable_two_factor(&self, user_id: &str) -> Result<TwoFactorSetup, AuthError> {
         let user = self.validate_user(user_id).await?;
         self.setup_two_factor(&user).await
@@ -253,12 +276,12 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
     ```
   </GoodExample>
 
-  <BadExample description="Counterexample: Skip investigation and directly rewrite functionality"
+  <BadExample description="Skip investigation and directly rewrite functionality"
              userInput="帮我实现一个用户认证功能">
-    Skip investigation and directly rewrite, violation:
-
+    跳过调查直接重写, 违规:
+    <Tooling name="Write"
+             params:path="NewAuthSystem" />
     ```rust
-    // Reinventing the wheel - prohibited
     struct NewAuthSystem;
 
     impl NewAuthSystem {
@@ -291,20 +314,20 @@ Avoid creating new files:
 
 ```xml
 <Examples>
-  <GoodExample description="Example: Extend functionality within existing files"
+  <GoodExample description="Extend functionality within existing files"
                userInput="添加一个新的工具函数来格式化日期">
-    Merge date formatting function into existing utility file.
+    将日期格式化函数合并进现有工具文件。
     <Tooling name="Write"
              params:path="src/utils/helpers.rs" />
     ```rust
     use chrono::{DateTime, Local};
 
-    // Add new function in helpers.rs
+    // 在 helpers.rs 中新增函数
     pub fn format_date(date: DateTime<Local>, format: &str) -> String {
       date.format(format).to_string()
     }
 
-    // Keep consistent style with existing functions
+    // 保持与现有函数风格一致
     pub fn format_currency(amount: f64) -> String { /* ... */ "".to_string() }
     pub fn format_phone_number(phone: &str) -> String { /* ... */ "".to_string() }
     ```
@@ -312,10 +335,10 @@ Avoid creating new files:
 
   <BadExample description="Counterexample: Unnecessarily creating new files"
               userInput="添加一个新的工具函数来格式化日期">
-    Unnecessarily split into new file:
+    不必要地拆出新文件:
     <Tooling name="Write"
              params:path="src/utils/date_utils.rs"
-             description="Unnecessary file creation"/>
+             description="不必要的文件创建"/>
     ```rust
     use chrono::{DateTime, Local};
 
@@ -400,11 +423,11 @@ Avoid creating new files:
   <BadExample description="Suppressing warnings">
     fn validate_config(config: &Config) {
       if config.timeout < 1000 {
-        // Suppress warning - prohibited
+        // 镇压警告 - 禁止
         // println!("Warning: timeout is very short");
       }
 
-      // Don't inform caller of potential issues
+      // 未告知调用者潜在问题
     }
   </BadExample>
 </Examples>
@@ -412,14 +435,27 @@ Avoid creating new files:
 
 ### Exception Handling Examples
 
+- Keep exceptions transparent, prioritize letting exceptions bubble up
+- If catching is needed, must supplement context and rethrow or return error objects, prohibit silent swallowing
+- Prioritize reusing existing exception types, avoid arbitrarily creating new exceptions leading to increased maintenance costs
+
 ```xml
-<Example description="Empty catch block">
-  try {
-    risky_operation();
-  } catch (Exception e) {
-    // Empty exception handling block - prohibited
-  }
-</Example>
+<Examples>
+  <GoodExample description="Reuse existing exceptions and supplement context">
+    try {
+      riskyOperation();
+    } catch (Exception e) {
+      throw new IOException("Unable to finish task", e);
+    }
+  </GoodExample>
+
+  <BadExample description="Silent swallowing exceptions causes information loss">
+    try {
+      riskyOperation();
+    } catch (Exception ignored) {
+    }
+  </BadExample>
+</Examples>
 ```
 
 # Strict Verification Mechanism
@@ -433,19 +469,19 @@ Avoid creating new files:
 1. Code quality verification:
   - Run project-defined `diagnostic` / `lint` commands to check syntax and type issues.
   - Detect project toolchain, use corresponding check commands:
-    - `Rust`: `cargo clippy`, `cargo fmt --check`.
-    - `Node.js`: Run `lint` scripts according to `package.json`.
-    - `Python`: `flake8`, `black --check`, `mypy` etc.
+    - `Rust`: `cargo clippy`, `cargo fmt --check`。
+    - `Node.js`: Run `lint` scripts according to `package.json`。
+    - `Gradle`: `build.gradle.kts`, `settings.gradle.kts` etc.。
 2. Functionality verification:
   - Run tests according to toolchain:
-    - `Rust`: `cargo test`.
-    - `Node.js`: `npm test` / `yarn test` / `pnpm test`.
-    - `Python`: `pytest` or `python -m unittest`.
+    - `Rust`: `cargo test`。
+    - `Node.js`: `yarn test` / `pnpm test`。
+    - `Gradle`: `./gradlew test`。
   - Execute necessary manual verification through `Bash` tool.
   - Confirm all modifications work as expected.
 3. Completeness verification:
   - Check if user requirements are covered.
-  - Confirm all `TodoWrite` tasks marked as `completed`.
+  - Confirm all `TodoWrite` tasks marked as `completed`。
   - Verify changes don't break existing functionality.
 
 ## Verification Failure Handling
@@ -455,25 +491,30 @@ Avoid creating new files:
 
 ```xml
 <Examples>
-  <GoodExample description="Example: Comprehensively execute verification process"
+  <GoodExample description="Comprehensively execute verification process"
                userInput="帮我修复这个登录功能的bug">
-    Execute complete verification after fix.
+    修复后执行完整验证。
+    <Tooling name="Bash" params:command="diagnostic">
+      Run project-defined diagnostic command to surface syntax issues
+    </Tooling>
+    <Tooling name="Bash" params:command="cargo test">
+      Execute `cargo test` aligned with the detected Cargo configuration
+    </Tooling>
+    <Tooling name="Bash" params:command="manual login flow">
+      Drive a manual login flow check via Bash to confirm behaviour
+    </Tooling>
+    全部验证通过:
 
-    *Run project-defined `diagnostic` command to check for syntax errors*
-    *Run `cargo test` according to `Cargo` configuration*
-    *Use `Bash` tool to manually test login process*
+    - ✅ 无语法或类型错误。
+    - ✅ `cargo test` 全绿。
+    - ✅ 手测登录流程正常。
 
-    All verifications passed:
-    - ✅ No syntax or type errors.
-    - ✅ `cargo test` all green.
-    - ✅ Manual test confirms login process normal.
-
-    Login issue has been fixed and verified.
+    登录问题已修复并验证。
   </GoodExample>
 
-  <BadExample description="Counterexample: Claiming completion without verification"
+  <BadExample description="Claiming completion without verification"
              userInput="帮我修复这个登录功能的bug">
-    Claim fix completed without verification, violation.
+    未验证即声称修复完成, 违规。
   </BadExample>
 </Examples>
 ```
@@ -486,3 +527,4 @@ Avoid creating new files:
 - Examples mostly use `xml` structure presentation, have high reference value, when following examples prioritize understanding their structured intent.
 - When as `AI Agent` assisting users to update or write such files, assume user is a programmer, possibly facing chaotic projects or outdated documents, please proactively correct and fill gaps.
 - Don't directly copy existing `**.locale.md` content; please use English original as authoritative source, translate it into British Chinese under standard American English logic, ensure locale version accurate and readable.
+- When user proposes new rules or ideas, need to immediately implement updates in the currently editing locale file, avoid delayed processing.
