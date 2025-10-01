@@ -21,7 +21,7 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
 
 2. **Check target file**:
   - Use `Glob(pattern: "target_file")` to verify if target file exists
-  - Pattern: Based on target path determined in step 2
+  - Pattern: Based on target path determined in step 1
 
 3. **Delete existing file**:
   - If target file exists, use Bash tool to delete
@@ -36,7 +36,7 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
 
 6. **Write target file**:
   - Create new target file and write translated content
-  - No need to read existing target file (deleted in step 4)
+  - No need to read existing target file (deleted in step 3)
 
 7. **Error handling**:
   - If `Write` fails, immediately delete target file

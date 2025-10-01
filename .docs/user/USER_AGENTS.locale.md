@@ -18,6 +18,10 @@
   3. 建议寻求专业支持。
   4. 结束对话。
 
+
+
+
+
 # 项目工具链配置约束
 
 ## 严格遵守项目工具链
@@ -29,6 +33,9 @@
   - `composer.json`: `PHP`。
   - `Gemfile`: `Ruby`。
 
+
+
+
 ## 工具链优先级
 - 采用顺序: 1) 根目录配置文件; 2) `.tool-versions` 或 `mise`; 3) `README` 指南; 4) 现有脚本与 `CI`。
 
@@ -36,34 +43,33 @@
 <Examples>
   <GoodExample description="示例: 正确识别并使用项目工具链"
                userInput="帮我运行测试">
-    先检查仓库配置。
-
-    *使用 `Glob` 查找 `Cargo.toml`*
-    *确认根目录存在 `Cargo.toml`*
-
-    `Rust` 项目固定使用 `cargo` 执行测试:
-
-    ```bash
-    cargo test
-    ```
+    <Tooling name="Search" params:pattern="Cargo.toml">
+      Locate Cargo.toml within the workspace
+    </Tooling>
+    <Tooling name="Bash" params:command="test -f Cargo.toml">
+      Confirm Cargo.toml exists at the repository root
+    </Tooling>
   </GoodExample>
 
-  <BadExample description="反例: 未调查即假设工具链"
+  <BadExample description="未调查即假设工具链"
              userInput="帮我运行测试">
-    未调查直接假设 `npm`, 违反规则:
-
-    ```bash
-    npm test  # 错误 - 未检测项目实际使用的工具链
-    ```
+    <Tooling name="Bash"
+             params:command="npm test" />
   </BadExample>
 </Examples>
 ```
+
+
+
 
 ## 命令生成规范
 - 构建: 根据工具链选择 `cargo build` / `npm run build` / `pip install` 等。
 - 测试: 使用 `cargo test` / `npm test` / `pytest` 等, 不得自创命令。
 - 格式化: 遵循项目脚本, 如 `cargo fmt`, `prettier`, `black`。
 - 检查: 根据语言运行 `cargo clippy`, `eslint`, `flake8` 等。
+
+
+
 
 # 代码质量标准
 
@@ -88,30 +94,75 @@
 </Examples>
 ```
 
+
+
+
 ## 命名规范
 - 优先顺序: `PascalCase` 或 `camelCase` -> `snake_case` -> 避免 `kebab-case` (除非语言强制)。
 
 ```xml
 <Examples>
-  <GoodExample description="示例: 推荐的命名方式">
-    // 推荐: 类型使用 PascalCase
+  <GoodExample description="类型采用 PascalCase">
     struct UserAccount;
-    // 推荐: 变量使用 camelCase
+  </GoodExample>
+
+  <GoodExample description="变量采用 camelCase">
     let userName = "john";
-    // 可接受: snake_case
+  </GoodExample>
+
+  <GoodExample description="变量可接受 snake_case">
     let user_count = 42;
-    // Rust 模块遵循 snake_case
+  </GoodExample>
+
+  <GoodExample description="Rust 模块使用 snake_case">
     mod user_service;
   </GoodExample>
 
-  <BadExample description="反例: 需要避免的命名方式">
-    // 避免: kebab-case
+  <BadExample description="变量使用 kebab-case">
     let user-name = "john";
-    // 避免: kebab-case 类型名
+  </BadExample>
+
+  <BadExample description="类型使用 kebab-case">
     struct user-account;
   </BadExample>
 </Examples>
 ```
+
+
+
+
+### 代码风格约束
+
+- 注释应当置于语句上方, 禁止行尾补充, 以免拉长代码行并降低可读性
+- 条件语句与循环体必须显式使用大括号, 避免因省略而引入严重漏洞
+
+```xml
+<Examples>
+  <GoodExample description="条件分支始终使用大括号">
+    if (is_ready) {
+      handle_ready();
+    }
+  </GoodExample>
+
+  <BadExample description="省略大括号导致逻辑失控">
+    if (is_ready)
+      handle_ready();
+      finalize();
+  </BadExample>
+
+  <BadExample description="行内注释拉长代码行">
+    let total = price * quantity; // skip tax for legacy orders
+  </BadExample>
+  <GoodExample description="正确注释方式">
+    // skip tax for legacy orders
+    let total = price * quantity;
+  </GoodExample>
+</Examples>
+```
+
+
+
+
 
 ## 代码编写技巧
 
@@ -120,20 +171,16 @@
 
 ```xml
 <Examples>
-  <GoodExample description="示例: 使用 guard clause 降低嵌套">
-    // 使用 Guard Clause
+  <GoodExample description="使用 guard clause 降低嵌套">
     fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
       let user = user?;
       if !user.is_active { return None; }
       if user.age < 18 { return None; }
-
-      // 主逻辑
       handle_adult_user(user)
     }
   </GoodExample>
 
-  <BadExample description="反例: 深层嵌套的写法">
-    // 避免深层嵌套
+  <BadExample description="深层嵌套的写法">
     fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
       if let Some(user) = user {
         if user.is_active {
@@ -154,8 +201,7 @@
 
 ```xml
 <Examples>
-  <GoodExample description="示例: 采用 match 或查表管理多条件">
-    // 使用 match
+  <GoodExample description="match 分支覆盖多条件">
     fn get_error_message(status_code: u16) -> &'static str {
       match status_code {
         403 => "Permission denied, cannot access this resource",
@@ -165,8 +211,9 @@
         _ => "Unknown error"
       }
     }
+  </GoodExample>
 
-    // 使用查表
+  <GoodExample description="查表替代多分支">
     use std::collections::HashMap;
 
     fn get_error_message_lookup(status_code: u16) -> &'static str {
@@ -183,8 +230,7 @@
     }
   </GoodExample>
 
-  <BadExample description="反例: 大量 if-else 链处理多条件">
-    // 避免多个 if-else
+  <BadExample description="大量 if-else 链处理多条件">
     fn get_error_message(status_code: u16) -> &'static str {
       let mut error_message = "Unknown error";
 
@@ -204,9 +250,17 @@
 </Examples>
 ```
 
+
+
+
+
 ## 代码错误检测
 - 每次完成功能后调用项目现成的 `diagnostic` 或 `lint` 指令捕获语法与类型问题。
 - 修改文件即刻重新诊断, 防止错误堆积。
+
+
+
+
 
 # 开发原则与约束
 
@@ -215,6 +269,9 @@
 - 即便现有项目建立在动态语言上, 提出方案时也要规划向静态类型迁移的路线, 包含阶段目标与风险提示。
 - 禁止主动扩充新的动态语言组件; 若用户坚持动态语言, 需再次确认并完整记录潜在风险。
 
+
+
+
 ## 禁止重复造轮子
 - 开发前先调查现有功能与架构。
 - 强制复用现有组件、工具或函数, 不得重新实现。
@@ -222,19 +279,19 @@
 - 默认策略: 在现有基础上扩展能力而非重写。
 
 ### 调查工作流程
-1. 全面搜索: 使用 `Grep` 探索关键词, 用 `Glob` 查看目录结构, 以 `Read` 深入关键文件。
+1. 全面搜索: 使用 `Search` 工具探索关键词, 用 `Glob` 查看目录结构, 以 `Read` 深入关键文件。
 2. 架构分析: 理解设计模式与编码风格, 定位可复用组件与最佳扩展点。
 3. 复用策略: 首选扩展已有类/函数, 其次组合现有组件, 最后才创建新组件并提供充分理由。
 
 ```xml
 <Examples>
-  <GoodExample description="示例: 开发前调查并复用现有代码"
+  <GoodExample description="开发前调查并复用现有代码"
                userInput="帮我实现一个用户认证功能">
     先搜索认证相关代码。
-
-    *使用 `Grep` 和 `Glob` 搜索 `auth` 关键词*
-    *定位 `AuthService` 与 `UserValidator`*
-
+    <Tooling name="Search"
+             params:words="auth" />
+    <Tooling name="Read"
+             params:path="AuthService" />
     选择扩展现有组件, 避免重造轮子:
 
     ```rust
@@ -253,12 +310,12 @@
     ```
   </GoodExample>
 
-  <BadExample description="反例: 跳过调查直接重写功能"
+  <BadExample description="跳过调查直接重写功能"
              userInput="帮我实现一个用户认证功能">
     跳过调查直接重写, 违规:
-
+    <Tooling name="Write"
+             params:path="NewAuthSystem" />
     ```rust
-    // 重新造轮子 - 禁止
     struct NewAuthSystem;
 
     impl NewAuthSystem {
@@ -270,6 +327,9 @@
   </BadExample>
 </Examples>
 ```
+
+
+
 
 ## 文件管理原则
 - 优先编辑现有文件, 避免创建新文件。
@@ -291,7 +351,7 @@
 
 ```xml
 <Examples>
-  <GoodExample description="示例: 在现有文件内扩展功能"
+  <GoodExample description="在现有文件内扩展功能"
                userInput="添加一个新的工具函数来格式化日期">
     将日期格式化函数合并进现有工具文件。
     <Tooling name="Write"
@@ -326,6 +386,9 @@
   </BadExample>
 </Examples>
 ```
+
+
+
 
 ## 错误处理透明化原则
 - 禁止掩盖或镇压任何错误与警告。
@@ -412,15 +475,31 @@
 
 ### 异常处理示例
 
+- 保持异常透明, 优先让异常向上抛出
+- 如需捕获, 必须补充上下文并重新抛出或返回错误对象, 禁止静默吞掉
+- 优先复用现有异常类型, 避免随意创建新异常导致维护成本上升
+
 ```xml
-<Example description="空catch块">
-  try {
-    risky_operation();
-  } catch (Exception e) {
-    // 空的异常处理块 - 禁止
-  }
-</Example>
+<Examples>
+  <GoodExample description="复用现有异常并补充上下文">
+    try {
+      riskyOperation();
+    } catch (Exception e) {
+      throw new IOException("Unable to finish task", e);
+    }
+  </GoodExample>
+
+  <BadExample description="静默吞掉异常导致信息丢失">
+    try {
+      riskyOperation();
+    } catch (Exception ignored) {
+    }
+  </BadExample>
+</Examples>
 ```
+
+
+
 
 # 严格验证机制
 
@@ -435,18 +514,22 @@
   - 探测项目工具链, 使用对应检查命令:
     - `Rust`: `cargo clippy`, `cargo fmt --check`。
     - `Node.js`: 依 `package.json` 运行 `lint` 脚本。
-    - `Python`: `flake8`, `black --check`, `mypy` 等。
+    - `Gradle`: `build.gradle.kts`, `settings.gradle.kts` 等。
 2. 功能验证:
   - 按工具链运行测试:
     - `Rust`: `cargo test`。
-    - `Node.js`: `npm test` / `yarn test` / `pnpm test`。
-    - `Python`: `pytest` 或 `python -m unittest`。
+    - `Node.js`: `yarn test` / `pnpm test`。
+    - `Gradle`: `./gradlew test`。
   - 通过 `Bash` 工具执行必要的手动验证。
   - 确认所有修改按预期运行。
 3. 完整性验证:
   - 检查是否覆盖用户需求。
   - 确认 `TodoWrite` 任务全部标记为 `completed`。
   - 验证改动未破坏既有功能。
+
+
+
+
 
 ## 验证失败处理
 - 如实报告发现的问题。
@@ -455,15 +538,20 @@
 
 ```xml
 <Examples>
-  <GoodExample description="示例: 全面执行验证流程"
+  <GoodExample description="全面执行验证流程"
                userInput="帮我修复这个登录功能的bug">
     修复后执行完整验证。
-
-    *运行项目定义的 `diagnostic` 命令排查语法错误*
-    *根据 `Cargo` 配置运行 `cargo test`*
-    *使用 `Bash` 工具手动测登录流程*
-
+    <Tooling name="Bash" params:command="diagnostic">
+      Run project-defined diagnostic command to surface syntax issues
+    </Tooling>
+    <Tooling name="Bash" params:command="cargo test">
+      Execute `cargo test` aligned with the detected Cargo configuration
+    </Tooling>
+    <Tooling name="Bash" params:command="manual login flow">
+      Drive a manual login flow check via Bash to confirm behaviour
+    </Tooling>
     全部验证通过:
+
     - ✅ 无语法或类型错误。
     - ✅ `cargo test` 全绿。
     - ✅ 手测登录流程正常。
@@ -471,12 +559,15 @@
     登录问题已修复并验证。
   </GoodExample>
 
-  <BadExample description="反例: 未验证即声称完成"
+  <BadExample description="未验证即声称完成"
              userInput="帮我修复这个登录功能的bug">
     未验证即声称修复完成, 违规。
   </BadExample>
 </Examples>
 ```
+
+
+
 
 # 提示词编写规范
 
@@ -486,3 +577,4 @@
 - 示例多使用 `xml` 结构呈现，具备高参考价值，遵循示例时优先理解其结构化意图。
 - 作为 `AI Agent` 协助用户更新或撰写此类文件时，要假设用户是一名程序员，可能正面临混乱项目或陈旧文档，请主动修正并补齐缺漏。
 - 不要直接照搬现有的 `**.locale.md` 内容；请以英文原稿为权威来源，将其翻译成标准美式英语逻辑下的英式中文，确保 locale 版本准确可读。
+- 当用户提出新的规则或想法时, 需立刻在当前正在编辑的 locale 文件中落实更新, 避免延后处理。
