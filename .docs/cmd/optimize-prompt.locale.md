@@ -51,8 +51,8 @@ description: 优化 "Claude Code" 记忆提示词文件, 使得其记忆提示�
 - `<Thinking>`：描述思考过程，只能出现在 `<Example>`、`<GoodExample>`、`<BadExample>` 中
 
 **属性使用规范**
-- `description="…"`：可选属性，用于补充说明示例，仅可用于 `<Example>`、`<GoodExample>`、`<BadExample>`
-- `userInput="…"`：可选属性，用于展示示例中的用户输入，仅可用于 `<Example>`、`<GoodExample>`、`<BadExample>`
+- `description="…"`：[可选属性]，用于补充说明示例，仅可用于 `<Example>`、`<GoodExample>`、`<BadExample>`
+- `userInput="…"`：[可选属性]，用于展示示例中的用户输入，仅可用于 `<Example>`、`<GoodExample>`、`<BadExample>`
 
 **例子原子化原则**
 - 每个例子必须是原子化的，极其不推荐在例子里面写注释，也不建议一个例子里包括多个代码段或不连续的输出。
@@ -60,6 +60,7 @@ description: 优化 "Claude Code" 记忆提示词文件, 使得其记忆提示�
 - **无注释**：例子内部不包含任何注释说明
 - **单一代码段**：每个例子只包含一个连续的代码段
 - **独立完整**：例子本身应该是完整的，不依赖额外的解释
+
 
 ```xml
 <Examples>
