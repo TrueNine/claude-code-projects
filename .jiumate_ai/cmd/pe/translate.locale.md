@@ -10,15 +10,15 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 ## [STEP-1] **解析输出路径**：
 **优先匹配特殊路径**，按照下列映射生成目标文件：
 
-| 源文件路径                                             | 输出文件路径                                                                         |
-|---------------------------------------------------|--------------------------------------------------------------------------------|
-| `.jiumate_ai/.locale_mapping/**/*.locale.md`      | `PROJECT_DIR/**/*.md`                                                          |
-| `.jiumate_ai/.locale_mapping/**/AGENTS.locale.md` | `PROJECT_DIR/**/AGENTS.md`, `PROJECT_DIR/**/CLAUDE.md`                         |
-| `.jiumate_ai/.locale_mapping/AGENTS.locale.md`    | `PROJECT_DIR/AGENTS.md`, `PROJECT_DIR/CLAUDE.md`                               |
-| `.jiumate_ai/.locale_mapping/README.locale.md`    | `PROJECT_DIR/README.md`                                                        |
-| `.jiumate_ai/cmd/**/*.locale.md`                  | `.claude/commands/**/*.md`, `.jiumate_ai/.output/.claude/commands/**/*.md`     |
-| `.jiumate_ai/sa/**/*.locale.md`                   | `.claude/subagents/**/*.md`, `.jiumate_ai/.output/.claude/subagents/**/*.md`   |
-| `.jiumate_ai/user/**/*.locale.md`                 | `~/.claude/CALUDE.md`, `~/.codex/AGENTS.md`,`.jiumate_ai/.output/GLOBAL/**.md` |
+| 源文件路径                                     | 输出文件路径                                                                         |
+|-------------------------------------------|--------------------------------------------------------------------------------|
+| `.jiumate_ai/.locale/**/*.locale.md`      | `**/*.md`                                                                      |
+| `.jiumate_ai/.locale/**/AGENTS.locale.md` | `**/AGENTS.md`, `**/CLAUDE.md`                                                 |
+| `.jiumate_ai/.locale/AGENTS.locale.md`    | `AGENTS.md`, `CLAUDE.md`                                                       |
+| `.jiumate_ai/.locale/README.locale.md`    | `README.md`                                                                    |
+| `.jiumate_ai/cmd/**/*.locale.md`          | `.claude/commands/**/*.md`, `.jiumate_ai/.output/.claude/commands/**/*.md`     |
+| `.jiumate_ai/sa/**/*.locale.md`           | `.claude/subagents/**/*.md`, `.jiumate_ai/.output/.claude/subagents/**/*.md`   |
+| `.jiumate_ai/user/**/*.locale.md`         | `~/.claude/CALUDE.md`, `~/.codex/AGENTS.md`,`.jiumate_ai/.output/GLOBAL/**.md` |
 
 **未命中特殊路径时**，使用通用规则：`filename.locale.extension` -> `filename.extension`
 
@@ -68,13 +68,13 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
     .jiumate_ai/cmd/setup.locale.md` -> [.claude/commands/setup.md, .jiumate_ai/.output/.claude/commands/setup.md]
   </Example>
   <Example>
-    .jiumate_ai/.locale_mapping/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]
+    .jiumate_ai/.locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]
   </Example>
   <Example>
-    .jiumate_ai/.locale_mapping/README.locale.md -> README.md
+    .jiumate_ai/.locale/README.locale.md -> README.md
   </Example>
   <Example>
-    .jiumate_ai/.locale_mapping/.jiumate_ai/cmd/AGENTS.locale.md -> [.jiumate_ai/cmd/AGENTS.md, .jiumate_ai/cmd/CLAUDE.md]
+    .jiumate_ai/.locale/.jiumate_ai/cmd/AGENTS.locale.md -> [.jiumate_ai/cmd/AGENTS.md, .jiumate_ai/cmd/CLAUDE.md]
   </Example>
 </Examples>
 ```
