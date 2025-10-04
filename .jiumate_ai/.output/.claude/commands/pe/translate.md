@@ -1,7 +1,7 @@
 ---
 argument-hint: [ locale_markdown_file ] [ translation_description ]
 allowed-tools: Read, Write, Glob, Grep, Bash
-description: Translate Chinese localization memory prompt file to English memory prompt file, following consistent terminology and quality standards
+description: Translate Chinese localization memory prompt file to English memory prompt file, maintaining consistent terminology and quality standards
 ---
 
 Translate Chinese localization memory prompt file #$1 (.locale.md) to English memory prompt file, while maintaining quality standards and terminology consistency.
@@ -12,18 +12,18 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
 
 | Source file path                                          | Output file path                                                                      |
 |-----------------------------------------------------------|---------------------------------------------------------------------------------------|
-| `.jiumate_ai/.locale_mapping/**/*.locale.md`             | `PROJECT_DIR/**/*.md`                                                               |
-| `.jiumate_ai/.locale_mapping/**/AGENTS.locale.md`        | `PROJECT_DIR/**/AGENTS.md`, `PROJECT_DIR/**/CLAUDE.md`                              |
-| `.jiumate_ai/.locale_mapping/AGENTS.locale.md`          | `PROJECT_DIR/AGENTS.md`, `PROJECT_DIR/CLAUDE.md`                                    |
-| `.jiumate_ai/.locale_mapping/README.locale.md`          | `PROJECT_DIR/README.md`                                                             |
-| `.jiumate_ai/cmd/**/*.locale.md`                         | `.claude/commands/**/*.md`, `.jiumate_ai/.output/.claude/commands/**/*.md`          |
-| `.jiumate_ai/sa/**/*.locale.md`                          | `.claude/subagents/**/*.md`, `.jiumate_ai/.output/.claude/subagents/**/*.md`        |
-| `.jiumate_ai/user/**/*.locale.md`                        | `~/.claude/CALUDE.md`, `~/.codex/AGENTS.md`,`.jiumate_ai/.output/GLOBAL/**.md`      |
+| `.jiumate_ai/.locale/**/*.locale.md`                      | `**/*.md`                                                                             |
+| `.jiumate_ai/.locale/**/AGENTS.locale.md`                 | `**/AGENTS.md`, `**/CLAUDE.md`                                                        |
+| `.jiumate_ai/.locale/AGENTS.locale.md`                   | `AGENTS.md`, `CLAUDE.md`                                                              |
+| `.jiumate_ai/.locale/README.locale.md`                   | `README.md`                                                                           |
+| `.jiumate_ai/cmd/**/*.locale.md`                          | `.claude/commands/**/*.md`, `.jiumate_ai/.output/.claude/commands/**/*.md`           |
+| `.jiumate_ai/sa/**/*.locale.md`                           | `.claude/subagents/**/*.md`, `.jiumate_ai/.output/.claude/subagents/**/*.md`         |
+| `.jiumate_ai/user/**/*.locale.md`                         | `~/.claude/CALUDE.md`, `~/.codex/AGENTS.md`,`.jiumate_ai/.output/GLOBAL/**.md`         |
 
 **When special paths don't match**, use general rule: `filename.locale.extension` -> `filename.extension`
 
 ## [STEP-2] **Check target file**:
-- Use `Search(pattern: "<target_file>")` to verify target file exists
+- Use `Glob(pattern: "<target_file>")` to verify target file exists
 - Use `Bash(command: "mkdir <target_directory>"` to create all directories that should exist
 - Pattern: Based on target path determined in [STEP-1]
 
@@ -67,13 +67,13 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
     .jiumate_ai/cmd/setup.locale.md` -> [.claude/commands/setup.md, .jiumate_ai/.output/.claude/commands/setup.md]
   </Example>
   <Example>
-    .jiumate_ai/.locale_mapping/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]
+    .jiumate_ai/.locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]
   </Example>
   <Example>
-    .jiumate_ai/.locale_mapping/README.locale.md -> README.md
+    .jiumate_ai/.locale/README.locale.md -> README.md
   </Example>
   <Example>
-    .jiumate_ai/.locale_mapping/.jiumate_ai/cmd/AGENTS.locale.md -> [.jiumate_ai/cmd/AGENTS.md, .jiumate_ai/cmd/CLAUDE.md]
+    .jiumate_ai/.locale/.jiumate_ai/cmd/AGENTS.locale.md -> [.jiumate_ai/cmd/AGENTS.md, .jiumate_ai/cmd/CLAUDE.md]
   </Example>
 </Examples>
 ```
