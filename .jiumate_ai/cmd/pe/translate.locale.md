@@ -7,25 +7,28 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 将中文本地化记忆提示词文件 #$1 (.locale.md) 翻译为 英文 记忆提示词文件, 同时保持 质量标准 和 术语一致性.
 
 # 任务执行流程
-## [STEP-1] **解析文件名**：
-- **优先匹配特殊路径**，按照下列映射生成目标文件：
-  - `.docs/cmd/**/*.locale.md` -> `.claude/commands/**/*.md`
-  - `.docs/sa/**/*.locale.md` -> `.claude/agents/***/*.md`
-  - `.docs/AGENTS-cmd.locale.md` -> [`.docs/cmd/AGENTS.md`, `.docs/cmd/CLAUDE.md`]
-  - `.docs/AGENTS-sa.locale.md` -> [`.docs/sa/AGENTS.md`, `.docs/sa/CLAUDE.md`]
-  - `.docs/AGENTS-user.locale.md` -> [`.docs/user/AGENTS.md`, `.docs/user/CLAUDE.md`]
-  - `.docs/AGENTS-project.locale.md` -> [`.docs/project/AGENTS.md`, `.docs/project/AGENTS.md`]
-  - `.docs/AGENTS.locale.md` -> [`.docs/AGENTS.md`, `.docs/CLAUDE.md`]
-  - `AGENTS.locale.md` -> [`AGENTS.md`, `CLAUDE.md`]
-  - `README.locale.md` -> `README.md`
-- **未命中特殊路径时**，使用通用规则：`filename.locale.extension` -> `filename.extension`
+## [STEP-1] **解析输出路径**：
+**优先匹配特殊路径**，按照下列映射生成目标文件：
+
+| 源文件路径                                             | 输出文件路径                                                                         |
+|---------------------------------------------------|--------------------------------------------------------------------------------|
+| `.jiumate_ai/.locale_mapping/**/*.locale.md`      | `PROJECT_DIR/**/*.md`                                                          |
+| `.jiumate_ai/.locale_mapping/**/AGENTS.locale.md` | `PROJECT_DIR/**/AGENTS.md`, `PROJECT_DIR/**/CLAUDE.md`                         |
+| `.jiumate_ai/.locale_mapping/AGENTS.locale.md`    | `PROJECT_DIR/AGENTS.md`, `PROJECT_DIR/CLAUDE.md`                               |
+| `.jiumate_ai/.locale_mapping/README.locale.md`    | `PROJECT_DIR/README.md`                                                        |
+| `.jiumate_ai/cmd/**/*.locale.md`                  | `.claude/commands/**/*.md`, `.jiumate_ai/.output/.claude/commands/**/*.md`     |
+| `.jiumate_ai/sa/**/*.locale.md`                   | `.claude/subagents/**/*.md`, `.jiumate_ai/.output/.claude/subagents/**/*.md`   |
+| `.jiumate_ai/user/**/*.locale.md`                 | `~/.claude/CALUDE.md`, `~/.codex/AGENTS.md`,`.jiumate_ai/.output/GLOBAL/**.md` |
+
+**未命中特殊路径时**，使用通用规则：`filename.locale.extension` -> `filename.extension`
 
 ## [STEP-2] **检查目标文件**:
-- 使用 `Search(pattern: "target_file")` 验证目标文件是否存在
+- 使用 `Search(pattern: "<target_file>")` 验证目标文件是否存在
+- 使用 `Bash(command: "mkdir <target_directory>"` 创建所有应存在的目录
 - 模式: 基于 [STEP-1] 确定的目标路径
 
 ## [STEP-3] **删除现有文件**:
-- 如果目标文件存在，使用 `Bash(command: "rm <target_file>")` 工具删除
+- WHEN 目标文件存在 THEN 使用 `Bash(command: "rm <target_file>")` 工具删除
 - 命令: `Bash(command: "rm <target_file>")` (Linux/Mac) 或 等价 (Windows) 命令
 
 ## [STEP-4] **读取源文件**: `Read($1)`
@@ -36,10 +39,11 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 
 ## [STEP-6] **写入目标文件**:
 - 创建新的目标文件并写入翻译内容
+- WHEN 存在多个输出目标文件 THEN 先输出第一份目标文件, 随后调用 `Bash(command: "cp -R <first_file> <target_file>")` 直接复制以保证准确性
 - 无需读取现有目标文件 (已在 [STEP-4] 中删除)
 
 ## [STEP-7] **错误处理**:
-- 如果 `Write` 失败，立即 `Bash(command: "rm <target_file>")` 目标文件
+- WHEN 调用 `Write` 失败 THEN 立即 `Bash(command: "rm <target_file>")` 目标文件
 - 使用 `Bash(command: "rm <target_file")` 执行删除
 - 重新开始流程，不尝试修复
 
@@ -58,13 +62,19 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 ```xml
 <Examples description="文件路径转换">
   <Example>
-    translate.locale.md -> translate.md
+    .jiumate_ai/cmd/translate.locale.md -> [.claude/commands/translate.md, .jiumate_ai/.output/.claude/commands/translate.md]
   </Example>
   <Example>
-    setup.locale.md` -> setup.md
+    .jiumate_ai/cmd/setup.locale.md` -> [.claude/commands/setup.md, .jiumate_ai/.output/.claude/commands/setup.md]
   </Example>
   <Example>
-    AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]
+    .jiumate_ai/.locale_mapping/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]
+  </Example>
+  <Example>
+    .jiumate_ai/.locale_mapping/README.locale.md -> README.md
+  </Example>
+  <Example>
+    .jiumate_ai/.locale_mapping/.jiumate_ai/cmd/AGENTS.locale.md -> [.jiumate_ai/cmd/AGENTS.md, .jiumate_ai/cmd/CLAUDE.md]
   </Example>
 </Examples>
 ```
