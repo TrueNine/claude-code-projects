@@ -1,5 +1,3 @@
-
-
 This file provides guidance for `AI Agent` working in this repository.
 
 
@@ -29,28 +27,14 @@ This is a documentation and configuration repository for `AI Agent` workflows, f
 # Documentation Structure
 
 ```md
-`.docs/`
-  - `user/` - Global user prompts
-  - `project/` - Project-level prompts
+`.jiumate_ai/` - Similar to src, a source prompt working directory
+  - `.locale/` - Current project mapping memory prompts
+  - `user/` - Global user memory prompts
+  - `project/` - Project-level memory prompts
   - `cmd/` - Custom command prompts
   - `sa/` - Sub-agent prompts
   - `metaprompts/` - Prompt writing standards
 ```
-
-
-
-
-# Important Configuration
-
-## Project Conventions
-- **File Naming Standards**:
-  - Chinese documents: `*.locale.md`
-  - English documents: `*.md`
-  - Maintain bilingual correspondence
-- **Document Organization Principles**:
-  - Categorize by functional modules
-  - Maintain clear hierarchy
-  - Facilitate quick lookup
 
 
 
