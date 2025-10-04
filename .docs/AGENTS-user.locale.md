@@ -1,8 +1,3 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this Repository.
-
-## ...
 
 - 此文件夹中存储着 claude code 的全局记忆提示词
 - 它们应该是通用的, 而不是针对某种特定语言, 也不针对特定项目

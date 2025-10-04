@@ -8,46 +8,46 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
 
 # Task Execution Workflow
 
-1. **Parse filename**:
-  - **Priority matching special paths**, generate target file according to the following mapping:
-    - `.docs/cmd/**/*.locale.md` -> `.claude/commands/**/*.md`
-    - `.docs/sa/**/*.locale.md` -> `.claude/agents/***/*.md`
-    - `.docs/CLAUDE-cmd.locale.md` -> `.docs/cmd/CLAUDE.md`
-    - `.docs/CLAUDE-sa.locale.md` -> `.docs/sa/CLAUDE.md`
-    - `.docs/CLAUDE-user.locale.md` -> `.docs/user/CLAUDE.md`
-    - `.docs/CLAUDE-project.locale.md` -> `.docs/project/CLAUDE.md`
-    - `.docs/CLAUDE.locale.md` -> `.docs/CLAUDE.md`
-  - **When special paths don't match**, use general rule: `filename.locale.extension` -> `filename.extension`
+## [STEP-1] **Parse filename**:
+- **Priority matching special paths**, generate target file according to the following mapping:
+  - `.docs/cmd/**/*.locale.md` -> `.claude/commands/**/*.md`
+  - `.docs/sa/**/*.locale.md` -> `.claude/agents/***/*.md`
+  - `.docs/AGENTS-cmd.locale.md` -> [`.docs/cmd/AGENTS.md`, `.docs/cmd/CLAUDE.md`]
+  - `.docs/AGENTS-sa.locale.md` -> [`.docs/sa/AGENTS.md`, `.docs/sa/CLAUDE.md`]
+  - `.docs/AGENTS-user.locale.md` -> [`.docs/user/AGENTS.md`, `.docs/user/CLAUDE.md`]
+  - `.docs/AGENTS-project.locale.md` -> [`.docs/project/AGENTS.md`, `.docs/project/AGENTS.md`]
+  - `.docs/AGENTS.locale.md` -> [`.docs/AGENTS.md`, `.docs/CLAUDE.md`]
+  - `AGENTS.locale.md` -> [`AGENTS.md`, `CLAUDE.md`]
+  - `README.locale.md` -> `README.md`
+- **When special paths don't match**, use general rule: `filename.locale.extension` -> `filename.extension`
 
-2. **Check target file**:
-  - Use `Search(pattern: "target_file")` to verify if target file exists
-  - Pattern: Based on target path determined in step 2
+## [STEP-2] **Check target file**:
+- Use `Search(pattern: "target_file")` to verify if target file exists
+- Pattern: Based on target path determined in [STEP-1]
 
-3. **Delete existing file**:
-  - If target file exists, use Bash tool to delete
-  - Command: `Bash(rm filename.extension)` (Linux/Mac) or equivalent (Windows) command
+## [STEP-3] **Delete existing file**:
+- If target file exists, use `Bash(command: "rm <target_file>")` tool to delete
+- Command: `Bash(command: "rm <target_file>")` (Linux/Mac) or equivalent (Windows) command
 
-4. **Read source file**: `Read($1)`
+## [STEP-4] **Read source file**: `Read($1)`
 
-5. **Execute translation**:
-  - Preserve Markdown structure and formatting
-  - Apply consistent terminology from glossary
-  - Keep code blocks unchanged and translate all comment content
+## [STEP-5] **Execute translation**:
+- Preserve `Markdown` structure and formatting
+- Keep code blocks unchanged, translate all comment content within code blocks
 
-6. **Write target file**:
-  - Create new target file and write translated content
-  - No need to read existing target file (deleted in step 4)
+## [STEP-6] **Write target file**:
+- Create new target file and write translated content
+- No need to read existing target file (already deleted in [STEP-4])
 
-7. **Error handling**:
-  - If `Write` fails, immediately delete target file
-  - Use `Bash(rm target_file)` to execute deletion
-  - Restart process without attempting to fix
-
+## [STEP-7] **Error handling**:
+- If `Write` fails, immediately `Bash(command: "rm <target_file>")` target file
+- Use `Bash(command: "rm <target_file")` to execute deletion
+- Restart process without attempting to fix
 
 
 
-## Quality Standards
 
+# Quality Standards
 - **Terminology consistency**: Determine translation by comparing with glossary item by item, maintain consistent capitalization and punctuation with terminology table
 - **Technical accuracy**: Confirm commands, parameters, file paths and other technical information are correct, avoid introducing new meanings
 - **Format preservation**: Preserve title hierarchy, list indentation, tables and inline code as-is, do not add or remove blank lines
@@ -56,7 +56,7 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
 - **Code integrity**: Keep code block content unchanged, only translate comments within blocks and verify statement alignment
 
 ```xml
-<Examples description="Filename conversion">
+<Examples description="File path conversion">
   <Example>
     translate.locale.md -> translate.md
   </Example>
@@ -64,21 +64,7 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
     setup.locale.md` -> setup.md
   </Example>
   <Example>
-    config.locale.yaml -> config.yaml
+    AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]
   </Example>
-</Examples>
-```
-
-```xml
-<Examples description="Translation examples">
-  <GoodExample userInput="请参阅文档">
-    See documentation
-  </GoodExample>
-  <GoodExample userInput="配置文件">
-    Configuration file
-  </GoodExample>
-  <GoodExample userInput="命令行工具">
-    Command-line tool
-  </GoodExample>
 </Examples>
 ```
