@@ -1,0 +1,12 @@
+{
+  "name": "@truenine/agents-cli",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  },
+  "keywords": [],
+  "author": "",
+  "license": "LGPL-3.0-or-later",
+  "packageManager": "pnpm@10.17.1"
+}
