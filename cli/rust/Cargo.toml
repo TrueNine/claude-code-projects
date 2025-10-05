@@ -1,0 +1,77 @@
+[package]
+name = "agents-core"
+version = "0.1.0"
+edition = "2024"
+authors = ["TrueNine"]
+license = "LGPL-3.0-or-later"
+description = "Rust core engine for Agent CLI prompt management"
+repository = "https://github.com/TrueNine/claude-code-projects"
+keywords = ["cli", "agents", "prompts", "ai", "rust"]
+categories = ["command-line-utilities", "development-tools"]
+
+[lib]
+name = "agents_core"
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "agents-core"
+path = "src/bin/main.rs"
+
+[dependencies]
+# NAPI bindings for Node.js integration
+napi = { version = "3.3.0", default-features = false, features = ["napi4"], optional = true }
+napi-derive = { version = "3.2.5", optional = true }
+
+# CLI and argument parsing
+clap = { version = "4.0", features = ["derive"] }
+console = "0.16.1"
+dialoguer = "0.12.0"
+indicatif = "0.18.0"
+
+# File system and I/O
+tokio = { version = "1.0", features = ["full"] }
+walkdir = "2.0"
+notify = "8.2.0"
+
+# Serialization and configuration
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "0.9.7"
+
+# Path handling and platform detection
+atty = "0.2"
+terminal_size = "0.4.3"
+directories = "6.0.0"
+which = "8.0.0"
+
+# System integration
+libc = "0.2"
+
+# Error handling
+anyhow = "1.0"
+thiserror = "2.0.17"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# Template engine
+handlebars = "6.0"
+regex = "1.0"
+
+# Checksum and hashing
+sha2 = "0.10"
+
+[build-dependencies]
+napi-build = "2.0"
+
+[profile.release]
+lto = true
+strip = true
+opt-level = "z"
+codegen-units = 1
+
+[features]
+default = []
+napi = ["dep:napi", "dep:napi-derive"]
+
