@@ -74,33 +74,39 @@
 
 
 
-## Naming Conventions
-- Priority order: `PascalCase` or `camelCase` -> `snake_case` -> avoid `kebab-case` (unless language requires).
+## File Naming Conventions
+- File name priority order: `PascalCase` or `camelCase` -> `snake_case` -> avoid `kebab-case` (unless language requires).
 
 ```xml
 <Examples>
-  <GoodExample description="Types use PascalCase">
-    struct UserAccount;
+  <GoodExample description="Component files use PascalCase">
+    UserAccount.ts
+    UserProfile.tsx
   </GoodExample>
 
-  <GoodExample description="Variables use camelCase">
-    let userName = "john";
+  <GoodExample description="Utility files use camelCase">
+    userUtils.ts
+    apiClient.js
   </GoodExample>
 
-  <GoodExample description="Variables acceptable snake_case">
-    let user_count = 42;
+  <GoodExample description="Configuration files acceptable snake_case">
+    user_config.json
+    database_settings.yaml
   </GoodExample>
 
-  <GoodExample description="Rust modules use snake_case">
-    mod user_service;
+  <GoodExample description="Rust module files use snake_case">
+    user_service.rs
+    auth_handler.rs
   </GoodExample>
 
-  <BadExample description="Variables use kebab-case">
-    let user-name = "john";
+  <BadExample description="File names use kebab-case">
+    user-utils.ts
+    api-client.js
   </BadExample>
 
-  <BadExample description="Types use kebab-case">
-    struct user-account;
+  <BadExample description="Component files use lowercase">
+    useraccount.ts
+    userprofile.tsx
   </BadExample>
 </Examples>
 ```
@@ -121,7 +127,7 @@
     }
   </GoodExample>
 
-  <BadExample description="Omitting braces leads to logic失控">
+  <BadExample description="Omitting braces leads to logic out of control">
     if (is_ready)
       handle_ready();
       finalize();
@@ -252,18 +258,12 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
 - Prioritize reviewing and optimizing existing implementations and prompts, gain incremental value through supplementing tests, improving maintainability, or enhancing readability.
 - Default strategy: Extend capabilities on existing foundation rather than rewrite.
 
-### Investigation Workflow
-1. Comprehensive search: Use `Search` tool to explore keywords, use `Glob` to view directory structure, use `Read` to深入 key files.
-2. Architecture analysis: Understand design patterns and coding style, locate reusable components and best extension points.
-3. Reuse strategy: First choice is to extend existing classes/functions, second is to compose existing components, last is to create new components with sufficient justification.
-
 ```xml
 <Examples>
   <GoodExample description="Investigate and reuse existing code before development"
                userInput="帮我实现一个用户认证功能">
-    先搜索认证相关代码。
     <Tooling name="Search"
-             params:words="auth" />
+             params:pattern="auth" />
     <Tooling name="Read"
              params:path="AuthService" />
     选择扩展现有组件, 避免重造轮子:
@@ -286,7 +286,6 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
 
   <BadExample description="Skip investigation and directly rewrite functionality"
              userInput="帮我实现一个用户认证功能">
-    跳过调查直接重写, 违规:
     <Tooling name="Write"
              params:path="NewAuthSystem" />
     ```rust
@@ -328,7 +327,7 @@ Avoid creating new files:
   <GoodExample description="Extend functionality within existing files"
                userInput="添加一个新的工具函数来格式化日期">
     将日期格式化函数合并进现有工具文件。
-    <Tooling name="Write"
+    <Tooling name="Update"
              params:path="src/utils/helpers.rs" />
     ```rust
     use chrono::{DateTime, Local};
@@ -344,12 +343,12 @@ Avoid creating new files:
     ```
   </GoodExample>
 
-  <BadExample description="Counterexample: Unnecessarily creating new files"
+  <BadExample description="Unnecessarily creating new files"
               userInput="添加一个新的工具函数来格式化日期">
     不必要地拆出新文件:
     <Tooling name="Write"
              params:path="src/utils/date_utils.rs"
-             description="不必要的文件创建"/>
+             description="不必要的文件创建" />
     ```rust
     use chrono::{DateTime, Local};
 
@@ -556,8 +555,8 @@ Avoid creating new files:
 
 ## File Structure Writing Demonstration
 
+```xml
 <Example description="Use md code block nested file list instead of tree structure">
-```md
 - `.ai/` - AI Agent engineering directory, similar to src source prompt working directory
   - `locale/` - Current project mapping memory prompts
   - `user/` - Global user memory prompts
@@ -571,5 +570,5 @@ Avoid creating new files:
 - `scripts/` - Script directory
   - `build/` - Build scripts
   - `deploy/` - Deployment scripts
-```
 </Example>
+```

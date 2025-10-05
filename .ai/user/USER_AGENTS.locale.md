@@ -41,8 +41,8 @@
 
 
 ## 命令生成规范
-- 构建: 根据工具链选择 `cargo build` / `npm run build` / `pip install` 等。
-- 测试: 使用 `cargo test` / `npm test` / `pytest` 等, 不得自创命令。
+- 构建: 根据工具链选择 `cargo build` / `pnpm run build` / `uv install` 等。
+- 测试: 使用 `cargo test` / `pnpm run test` / `pytest` 等, 不得自创命令。
 - 格式化: 遵循项目脚本, 如 `cargo fmt`, `prettier`, `black`。
 - 检查: 根据语言运行 `cargo clippy`, `eslint`, `flake8` 等。
 
@@ -58,13 +58,13 @@
 
 ```xml
 <Examples>
-  <GoodExample description="示例: 2 空格缩进的正确格式">
+  <GoodExample description="2 空格缩进">
     fn main() {
       println!("Hello World");
     }
   </GoodExample>
 
-  <BadExample description="反例: 4 空格缩进导致格式错误">
+  <BadExample description="4 空格缩进导致格式错误">
     fn main() {
         println!("Hello World");
     }
@@ -75,33 +75,39 @@
 
 
 
-## 命名规范
-- 优先顺序: `PascalCase` 或 `camelCase` -> `snake_case` -> 避免 `kebab-case` (除非语言强制)。
+## 文件命名规范
+- 文件名优先顺序: `PascalCase` 或 `camelCase` -> `snake_case` -> 避免 `kebab-case` (除非语言强制)。
 
 ```xml
 <Examples>
-  <GoodExample description="类型采用 PascalCase">
-    struct UserAccount;
+  <GoodExample description="组件文件使用 PascalCase">
+    UserAccount.ts
+    UserProfile.tsx
   </GoodExample>
 
-  <GoodExample description="变量采用 camelCase">
-    let userName = "john";
+  <GoodExample description="工具文件使用 camelCase">
+    userUtils.ts
+    apiClient.js
   </GoodExample>
 
-  <GoodExample description="变量可接受 snake_case">
-    let user_count = 42;
+  <GoodExample description="配置文件可接受 snake_case">
+    user_config.json
+    database_settings.yaml
   </GoodExample>
 
-  <GoodExample description="Rust 模块使用 snake_case">
-    mod user_service;
+  <GoodExample description="Rust 模块文件使用 snake_case">
+    user_service.rs
+    auth_handler.rs
   </GoodExample>
 
-  <BadExample description="变量使用 kebab-case">
-    let user-name = "john";
+  <BadExample description="文件名使用 kebab-case">
+    user-utils.ts
+    api-client.js
   </BadExample>
 
-  <BadExample description="类型使用 kebab-case">
-    struct user-account;
+  <BadExample description="组件文件使用小写">
+    useraccount.ts
+    userprofile.tsx
   </BadExample>
 </Examples>
 ```
@@ -260,9 +266,8 @@
 <Examples>
   <GoodExample description="开发前调查并复用现有代码"
                userInput="帮我实现一个用户认证功能">
-    先搜索认证相关代码。
     <Tooling name="Search"
-             params:words="auth" />
+             params:pattern="auth" />
     <Tooling name="Read"
              params:path="AuthService" />
     选择扩展现有组件, 避免重造轮子:
@@ -285,7 +290,6 @@
 
   <BadExample description="跳过调查直接重写功能"
              userInput="帮我实现一个用户认证功能">
-    跳过调查直接重写, 违规:
     <Tooling name="Write"
              params:path="NewAuthSystem" />
     ```rust
@@ -327,7 +331,7 @@
   <GoodExample description="在现有文件内扩展功能"
                userInput="添加一个新的工具函数来格式化日期">
     将日期格式化函数合并进现有工具文件。
-    <Tooling name="Write"
+    <Tooling name="Update"
              params:path="src/utils/helpers.rs" />
     ```rust
     use chrono::{DateTime, Local};
@@ -343,12 +347,12 @@
     ```
   </GoodExample>
 
-  <BadExample description="反例: 不必要地创建新文件"
+  <BadExample description="不必要地创建新文件"
               userInput="添加一个新的工具函数来格式化日期">
     不必要地拆出新文件:
     <Tooling name="Write"
              params:path="src/utils/date_utils.rs"
-             description="不必要的文件创建"/>
+             description="不必要的文件创建" />
     ```rust
     use chrono::{DateTime, Local};
 
@@ -556,8 +560,8 @@
 
 ## 文件结构书写示范
 
+```xml
 <Example description="使用 md 代码块的嵌套文件列表而不是树形结构">
-```md
 - `.ai/` - AI Agent 工程目录，类似于 src 的源提示词工作目录
   - `locale/` - 当前项目映射的记忆提示词
   - `user/` - 全局用户记忆提示词
@@ -571,5 +575,5 @@
 - `scripts/` - 脚本目录
   - `build/` - 构建脚本
   - `deploy/` - 部署脚本
-```
 </Example>
+```
