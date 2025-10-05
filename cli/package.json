@@ -1,12 +1,59 @@
 {
   "name": "@truenine/agents-cli",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
+  "description": "Agent CLI Prompt Management Solution - Initialize and manage .ai/ prompt repositories",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "agent-cli": "dist/cli.js"
   },
-  "keywords": [],
-  "author": "",
+  "scripts": {
+    "dev": "tsdown watch src/index.ts",
+    "dev:rust": "cd rust && cargo build && cd .. && pnpm run dev",
+    "build": "pnpm run build:rust && tsdown build src/index.ts",
+    "build:rust": "cd rust && cargo build --release",
+    "build:rust:debug": "cd rust && cargo build",
+    "build:napi": "cd rust && cargo build --release",
+    "test": "vitest",
+    "test:rust": "cd rust && cargo test",
+    "typecheck": "tsc --noEmit",
+    "clean": "rimraf dist && rimraf rust/target",
+    "clean:rust": "cd rust && cargo clean",
+    "install:rust": "cd rust && cargo install --path .",
+    "prepublishOnly": "pnpm run clean && pnpm run build"
+  },
+  "keywords": [
+    "cli",
+    "agents",
+    "prompts",
+    "ai",
+    "claude",
+    "template",
+    "management"
+  ],
+  "author": "truenine",
   "license": "LGPL-3.0-or-later",
-  "packageManager": "pnpm@10.17.1"
+  "packageManager": "pnpm@10.17.1",
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "commander": "^14.0.1",
+    "inquirer": "^12.9.6",
+    "ora": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.9",
+    "@types/node": "^24.6.2",
+    "rimraf": "^6.0.1",
+    "tsdown": "^0.15.6",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
 }

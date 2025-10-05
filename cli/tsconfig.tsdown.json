@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "ES2022",
+    "module": "ESNext",
+    "format": "esm"
+  },
+  "entry": ["src/index.ts", "src/cli.ts"],
+  "bundle": false,
+  "dts": true,
+  "clean": true,
+  "minify": false
+}
