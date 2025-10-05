@@ -67,6 +67,9 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
   <Example>
     .jiumate_ai/cmd/setup.locale.md` -> [.claude/commands/setup.md, .jiumate_ai/.output/.claude/commands/setup.md]
   </Example>
+    <Example>
+    .jiumate_ai/user/cc.locale.md` -> [.jiumate_ai/.output/GLOBAL/cc.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]
+  </Example>
   <Example>
     .jiumate_ai/.locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]
   </Example>

@@ -1,7 +1,7 @@
 ---
 argument-hint: [ locale_markdown_file ] [ translation_description ]
 allowed-tools: Read, Write, Glob, Grep, Bash
-description: Translate Chinese localization memory prompt file to English memory prompt file, maintaining consistent terminology and quality standards
+description: Translate Chinese localization memory prompt file to English memory prompt file, following consistent terminology and quality standards
 ---
 
 Translate Chinese localization memory prompt file #$1 (.locale.md) to English memory prompt file, while maintaining quality standards and terminology consistency.
@@ -65,6 +65,9 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
   </Example>
   <Example>
     .jiumate_ai/cmd/setup.locale.md` -> [.claude/commands/setup.md, .jiumate_ai/.output/.claude/commands/setup.md]
+  </Example>
+    <Example>
+    .jiumate_ai/user/cc.locale.md` -> [.jiumate_ai/.output/GLOBAL/cc.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]
   </Example>
   <Example>
     .jiumate_ai/.locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]

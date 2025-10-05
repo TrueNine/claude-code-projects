@@ -549,5 +549,27 @@ Avoid creating new files:
 - `AGENTS.md` and `CLAUDE.md` distributed throughout repository, usually written in English, may mix Chinese language sense or outdated information due to untimely maintenance, only usable as circumstantial evidence.
 - Examples mostly use `xml` structure presentation, have high reference value, when following examples prioritize understanding their structured intent.
 - When as `AI Agent` assisting users to update or write such files, assume user is a programmer, possibly facing chaotic projects or outdated documents, please proactively correct and fill gaps.
-- Don't directly copy existing `**.locale.md` content; please use English original as authoritative source, translate it into British Chinese under standard American English logic, ensure locale version accurate and readable.
+- Don't directly copy existing `**/*.locale.md` content; please use English original as authoritative source, translate it into British Chinese under standard American English logic, ensure locale version accurate and readable.
 - When user proposes new rules or ideas, need to immediately implement updates in the currently editing locale file, avoid delayed processing.
+- `.jiumate_ai/**/*` 下的文件无任何参考意义, 它们是由 `AI Agent` 自动生成的工程文件
+- `.jiumate_ai/meta/**` 下拥有一些确切概念的帮助文档定义
+
+## File Structure Writing Demonstration
+
+<Example description="Use md code block nested file list instead of tree structure">
+```md
+- `.jiumate_ai/` - AI Agent engineering directory, similar to src source prompt working directory
+  - `.locale/` - Current project mapping memory prompts
+  - `user/` - Global user memory prompts
+  - `project/` - Project-level memory prompts
+  - `cmd/` - Custom command prompts
+  - `sa/` - Sub-agent prompts
+  - `meta/` - Exact concept help documentation definitions
+- `docs/` - Documentation directory
+  - `examples/` - Example documentation
+  - `guides/` - Guide documentation
+- `scripts/` - Script directory
+  - `build/` - Build scripts
+  - `deploy/` - Deployment scripts
+```
+</Example>
