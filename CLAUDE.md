@@ -27,8 +27,8 @@ This is a documentation and configuration repository for `AI Agent` workflows, f
 # Documentation Structure
 
 ```md
-`.jiumate_ai/` - Similar to src, a source prompt working directory
-  - `.locale/` - Current project mapping memory prompts
+`.ai/` - Similar to src, a source prompt working directory
+  - `locale/` - Current project mapping memory prompts
   - `user/` - Global user memory prompts
   - `project/` - Project-level memory prompts
   - `cmd/` - Custom command prompts
