@@ -1,7 +1,7 @@
 ---
 argument-hint: [ locale_markdown_file ] [ translation_description ]
 allowed-tools: Read, Write, Glob, Grep, Bash
-description: Translate Chinese localization memory prompt file to English memory prompt file, maintaining consistent terminology and quality standards
+description: Translate Chinese localization memory prompt file to English memory prompt file, maintaining terminology and quality standards
 ---
 
 Translate Chinese localization memory prompt file #$1 (.locale.md) to English memory prompt file, while maintaining established quality standards and terminology consistency.
@@ -13,7 +13,7 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
 | Source file path                            | Output file path                                                                 |
 |---------------------------------------------|---------------------------------------------------------------------------------|
 | `.ai/locale/**/*.locale.md`                 | `**/*.md`                                                                       |
-| `.ai/locale/**/AGENTS.locale.md`            | `**/AGENTS.md`, `**/CLAUDE.md`                                                  |
+| `.ai/locale/**/AGENTS.locale.md`            | `<relative_path>/AGENTS.md`, `<relative_path>/CLAUDE.md`                         |
 | `.ai/locale/AGENTS.locale.md`              | `AGENTS.md`, `CLAUDE.md`                                                        |
 | `.ai/locale/README.locale.md`              | `README.md`                                                                     |
 | `.ai/cmd/**/*.locale.md`                   | `.claude/commands/**/*.md`, `.ai/out/.claude/commands/**/*.md`                 |
@@ -22,6 +22,11 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
 | `.ai/locale/meta/**/*.locale.md`           | `.ai/meta/**/*.md`                                                              |
 
 **When special paths don't match**, apply general rule: `filename.locale.extension` -> `filename.extension`.
+
+Where `<relative_path>` represents the directory structure after removing the `.ai/locale/` prefix from the source file.
+```xml
+<Example description="">.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</Example>
+```
 
 ## [STEP-2] **Check Target File**
 - Use `Glob(pattern: "<target_file>")` to verify if target file exists
@@ -60,6 +65,7 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
   <Example>.ai/user/cc.locale.md -> [.ai/out/GLOBAL/cc.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</Example>
   <Example>.ai/user/USER_AGENTS.locale.md -> [.ai/out/GLOBAL/USER_AGENTS.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</Example>
   <Example>.ai/locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]</Example>
+  <Example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</Example>
   <Example>.ai/locale/README.locale.md -> README.md</Example>
   <Example>.ai/locale/.ai/cmd/AGENTS.locale.md -> [.ai/cmd/AGENTS.md, .ai/cmd/CLAUDE.md]</Example>
   <Example>.ai/locale/meta/examples.locale.md -> .ai/meta/examples.md</Example>
