@@ -1,4 +1,4 @@
----
+﻿---
 argument-hint: [ locale_markdown_file ] [ translation_description ]
 allowed-tools: Read, Write, Glob, Grep, Bash
 description: 将中文本地化记忆提示词文件翻译为英文记忆提示词文件，保持术语与质量标准一致
@@ -13,7 +13,7 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 | 源文件路径                            | 输出文件路径                                                                |
 |----------------------------------|-----------------------------------------------------------------------|
 | `.ai/locale/**/*.locale.md`      | `**/*.md`                                                             |
-| `.ai/locale/**/AGENTS.locale.md` | `**/AGENTS.md`, `**/CLAUDE.md`                                        |
+| `.ai/locale/**/AGENTS.locale.md` | `<relative_path>/AGENTS.md`, `<relative_path>/CLAUDE.md` |
 | `.ai/locale/AGENTS.locale.md`    | `AGENTS.md`, `CLAUDE.md`                                              |
 | `.ai/locale/README.locale.md`    | `README.md`                                                           |
 | `.ai/cmd/**/*.locale.md`         | `.claude/commands/**/*.md`, `.ai/out/.claude/commands/**/*.md`        |
@@ -22,6 +22,11 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 | `.ai/locale/meta/**/*.locale.md` | `.ai/meta/**/*.md`                                                    |
 
 当未命中特殊路径映射时，套用通用规则：`filename.locale.extension -> filename.extension`。
+
+其中 `<relative_path>` 表示源文件去除 `.ai/locale/` 前缀后的目录结构。
+```xml
+<Example description="">.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</Example>
+```
 
 ## [STEP-2] **检查目标文件**
 - 使用 `Glob(pattern: "<target_file>")` 判断目标文件是否已存在
@@ -60,6 +65,7 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
   <Example>.ai/user/cc.locale.md -> [.ai/out/GLOBAL/cc.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</Example>
   <Example>.ai/user/USER_AGENTS.locale.md -> [.ai/out/GLOBAL/USER_AGENTS.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</Example>
   <Example>.ai/locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]</Example>
+  <Example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</Example>
   <Example>.ai/locale/README.locale.md -> README.md</Example>
   <Example>.ai/locale/.ai/cmd/AGENTS.locale.md -> [.ai/cmd/AGENTS.md, .ai/cmd/CLAUDE.md]</Example>
   <Example>.ai/locale/meta/examples.locale.md -> .ai/meta/examples.md</Example>
