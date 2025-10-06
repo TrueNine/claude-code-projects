@@ -9,9 +9,9 @@ export interface AgentCliOptions {
   silent?: boolean
 }
 
-export function createAgentCli(options: AgentCliOptions = {}) {
+export function createAgentCli(options: AgentCliOptions = {}): { version: string; options: AgentCliOptions; init(repositoryPath?: string): Promise<any>; update(): Promise<any>; compose(type: string, template?: string): Promise<any> } {
   return {
-    version: VERSION,
+    version: VERSION as string,
     options,
 
     // Core methods that will delegate to either TypeScript or Rust implementations

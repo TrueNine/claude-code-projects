@@ -145,12 +145,12 @@ export class RustBridge {
 }
 
 // Default bridge instance
-export const rustBridge = new RustBridge()
+export const rustBridge: RustBridge = new RustBridge()
 
 // Convenience functions
-export const init = (path?: string) => rustBridge.init(path)
-export const update = (options?: { backup?: boolean, version?: string }) => rustBridge.update(options)
-export const compose = (type: string, options?: { interactive?: boolean, template?: string }) => rustBridge.compose(type, options)
-export const prune = (options?: { force?: boolean, dryRun?: boolean }) => rustBridge.prune(options)
-export const sync = (options?: { remote?: string, branch?: string }) => rustBridge.sync(options)
-export const checkHealth = () => rustBridge.checkHealth()
+export const init = (path?: string): Promise<{ success: boolean; path: string }> => rustBridge.init(path)
+export const update = (options?: { backup?: boolean; version?: string }): Promise<{ success: boolean; updated: string[] }> => rustBridge.update(options)
+export const compose = (type: string, options?: { interactive?: boolean; template?: string }): Promise<{ success: boolean; type: string; content: string }> => rustBridge.compose(type, options)
+export const prune = (options?: { force?: boolean; dryRun?: boolean }): Promise<{ success: boolean; pruned: string[] }> => rustBridge.prune(options)
+export const sync = (options?: { remote?: string; branch?: string }): Promise<{ success: boolean; synced: string[] }> => rustBridge.sync(options)
+export const checkHealth = (): Promise<{ success: boolean; version: string; platform: string }> => rustBridge.checkHealth()
