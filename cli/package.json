@@ -53,11 +53,11 @@
     "ora": "^9.0.0"
   },
   "devDependencies": {
-    "@truenine/eslint9-config": "^1.0.15",
-    "@truenine/tsconfig": "^1.0.6",
+    "@truenine/eslint9-config": "^1.0.17",
+    "@truenine/tsconfig": "^1.0.7",
     "@tsconfig/node22": "^22.0.2",
     "@types/inquirer": "^9.0.9",
-    "@types/node": "^24.6.2",
+    "@types/node": "^24.7.0",
     "npm-run-all2": "^8.0.4",
     "rimraf": "^6.0.1",
     "tsdown": "^0.15.6",
