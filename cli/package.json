@@ -1,6 +1,7 @@
 {
   "name": "@truenine/agents-cli",
   "version": "0.0.1",
+  "type": "module",
   "packageManager": "pnpm@10.17.1",
   "description": "Agent CLI Prompt Management Solution - Initialize and manage .ai/ prompt repositories",
   "author": "truenine",
@@ -54,6 +55,7 @@
   "devDependencies": {
     "@truenine/eslint9-config": "^1.0.15",
     "@truenine/tsconfig": "^1.0.6",
+    "@tsconfig/node22": "^22.0.2",
     "@types/inquirer": "^9.0.9",
     "@types/node": "^24.6.2",
     "npm-run-all2": "^8.0.4",
