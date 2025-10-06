@@ -1,0 +1,20 @@
+# Rustfmt configuration for agents-core project
+
+# Indentation settings
+hard_tabs = false
+tab_spaces = 2
+
+# Line length settings
+max_width = 100
+use_small_heuristics = "Default"
+
+# Import settings
+reorder_imports = true
+
+# Trailing comma settings
+match_block_trailing_comma = false
+
+# Miscellaneous formatting options
+remove_nested_parens = true
+use_field_init_shorthand = true
+force_explicit_abi = true

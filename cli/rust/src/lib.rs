@@ -12,12 +12,12 @@ pub use crate::napi::*;
 
 // Re-export main types
 pub use modules::{
-    config::{AgentConfig, PromptTemplate, TemplateType},
-    error::{AgentError, Result},
-    orchestrator::Orchestrator,
-    platform::Platform,
-    storage::{BackupInfo, StorageManager},
-    template::TemplateRegistry,
+  config::{AgentConfig, PromptTemplate, TemplateType},
+  error::{AgentError, Result},
+  orchestrator::Orchestrator,
+  platform::Platform,
+  storage::{BackupInfo, StorageManager},
+  template::TemplateRegistry,
 };
 
 /// Library version
@@ -25,20 +25,20 @@ pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// Initialize the agents core system
 pub fn init() -> Result<()> {
-    tracing::info!("Initializing Agents Core v{}", VERSION);
+  tracing::info!("Initializing Agents Core v{}", VERSION);
 
-    let platform = Platform::detect()?;
-    tracing::info!("Detected platform: {}", platform);
+  let platform = Platform::detect()?;
+  tracing::info!("Detected platform: {}", platform);
 
-    Ok(())
+  Ok(())
 }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+  use super::*;
 
-    #[test]
-    fn test_init() {
-        assert!(init().is_ok());
-    }
+  #[test]
+  fn test_init() {
+    assert!(init().is_ok());
+  }
 }
