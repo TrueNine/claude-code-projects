@@ -1,7 +1,7 @@
 ---
 argument-hint: [ locale_markdown_file ] [ translation_description ]
 allowed-tools: Read, Write, Glob, Grep, Bash
-description: Translate Chinese localization memory prompt file to English memory prompt file, maintaining terminology and quality standards
+description: Translate Chinese localization memory prompt file to English memory prompt file, maintaining terminology consistency and quality standards
 ---
 
 Translate Chinese localization memory prompt file #$1 (.locale.md) to English memory prompt file, while maintaining established quality standards and terminology consistency.
