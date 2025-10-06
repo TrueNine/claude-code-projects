@@ -5,9 +5,9 @@
 - 内部思考: `Thinking` 和 `Tooling` 段必须美式英语, 示例如 `Thinking: Validate payload schema`, 禁止出现 `Thinking: 检查文件` 这种混搭。
 - 会话自检: 发送前检查 `Thinking` 与 `Tooling` 是否混入中文, 若发现立即改成英文; 用户可见输出保持简体中文。
 - 文化取向: 记住用户母语是中文, 但工作流程全程对齐美国工程文化, 除用户沟通外一律使用美式英语处理事务。
-- 严格禁止: `Thinking` 字段出现中文字符 => 直接视为违规, 从 `onboarding` 起就开始抓。
+- 严格禁止: `Thinking` 字段出现中文字符 => 直接视为违规。
 - 提示词风格: 只要 `Markdown` 合规就行, 内容保持技术向和精炼, 不为排版对齐或辞藻堆砌浪费时间。
-- `**/*.locale.md` 文件: 所有 `**/*.locale.md` 统一用英式中文书写, 保持英文逻辑和术语直译, 全文执行。
+- [.ai/](/.ai) `**/*.locale.md` 文件: 所有 [.ai/](/.ai) `**/*.locale.md` 统一用英式中文书写, 保持英文逻辑和术语直译, 全文执行。
 
 
 
@@ -21,16 +21,18 @@
 <Examples>
   <GoodExample description="示例: 正确识别并使用项目工具链"
                userInput="帮我运行测试">
-    <Tooling name="Search" params:pattern="Cargo.toml">
+    <Tooling name="Search" 
+             params:pattern="Cargo.toml">
       Locate Cargo.toml within the workspace
     </Tooling>
-    <Tooling name="Bash" params:command="test -f Cargo.toml">
+    <Tooling name="Bash" 
+             params:command="test -f Cargo.toml">
       Confirm Cargo.toml exists at the repository root
     </Tooling>
   </GoodExample>
 
   <BadExample description="未调查即假设工具链"
-             userInput="帮我运行测试">
+              userInput="帮我运行测试">
     <Tooling name="Bash"
              params:command="npm test" />
   </BadExample>
@@ -548,32 +550,32 @@
 
 # 提示词编写规范
 
-- `**.locale.md` 属于英式中文提示词文件，面向用户阅读，语言需紧贴美式英语的逻辑与思路，专业术语直接保留英文原文。
+- [.ai/locale](/.ai/locale) 下的 `**/*.locale.md` 属于英式中文提示词文件，面向用户阅读，语言需紧贴美式英语的逻辑与思路，专业术语直接保留英文原文。
 - 这些 `locale` 文件常作为 `AI Agent` 快捷命令、子代理提示词或 `memory prompt file` 的本地化版本，内容必须精确映射英文主稿。
 - `AGENTS.md` 与 `CLAUDE.md` 分布在仓库各处，通常采用英文撰写，可能因维护不及时而混入中文语感或过时信息，仅可作为旁证资料。
 - 示例多使用 `xml` 结构呈现，具备高参考价值，遵循示例时优先理解其结构化意图。
 - 作为 `AI Agent` 协助用户更新或撰写此类文件时，要假设用户是一名程序员，可能正面临混乱项目或陈旧文档，请主动修正并补齐缺漏。
 - 不要直接照搬现有的 `**.locale.md` 内容；请以英文原稿为权威来源，将其翻译成标准美式英语逻辑下的英式中文，确保 locale 版本准确可读。
 - 当用户提出新的规则或想法时, 需立刻在当前正在编辑的 locale 文件中落实更新, 避免延后处理。
-- `.ai/**/*` 下的文件无任何参考意义, 它们是由 `AI Agent` 自动生成的工程文件
-- `.ai/meta/**` 下拥有一些确切概念的帮助文档定义
+- [.ai](/.ai) 除了 `meta/**` 下的文件外，其他无任何参考意义, 它们是由 `AI Agent` 自动生成的工程文件
+- [.ai/meta](/.ai/meta) 下拥有一些确切概念的帮助文档定义
 
 ## 文件结构书写示范
 
 ```xml
 <Example description="使用 md 代码块的嵌套文件列表而不是树形结构">
-- `.ai/` - AI Agent 工程目录，类似于 src 的源提示词工作目录
-  - `locale/` - 当前项目映射的记忆提示词
-  - `user/` - 全局用户记忆提示词
-  - `project/` - 项目级别记忆提示词
-  - `cmd/` - 自定义命令提示词
-  - `sa/` - 子代理提示词
-  - `meta/` - 确切概念的帮助文档定义
-- `docs/` - 文档目录
-  - `examples/` - 示例文档
-  - `guides/` - 指南文档
-- `scripts/` - 脚本目录
-  - `build/` - 构建脚本
-  - `deploy/` - 部署脚本
+- [.ai](/.ai) - AI Agent 工程目录，类似于 src 的源提示词工作目录
+  - [.ai/locale/](/.ai/locale) - 当前项目映射的记忆提示词
+  - [.ai/user/](/.ai/user) - 全局用户记忆提示词
+  - [.ai/project/](/.ai/project) - 项目级别记忆提示词
+  - [.ai/cmd/](/.ai/cmd) - 自定义命令提示词
+  - [.ai/sa/](/.ai/sa) - 子代理提示词
+  - [.ai/meta/](/.ai/meta) - 确切概念的帮助文档定义
+- [README.md](/README.md) - 项目描述文件
+- [AGENTS.md](/AGENTS.md) - AI 代理记忆提示词
+- [.editorconfig](/.editorconfig) - 编辑器配置文件
 </Example>
 ```
+
+## 参考元定义
+项目下 [.ai/meta/](/.ai/meta) 下有些具体的概念定义，请以这些定义为准。
