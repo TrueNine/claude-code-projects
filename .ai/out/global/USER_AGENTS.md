@@ -1,12 +1,12 @@
-# Communication Language Usage Standards
-- User communication: All user-facing outputs use `Simplified Chinese`, industry common English terms may be retained, sentence structure follows English logic, avoid flowery language.
+# Language Usage Standards
+- User communication: All user-facing outputs use simplified Chinese, industry common English terms may be retained, sentence structure follows English logic, avoid flowery language.
 - Code development: All code, comments, and naming use English, Chinese identifiers are prohibited, effective from day one.
-- Internal thinking: `Thinking` and `Tooling` sections must use American English, examples like `Thinking: Validate payload schema`, avoid mixed usage like `Thinking: 检查文件`.
+- Internal thinking: `Thinking` and `Tooling` sections must use American English, examples like `Thinking(desc: "Validate payload schema...")`, avoid mixed usage like `Thinking(desc: "检查文件...")`.
 - Session self-check: Before sending, check if `Thinking` and `Tooling` contain Chinese characters, if found, immediately change to English; user-visible output remains in simplified Chinese.
 - Cultural orientation: Remember user's native language is Chinese, but workflow aligns with American engineering culture, use American English for all affairs except user communication.
-- Strictly prohibited: Chinese characters in `Thinking` field => considered violation, enforcement starts from onboarding.
-- Prompt style: As long as `Markdown` compliant, keep content technical and concise, don't waste time on formatting alignment or rhetoric.
-- `**/*.locale.md` files: All `**/*.locale.md` use British Chinese writing, maintain English logic and direct translation of terminology, execute throughout the document.
+- Strictly prohibited: Chinese characters in `Thinking` field => considered violation.
+- "Memory prompt" style: As long as `Markdown` compliant, keep content technical and concise, don't waste time on formatting alignment or rhetoric.
+- [.ai/](/.ai) `**/*.locale.md` files: All [.ai/](/.ai) `**/*.locale.md` use British Chinese writing, maintain English logic and direct translation of terminology, execute throughout the document.
 
 
 
@@ -20,16 +20,18 @@
 <Examples>
   <GoodExample description="Example: Correctly identify and use project toolchain"
                userInput="帮我运行测试">
-    <Tooling name="Search" params:pattern="Cargo.toml">
+    <Tooling name="Search"
+             params:pattern="Cargo.toml">
       Locate Cargo.toml within the workspace
     </Tooling>
-    <Tooling name="Bash" params:command="test -f Cargo.toml">
+    <Tooling name="Bash"
+             params:command="test -f Cargo.toml">
       Confirm Cargo.toml exists at the repository root
     </Tooling>
   </GoodExample>
 
   <BadExample description="Counterexample: Assuming toolchain without investigation"
-             userInput="帮我运行测试">
+              userInput="帮我运行测试">
     <Tooling name="Bash"
              params:command="npm test" />
   </BadExample>
@@ -40,8 +42,8 @@
 
 
 ## Command Generation Standards
-- Build: Choose `cargo build` / `npm run build` / `pip install` etc. based on toolchain.
-- Test: Use `cargo test` / `npm test` / `pytest` etc., don't create commands.
+- Build: Choose `cargo build` / `pnpm run build` / `uv install` etc. based on toolchain.
+- Test: Use `cargo test` / `pnpm run test` / `pytest` etc., don't create commands.
 - Format: Follow project scripts, like `cargo fmt`, `prettier`, `black`.
 - Check: Run `cargo clippy`, `eslint`, `flake8` etc. based on language.
 
@@ -74,7 +76,7 @@
 
 
 
-## File Naming Conventions
+## File Naming Standards
 - File name priority order: `PascalCase` or `camelCase` -> `snake_case` -> avoid `kebab-case` (unless language requires).
 
 ```xml
@@ -127,7 +129,7 @@
     }
   </GoodExample>
 
-  <BadExample description="Omitting braces leads to logic out of control">
+  <BadExample description="Omitting braces leads to logic失控">
     if (is_ready)
       handle_ready();
       finalize();
@@ -266,16 +268,16 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
              params:pattern="auth" />
     <Tooling name="Read"
              params:path="AuthService" />
-    选择扩展现有组件, 避免重造轮子:
+    Choose to extend existing components, avoid reinventing the wheel:
 
     ```rust
-    // 扩展现有 AuthService
+    // Extend existing AuthService
     impl AuthService {
       pub async fn login(&self, credentials: LoginCredentials) -> Result<AuthResult, AuthError> {
         // ... existing implementation
       }
 
-      // 新增多因素认证能力
+      // Add multi-factor authentication capability
       pub async fn enable_two_factor(&self, user_id: &str) -> Result<TwoFactorSetup, AuthError> {
         let user = self.validate_user(user_id).await?;
         self.setup_two_factor(&user).await
@@ -326,18 +328,18 @@ Avoid creating new files:
 <Examples>
   <GoodExample description="Extend functionality within existing files"
                userInput="添加一个新的工具函数来格式化日期">
-    将日期格式化函数合并进现有工具文件。
+    Merge date formatting function into existing utility file.
     <Tooling name="Update"
              params:path="src/utils/helpers.rs" />
     ```rust
     use chrono::{DateTime, Local};
 
-    // 在 helpers.rs 中新增函数
+    // Add new function in helpers.rs
     pub fn format_date(date: DateTime<Local>, format: &str) -> String {
       date.format(format).to_string()
     }
 
-    // 保持与现有函数风格一致
+    // Maintain consistent style with existing functions
     pub fn format_currency(amount: f64) -> String { /* ... */ "".to_string() }
     pub fn format_phone_number(phone: &str) -> String { /* ... */ "".to_string() }
     ```
@@ -345,10 +347,10 @@ Avoid creating new files:
 
   <BadExample description="Unnecessarily creating new files"
               userInput="添加一个新的工具函数来格式化日期">
-    不必要地拆出新文件:
+    Unnecessarily split into new file:
     <Tooling name="Write"
              params:path="src/utils/date_utils.rs"
-             description="不必要的文件创建" />
+             description="Unnecessary file creation" />
     ```rust
     use chrono::{DateTime, Local};
 
@@ -436,11 +438,11 @@ Avoid creating new files:
   <BadExample description="Suppressing warnings">
     fn validate_config(config: &Config) {
       if config.timeout < 1000 {
-        // 镇压警告 - 禁止
+        // Suppressing warnings - prohibited
         // println!("Warning: timeout is very short");
       }
 
-      // 未告知调用者潜在问题
+      // Not informing caller of potential issues
     }
   </BadExample>
 </Examples>
@@ -512,7 +514,7 @@ Avoid creating new files:
 <Examples>
   <GoodExample description="Comprehensively execute verification process"
                userInput="帮我修复这个登录功能的bug">
-    修复后执行完整验证。
+    Execute complete verification after fix.
     <Tooling name="Bash" params:command="diagnostic">
       Run project-defined diagnostic command to surface syntax issues
     </Tooling>
@@ -522,18 +524,18 @@ Avoid creating new files:
     <Tooling name="Bash" params:command="manual login flow">
       Drive a manual login flow check via Bash to confirm behaviour
     </Tooling>
-    全部验证通过:
+    All verifications passed:
 
-    - ✅ 无语法或类型错误。
-    - ✅ `cargo test` 全绿。
-    - ✅ 手测登录流程正常。
+    - ✅ No syntax or type errors.
+    - ✅ `cargo test` all green.
+    - ✅ Manual login flow normal.
 
-    登录问题已修复并验证。
+    Login issue has been fixed and verified.
   </GoodExample>
 
   <BadExample description="Claiming completion without verification"
              userInput="帮我修复这个登录功能的bug">
-    未验证即声称修复完成, 违规。
+    Claiming completion without verification, violation.
   </BadExample>
 </Examples>
 ```
@@ -543,32 +545,32 @@ Avoid creating new files:
 
 # Prompt Writing Standards
 
-- `**.locale.md` files are British Chinese prompt files,面向 user reading, language needs to closely follow American English logic and thinking, professional terms directly retain English original.
+- `**/*.locale.md` files under [.ai/locale](/.ai/locale) are British Chinese prompt files,面向 user reading, language needs to closely follow American English logic and thinking, professional terms directly retain English original.
 - These `locale` files often serve as `AI Agent` shortcut commands, sub-agent prompts, or localized versions of `memory prompt file`, content must precisely map English main draft.
 - `AGENTS.md` and `CLAUDE.md` distributed throughout repository, usually written in English, may mix Chinese language sense or outdated information due to untimely maintenance, only usable as circumstantial evidence.
 - Examples mostly use `xml` structure presentation, have high reference value, when following examples prioritize understanding their structured intent.
 - When as `AI Agent` assisting users to update or write such files, assume user is a programmer, possibly facing chaotic projects or outdated documents, please proactively correct and fill gaps.
-- Don't directly copy existing `**/*.locale.md` content; please use English original as authoritative source, translate it into British Chinese under standard American English logic, ensure locale version accurate and readable.
+- Don't directly copy existing `**.locale.md` content; please use English original as authoritative source, translate it into British Chinese under standard American English logic, ensure locale version accurate and readable.
 - When user proposes new rules or ideas, need to immediately implement updates in the currently editing locale file, avoid delayed processing.
-- `.ai/**/*` 下的文件无任何参考意义, 它们是由 `AI Agent` 自动生成的工程文件
-- `.ai/meta/**` 下拥有一些确切概念的帮助文档定义
+- [.ai](/.ai) except for files under `meta/**`, others have no reference significance, they are engineering files automatically generated by `AI Agent`
+- [.ai/meta](/.ai/meta) has some specific conceptual help documentation definitions
 
 ## File Structure Writing Demonstration
 
 ```xml
-<Example description="Use md code block nested file list instead of tree structure">
-- `.ai/` - AI Agent engineering directory, similar to src source prompt working directory
-  - `locale/` - Current project mapping memory prompts
-  - `user/` - Global user memory prompts
-  - `project/` - Project-level memory prompts
-  - `cmd/` - Custom command prompts
-  - `sa/` - Sub-agent prompts
-  - `meta/` - Exact concept help documentation definitions
-- `docs/` - Documentation directory
-  - `examples/` - Example documentation
-  - `guides/` - Guide documentation
-- `scripts/` - Script directory
-  - `build/` - Build scripts
-  - `deploy/` - Deployment scripts
+<Example description="Use nested file lists in md code blocks instead of tree structure">
+- [.ai](/.ai) - AI Agent engineering directory, similar to src source prompt working directory
+  - [.ai/locale/](/.ai/locale) - Current project mapping memory prompts
+  - [.ai/user/](/.ai/user) - Global user memory prompts
+  - [.ai/project/](/.ai/project) - Project-level memory prompts
+  - [.ai/cmd/](/.ai/cmd) - Custom command prompts
+  - [.ai/sa/](/.ai/sa) - Sub-agent prompts
+  - [.ai/meta/](/.ai/meta) - Specific conceptual help documentation definitions
+- [README.md](/README.md) - Project description file
+- [AGENTS.md](/AGENTS.md) - AI agent memory prompts
+- [.editorconfig](/.editorconfig) - Editor configuration file
 </Example>
 ```
+
+## Reference Meta Definitions
+There are some specific conceptual definitions under [.ai/meta/](/.ai/meta) in the project, please refer to these definitions as authoritative.
