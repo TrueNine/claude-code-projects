@@ -4,6 +4,7 @@ export default defineConfig({
   entry: ['./src/**/*', '!**/*.{spec,test}.*'],
   platform: 'node',
   sourcemap: true,
+  minify: true,
   unbundle: true,
   format: ['esm'],
   dts: {
