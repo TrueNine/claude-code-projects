@@ -246,14 +246,3 @@ description: 优化 记忆提示词文件, 使得其记忆提示词文件让 "AI
   </BadExample>
 </Examples>
 ```
-
-
-
-
-## 记忆提示词目录
-
-- `.docs/cmd/**/*.locale.md` - 是快捷命令文件, 它们注重任务效率优化
-- `.docs/user/**/*.locale.md` - 是全局记忆文件, 它们通常更抽象
-- `.docs/project/**/*.locale.md` - 是针对项目的模板, 虽抽象但更具有各项目的特色
-- `.docs/ss/**.locale.md` - 是 "子代理", 它们很专业且单有领域
-- `.docs/CLAUDE-**.locale.md` - 是针对 .docs/ 的 记忆提示词, 它们来帮助用户不断精进提示词以获得更好的效果
