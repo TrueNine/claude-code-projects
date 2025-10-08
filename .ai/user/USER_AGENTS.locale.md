@@ -431,7 +431,7 @@
 ### 警告处理示例
 
 ```xml
-<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="必须传递给调用者">
     fn validate_config(config: &Config) -> Result<(), Vec<ValidationWarning>> {
@@ -469,7 +469,7 @@
 - 优先复用现有异常类型, 避免随意创建新异常导致维护成本上升
 
 ```xml
-<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="复用现有异常并补充上下文">
     try {
@@ -527,7 +527,7 @@
 - 给出后续修复计划.
 
 ```xml
-<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="全面执行验证流程"
                user-input="帮我修复这个登录功能的bug">
@@ -574,7 +574,7 @@
 ## 文件结构书写示范
 
 ```xml
-<!DOCTYPE example "/.ai/meta/example-schema.dtd">
+<!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
 <example description="使用 md 代码块的嵌套文件列表而不是树形结构">
 - [.ai](/.ai) - AI Agent 工程目录，类似于 src 的源提示词工作目录
   - [.ai/locale/](/.ai/locale) - 当前项目映射的记忆提示词
