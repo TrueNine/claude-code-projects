@@ -23,7 +23,7 @@
   - [user/](/.ai/user) - 全局用户记忆提示词
   - [project/](/.ai/project) - 项目级记忆提示词
   - [cmd/](/.ai/cmd) - 自定义命令提示词
-  - [sa/](/.ai/sa) - 子代理提示词
+  - [agents/](/.ai/agents) - 子代理提示词
   - [meta/](/.ai/meta) - 可参考提示词编写标准
 - [cli/](/cli) - 命令行工具
   - [rust/](/cli/rust) - rust 核心工具

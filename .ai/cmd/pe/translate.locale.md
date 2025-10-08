@@ -23,7 +23,7 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 | [.ai/locale/`README.locale.md`](/.ai/locale)    | `README.md`                                                           |
 | [.ai/locale/`TODO.locale.md`](/.ai/locale)      | `TODO.md`                                                             |
 | [.ai/cmd/`**/*.locale.md`](/.ai/cmd)            | `.ai/out/.claude/commands/**/*.md`, `.claude/commands/**/*.md`        |
-| [.ai/sa/`**/*.locale.md`](/.ai/sa)              | `.ai/out/.claude/agents/**/*.md`, `.claude/agents/**/*.md`            |
+| [.ai/agents/`**/*.locale.md`](/.ai/agents)      | `.ai/out/.claude/agents/**/*.md`, `.claude/agents/**/*.md`            |
 | [.ai/user/`**/*.locale.md`](/.ai/user)          | `.ai/out/global/**/*.md`, `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md` |
 | [.ai/meta/`**/*.locale.md`](/.ai/meta)          | `.ai/meta/**/*.md`                                                    |
 
@@ -81,7 +81,7 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 <examples description="文件路径转换">
   <example>.ai/cmd/pe/translate.locale.md -> [.ai/out/.claude/commands/pe/translate.md, .claude/commands/pe/translate.md]</example>
   <example>.ai/cmd/pe/setup.locale.md -> [.ai/out/.claude/commands/pe/setup.md, .claude/commands/pe/setup.md]</example>
-  <example>.ai/sa/pe/translate.locale.md -> [.ai/out/.claude/agents/pe/translate.md, .claude/agents/pe/translate.md]</example>
+  <example>.ai/agents/pe/translate.locale.md -> [.ai/out/.claude/agents/pe/translate.md, .claude/agents/pe/translate.md]</example>
   <example>.ai/user/cc.locale.md -> [.ai/out/GLOBAL/cc.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</example>
   <example>.ai/user/USER_AGENTS.locale.md -> [.ai/out/GLOBAL/USER_AGENTS.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</example>
   <example>.ai/locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]</example>
