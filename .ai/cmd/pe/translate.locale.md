@@ -17,19 +17,20 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 | [.ai/locale/](/.ai/locale) `AGENTS.locale.md`    | `AGENTS.md`, `CLAUDE.md`                                              |
 | [.ai/locale/](/.ai/locale) `README.locale.md`    | `README.md`                                                           |
 | [.ai/cmd/](/.ai/cmd) `**/*.locale.md`            | `.claude/commands/**/*.md`, `.ai/out/.claude/commands/**/*.md`        |
-| [.ai/sa/](.ai/sa) `**/*.locale.md`               | `.claude/subagents/**/*.md`, `.ai/out/.claude/subagents/**/*.md`      |
-| [.ai/user/](.ai/user) `**/*.locale.md`           | `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `.ai/out/global/**/*.md` |
-| [.ai/meta/](.ai/meta) `**/*.locale.md`           | `.ai/meta/**/*.md`                                                    |
+| [.ai/sa/](/.ai/sa) `**/*.locale.md`              | `.claude/subagents/**/*.md`, `.ai/out/.claude/subagents/**/*.md`      |
+| [.ai/user/](/.ai/user) `**/*.locale.md`          | `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `.ai/out/global/**/*.md` |
+| [.ai/meta/](/.ai/meta) `**/*.locale.md`          | `.ai/meta/**/*.md`                                                    |
 
 当未命中特殊路径映射时，套用通用规则：`filename.locale.extension -> filename.extension`。
 
 其中 `<relative_path>` 表示源文件去除 `.ai/locale/` 前缀后的目录结构。
 ```xml
-<Example description="">.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</Example>
+<!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
+<example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
 ```
 
 ## [STEP-2] **检查目标文件**
-- 使用 `Glob(pattern: "<target_file>")` 判断目标文件是否已存在
+- 使用 `Search(pattern: "<target_file>")` 判断目标文件是否已存在
 - 使用 `Bash(command: "mkdir -p <target_directory>")` 创建所有需要的目标目录
 
 ## [STEP-3] **删除旧文件**
@@ -59,17 +60,18 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 - **代码完整**：除翻译注释外保持代码块原样，并确认语句缩进正确
 
 ```xml
-<Examples description="文件路径转换">
-  <Example>.ai/cmd/pe/translate.locale.md -> [.claude/commands/pe/translate.md, .ai/out/.claude/commands/pe/translate.md]</Example>
-  <Example>.ai/cmd/pe/setup.locale.md -> [.claude/commands/pe/setup.md, .ai/out/.claude/commands/pe/setup.md]</Example>
-  <Example>.ai/user/cc.locale.md -> [.ai/out/GLOBAL/cc.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</Example>
-  <Example>.ai/user/USER_AGENTS.locale.md -> [.ai/out/GLOBAL/USER_AGENTS.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</Example>
-  <Example>.ai/locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]</Example>
-  <Example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</Example>
-  <Example>.ai/locale/README.locale.md -> README.md</Example>
-  <Example>.ai/locale/.ai/cmd/AGENTS.locale.md -> [.ai/cmd/AGENTS.md, .ai/cmd/CLAUDE.md]</Example>
-  <Example>.ai/locale/meta/examples.locale.md -> .ai/meta/examples.md</Example>
-  <Example>.ai/locale/meta/prompt.locale.md -> .ai/meta/prompt.md</Example>
-  <Example>.ai/locale/meta/AGENTS.locale.md -> [.ai/meta/AGENTS.md, .ai/meta/CLAUDE.md]</Example>
-</Examples>
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<examples description="文件路径转换">
+  <example>.ai/cmd/pe/translate.locale.md -> [.claude/commands/pe/translate.md, .ai/out/.claude/commands/pe/translate.md]</example>
+  <example>.ai/cmd/pe/setup.locale.md -> [.claude/commands/pe/setup.md, .ai/out/.claude/commands/pe/setup.md]</example>
+  <example>.ai/user/cc.locale.md -> [.ai/out/GLOBAL/cc.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</example>
+  <example>.ai/user/USER_AGENTS.locale.md -> [.ai/out/GLOBAL/USER_AGENTS.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</example>
+  <example>.ai/locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]</example>
+  <example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
+  <example>.ai/locale/README.locale.md -> README.md</example>
+  <example>.ai/locale/.ai/cmd/AGENTS.locale.md -> [.ai/cmd/AGENTS.md, .ai/cmd/CLAUDE.md]</example>
+  <example>.ai/locale/meta/examples.locale.md -> .ai/meta/examples.md</example>
+  <example>.ai/locale/meta/prompt.locale.md -> .ai/meta/prompt.md</example>
+  <example>.ai/locale/meta/AGENTS.locale.md -> [.ai/meta/AGENTS.md, .ai/meta/CLAUDE.md]</example>
+</examples>
 ```
