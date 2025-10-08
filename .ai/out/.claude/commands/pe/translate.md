@@ -43,7 +43,7 @@ Where `<relative_path>` represents the directory structure after removing the `.
   <agent name="translate" message="Translate xxx.locale.md to [xxx.md, xxx.md]" />
   <agent name="translate" message="Translate xxx.locale.md to xxx.md" />
 </example>
-```/
+```
 
 ## [STEP-2] **Check Target Files**
 - Use `Glob(pattern: "<target_file>")` to determine if the target file already exists

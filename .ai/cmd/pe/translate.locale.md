@@ -40,10 +40,11 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 <example description="识别到文件夹">
   <tooling name="Bash" params:command="find $1 -name \"*.locale.md\" wc -l" />
   我将并发翻译...
-  <agent name="translate" message="Translate xxx.locale.md to [xxx.md, xxx.md]" />
-  <agent name="translate" message="Translate xxx.locale.md to xxx.md" />
+  <agent name="translate" message="Translate .ai/locale/arch/AGENTS.locale.md to [arch/AGENTS.md, arch/CLAUDE.md]" />
+  <agent name="translate" message="Translate .ai/locale/AGENTS.locale.md to [AGENTS.md, CLAUDE.md]" />
+  <agent name="translate" message="Translate .ai/locale/meta/example.locale.md to .ai/meta/example.md" />
 </example>
-```/
+```
 
 ## [STEP-2] **检查目标文件**
 - 使用 `Search(pattern: "<target_file>")` 判断目标文件是否已存在
