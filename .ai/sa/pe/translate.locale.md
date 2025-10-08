@@ -2,6 +2,7 @@
 name: translate
 description: 使用此代理时当您需要翻译单个文件，专为多次调用设计
 model: sonnet
+allowed-tools: Read, Write, Glob, Grep, Bash
 color: blue
 ---
 

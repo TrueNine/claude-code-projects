@@ -1,7 +1,7 @@
 ---
 argument-hint: [ locale_markdown_file ] [ translation_description ]
 allowed-tools: Read, Write, Glob, Grep, Bash
-description: Translate Chinese localization memory prompt files to English memory prompt files while maintaining terminology consistency and quality standards
+description: Translate Chinese localization memory prompt files to English memory prompt files, maintaining terminology consistency and quality standards
 ---
 
 Translate Chinese localization memory prompt file #$1 (.locale.md) to English memory prompt file, while maintaining established quality standards and terminology consistency.
@@ -9,7 +9,8 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
 # Task Execution Workflow
 ## [STEP-0] **Handle Directory Input**
 - When `$1` points to a directory, first count the number of files in that directory that meet translation rules to ensure the translation scope is clear
-- Divide tasks by file and call `pe:translate` subagent concurrently in a multi-threaded manner to avoid context pollution and reduce overall time consumption
+- Divide tasks by file and call `pe:translate` agent concurrently in a multi-threaded manner to avoid context pollution and reduce overall time consumption
+
 
 ## [STEP-1] **Parse Output Path**
 **Priority match special paths**, and generate target files according to the following table:
@@ -32,6 +33,17 @@ Where `<relative_path>` represents the directory structure after removing the `.
 <!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
 <example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
 ```
+
+**Directory translation example**
+```xml
+<!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
+<example description="Directory detected">
+  <tooling name="Bash" params:command="find $1 -name \"*.locale.md\" wc -l" />
+  I will translate concurrently...
+  <agent name="translate" message="Translate xxx.locale.md to [xxx.md, xxx.md]" />
+  <agent name="translate" message="Translate xxx.locale.md to xxx.md" />
+</example>
+```/
 
 ## [STEP-2] **Check Target Files**
 - Use `Glob(pattern: "<target_file>")` to determine if the target file already exists

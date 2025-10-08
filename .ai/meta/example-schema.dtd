@@ -29,6 +29,11 @@
 
   <!ELEMENT thinking (#PCDATA)>
 
+  <!ELEMENT agent (#PCDATA)>
+  <!ATTLIST tooling
+    <!-- name: Required command or tooling identifier (e.g., Read, Write, Search, or others) -->
+    name CDATA #REQUIRED
+
   <!ELEMENT tooling EMPTY>
   <!ATTLIST tooling
     <!-- name: Required command or tooling identifier (e.g., Read, Write, Search, or others) -->

@@ -8,8 +8,9 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 
 # 任务执行流程
 ## [STEP-0] **处理文件夹输入**
-- 当 `$1` 指向目录时，先统计该目录下符合翻译规则的文件数量，确保翻译范围明确
-- 按文件划分任务，以多线程并发方式调用 `pe:translate` subagent，避免上下文互相污染并缩短整体耗时
+- 当 `$1` 指向目录时，先统计该目录下符合翻译规则的文件，确保翻译范围明确
+- 按文件划分任务，以多线程并发方式调用 `pe:translate` aagent，避免上下文互相污染并缩短整体耗时
+
 
 ## [STEP-1] **解析输出路径**
 **优先匹配特殊路径**，并依据下表生成目标文件：
@@ -32,6 +33,17 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 <!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
 <example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
 ```
+
+**文件夹翻译示例**
+```xml
+<!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
+<example description="识别到文件夹">
+  <tooling name="Bash" params:command="find $1 -name \"*.locale.md\" wc -l" />
+  我将并发翻译...
+  <agent name="translate" message="Translate xxx.locale.md to [xxx.md, xxx.md]" />
+  <agent name="translate" message="Translate xxx.locale.md to xxx.md" />
+</example>
+```/
 
 ## [STEP-2] **检查目标文件**
 - 使用 `Search(pattern: "<target_file>")` 判断目标文件是否已存在
