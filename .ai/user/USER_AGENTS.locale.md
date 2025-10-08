@@ -563,9 +563,8 @@
 # 提示词编写规范
 
 - [.ai/locale](/.ai/locale) 下的 `**/*.locale.md` 属于英式中文提示词文件，面向用户阅读，语言需紧贴美式英语的逻辑与思路，专业术语直接保留英文原文。
-- 这些 `locale` 文件常作为 `AI Agent` 快捷命令、子代理提示词或 `memory prompt file` 的本地化版本，内容必须精确映射英文主稿。
-- `AGENTS.md` 与 `CLAUDE.md` 分布在仓库各处，通常采用英文撰写，可能因维护不及时而混入中文语感或过时信息，仅可作为旁证资料。
-- 示例多使用 `xml` 结构呈现，具备高参考价值，遵循示例时优先理解其结构化意图。
+- 这些 `**/*.locale.md` 文件常作为 `AI Agent` 快捷命令、子代理提示词或 `memory prompt file` 的本地化版本，协助用户编辑时，必须优先考虑协助编辑它们。
+- 示例多使用 `xml` 结构呈现，具备高参考价值，遵循示例时优先理解其结构化意图，具体定义可参考 [.ai/meta/example-schema.dtd](/.ai/meta/example-schema.dtd)。
 - 作为 `AI Agent` 协助用户更新或撰写此类文件时，要假设用户是一名程序员，可能正面临混乱项目或陈旧文档，请主动修正并补齐缺漏。
 - 不要直接照搬现有的 `**.locale.md` 内容；请以英文原稿为权威来源，将其翻译成标准美式英语逻辑下的英式中文，确保 locale 版本准确可读。
 - 当用户提出新的规则或想法时, 需立刻在当前正在编辑的 locale 文件中落实更新, 避免延后处理。
@@ -588,6 +587,35 @@
 - [AGENTS.md](/AGENTS.md) - AI 代理记忆提示词
 - [.editorconfig](/.editorconfig) - 编辑器配置文件
 </example>
+```
+
+## 路径引用规范
+- 提示词表写引用时，必须以 `/` 开头的基于当前项目的绝对路径为基准
+- 即使是文件夹连接，`()` 里也不能出现 `/` 结尾
+- 绝对不能出现绝对路径
+- 不得以加粗包裹文件引用，会极度分散注意力
+
+```xml
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<examples>
+  <good-example description="正确的路径引用格式">
+    [.ai/locale](/.ai/locale) - 当前项目映射的记忆提示词
+    [src/utils](/src/utils) - 工具函数目录
+    [README.md](/README.md) - 项目描述文件
+  </good-example>
+
+  <bad-example description="错误的路径引用格式">
+    [.ai/locale/](/.ai/locale/) - 文件夹链接末尾不能有斜杠
+    /home/user/project/src/utils - 禁止使用绝对路径
+    [src/utils/](/src/utils/) - 文件夹链接末尾不能有斜杠
+  </bad-example>
+
+  <bad-example description="加粗包裹文件引用（禁止）">
+    **[.ai/locale](/.ai/locale)** - 不得使用加粗包裹文件引用
+    **[src/utils](/src/utils)** - 加粗会分散注意力
+    **[README.md](/README.md)** - 禁止此格式
+  </bad-example>
+</examples>
 ```
 
 ## 参考元定义
