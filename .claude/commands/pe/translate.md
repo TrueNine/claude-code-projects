@@ -1,7 +1,7 @@
 ---
 argument-hint: [ locale_markdown_file ] [ translation_description ]
 allowed-tools: Read, Write, Glob, Grep, Bash
-description: Translate Chinese localization memory prompt file to English memory prompt file, maintaining terminology and quality standards
+description: Translate Chinese localization memory prompt file to English memory prompt file, maintaining terminology consistency and quality standards
 ---
 
 Translate Chinese localization memory prompt file #$1 (.locale.md) to English memory prompt file, while maintaining established quality standards and terminology consistency.
@@ -10,18 +10,18 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
 ## [STEP-1] **Parse Output Path**
 **Priority match special paths**, generate target files according to the following table:
 
-| Source file path                            | Output file path                                                                 |
-|--------------------------------------------------|-----------------------------------------------------------------------|
-| [.ai/locale/](/.ai/locale) `**/*.locale.md`      | `**/*.md`                                                             |
-| [.ai/locale/](/.ai/locale) `**/AGENTS.locale.md` | `<relative_path>/AGENTS.md`, `<relative_path>/CLAUDE.md`              |
-| [.ai/locale/](/.ai/locale) `AGENTS.locale.md`    | `AGENTS.md`, `CLAUDE.md`                                              |
-| [.ai/locale/](/.ai/locale) `README.locale.md`    | `README.md`                                                           |
-| [.ai/cmd/](/.ai/cmd) `**/*.locale.md`            | `.claude/commands/**/*.md`, `.ai/out/.claude/commands/**/*.md`        |
-| [.ai/sa/](/.ai/sa) `**/*.locale.md`              | `.claude/subagents/**/*.md`, `.ai/out/.claude/subagents/**/*.md`      |
-| [.ai/user/](/.ai/user) `**/*.locale.md`          | `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `.ai/out/global/**/*.md` |
-| [.ai/meta/](/.ai/meta) `**/*.locale.md`          | `.ai/meta/**/*.md`                                                    |
+| SOURCE FILE                                     | OUTPUT FILES                                                          |
+|-------------------------------------------------|-----------------------------------------------------------------------|
+| [.ai/locale/`**/*.locale.md`](/.ai/locale)      | `**/*.md`                                                             |
+| [.ai/locale/`**/AGENTS.locale.md`](/.ai/locale) | `/AGENTS.md`, `/CLAUDE.md`                                            |
+| [.ai/locale/`AGENTS.locale.md`](/.ai/locale)    | `AGENTS.md`, `CLAUDE.md`                                              |
+| [.ai/locale/`README.locale.md`](/.ai/locale)    | `README.md`                                                           |
+| [.ai/cmd/`**/*.locale.md`](/.ai/cmd)            | `.ai/out/.claude/commands/**/*.md`, `.claude/commands/**/*.md`        |
+| [.ai/sa/`**/*.locale.md`](/.ai/sa)              | `.ai/out/.claude/subagents/**/*.md`, `.claude/subagents/**/*.md`      |
+| [.ai/user/`**/*.locale.md`](/.ai/user)          | `.ai/out/global/**/*.md`, `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md` |
+| [.ai/meta/`**/*.locale.md`](/.ai/meta)          | `.ai/meta/**/*.md`                                                    |
 
-**When special paths don't match**, apply general rule: `filename.locale.extension` -> `filename.extension`.
+When special paths don't match, apply general rule: `filename.locale.extension -> filename.extension`.
 
 Where `<relative_path>` represents the directory structure after removing the `.ai/locale/` prefix from the source file.
 ```xml
@@ -61,8 +61,8 @@ Where `<relative_path>` represents the directory structure after removing the `.
 ```xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples description="File path conversion">
-  <example>.ai/cmd/pe/translate.locale.md -> [.claude/commands/pe/translate.md, .ai/out/.claude/commands/pe/translate.md]</example>
-  <example>.ai/cmd/pe/setup.locale.md -> [.claude/commands/pe/setup.md, .ai/out/.claude/commands/pe/setup.md]</example>
+  <example>.ai/cmd/pe/translate.locale.md -> [.ai/out/.claude/commands/pe/translate.md, .claude/commands/pe/translate.md]</example>
+  <example>.ai/cmd/pe/setup.locale.md -> [.ai/out/.claude/commands/pe/setup.md, .claude/commands/pe/setup.md]</example>
   <example>.ai/user/cc.locale.md -> [.ai/out/GLOBAL/cc.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</example>
   <example>.ai/user/USER_AGENTS.locale.md -> [.ai/out/GLOBAL/USER_AGENTS.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</example>
   <example>.ai/locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]</example>
