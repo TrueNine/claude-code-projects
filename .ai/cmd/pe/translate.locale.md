@@ -16,9 +16,9 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 | [.ai/locale/](/.ai/locale) `**/AGENTS.locale.md` | `<relative_path>/AGENTS.md`, `<relative_path>/CLAUDE.md`              |
 | [.ai/locale/](/.ai/locale) `AGENTS.locale.md`    | `AGENTS.md`, `CLAUDE.md`                                              |
 | [.ai/locale/](/.ai/locale) `README.locale.md`    | `README.md`                                                           |
-| [.ai/cmd/](/.ai/cmd) `**/*.locale.md`            | `.claude/commands/**/*.md`, `.ai/out/.claude/commands/**/*.md`        |
-| [.ai/sa/](/.ai/sa) `**/*.locale.md`              | `.claude/subagents/**/*.md`, `.ai/out/.claude/subagents/**/*.md`      |
-| [.ai/user/](/.ai/user) `**/*.locale.md`          | `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `.ai/out/global/**/*.md` |
+| [.ai/cmd/](/.ai/cmd) `**/*.locale.md`            | `.ai/out/.claude/commands/**/*.md`, `.claude/commands/**/*.md`        |
+| [.ai/sa/](/.ai/sa) `**/*.locale.md`              | `.ai/out/.claude/subagents/**/*.md`, `.claude/subagents/**/*.md`      |
+| [.ai/user/](/.ai/user) `**/*.locale.md`          | `.ai/out/global/**/*.md`, `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md` |
 | [.ai/meta/](/.ai/meta) `**/*.locale.md`          | `.ai/meta/**/*.md`                                                    |
 
 当未命中特殊路径映射时，套用通用规则：`filename.locale.extension -> filename.extension`。
@@ -61,8 +61,8 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 ```xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples description="文件路径转换">
-  <example>.ai/cmd/pe/translate.locale.md -> [.claude/commands/pe/translate.md, .ai/out/.claude/commands/pe/translate.md]</example>
-  <example>.ai/cmd/pe/setup.locale.md -> [.claude/commands/pe/setup.md, .ai/out/.claude/commands/pe/setup.md]</example>
+  <example>.ai/cmd/pe/translate.locale.md -> [.ai/out/.claude/commands/pe/translate.md, .claude/commands/pe/translate.md]</example>
+  <example>.ai/cmd/pe/setup.locale.md -> [.ai/out/.claude/commands/pe/setup.md, .claude/commands/pe/setup.md]</example>
   <example>.ai/user/cc.locale.md -> [.ai/out/GLOBAL/cc.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</example>
   <example>.ai/user/USER_AGENTS.locale.md -> [.ai/out/GLOBAL/USER_AGENTS.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</example>
   <example>.ai/locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]</example>
