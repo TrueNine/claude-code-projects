@@ -1,15 +1,9 @@
-﻿---
-argument-hint: [ locale_markdown_file ] [ translation_description ]
-allowed-tools: Read, Write, Glob, Grep, Bash
-description: 将中文本地化记忆提示词文件翻译为英文记忆提示词文件，保持术语与质量标准一致
 ---
-
-将中文本地化记忆提示词文件 #$1 (.locale.md) 翻译为英文记忆提示词文件，同时维持既定质量标准与术语一致性。
-
-# 任务执行流程
-## [STEP-0] **处理文件夹输入**
-- 当 `$1` 指向目录时，先统计该目录下符合翻译规则的文件数量，确保翻译范围明确
-- 按文件划分任务，以多线程并发方式调用 `pe:translate` subagent，避免上下文互相污染并缩短整体耗时
+name: translate
+description: 使用此代理时当您需要翻译单个文件，专为多次调用设计
+model: sonnet
+color: blue
+---
 
 ## [STEP-1] **解析输出路径**
 **优先匹配特殊路径**，并依据下表生成目标文件：
