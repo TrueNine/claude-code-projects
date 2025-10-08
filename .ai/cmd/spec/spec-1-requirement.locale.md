@@ -26,33 +26,34 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - 用户确认完成后，提醒其使用 `/translate` 或其他工具将文档翻译为英文，并把译文外链记录在 `project/CLAUDE.md` 以提升后续编码体验
 
 ```xml
-<Examples>
-  <GoodExample description="积极鼓励用户继续发散" userInput="我想做一个帮助远程团队协作的系统，但暂时只想到要让大家沟通更顺畅。">
-    <Tooling name="Update"
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<examples>
+  <good-example description="积极鼓励用户继续发散" userInput="我想做一个帮助远程团队协作的系统，但暂时只想到要让大家沟通更顺畅。">
+    <tooling name="Update"
              params:path=".ai/middle/spec/SPEC-1-REQUIREMENT.locale.md"
              description="让远程团队沟通更顺畅" />
     很棒的初衷！记录好了。可以先想象一下这个系统完美运行时的场景，例如团队成员在一天里会怎样协作？随意分享任何浮现的片段, 我们再一起把它们补充成结构化要点。
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="直接否定用户想法，缺乏鼓励" userInput="我想做一个帮助远程团队协作的系统，但暂时只想到要让大家沟通更顺畅。">
+  <bad-example description="直接否定用户想法，缺乏鼓励" userInput="我想做一个帮助远程团队协作的系统，但暂时只想到要让大家沟通更顺畅。">
     你描述得太模糊了，这样没法写需求，想清楚再来吧。
-  </BadExample>
+  </bad-example>
 
-  <GoodExample description="面对特别模糊的灵感仍保持友好引导" userInput="就想做点酷的，可能是个帮朋友们玩游戏的东西？我还没想明白呢。">
-    <Tooling name="Update"
+  <good-example description="面对特别模糊的灵感仍保持友好引导" userInput="就想做点酷的，可能是个帮朋友们玩游戏的东西？我还没想明白呢。">
+    <tooling name="Update"
              params:path=".ai/middle/SPEC-1-REQUIREMENT.locale.md"
              description="帮朋友们更顺利地一起玩游戏" />
     听起来很有趣！已经先记下这个目标。暂时不用急着定具体功能，可以先从你们玩游戏时遇到的小烦恼入手，比如语音沟通、组队流程或活动安排。随便说几个真实场景，我来帮你梳理哪些值得记录。
-  </GoodExample>
+  </good-example>
 
-  <GoodExample description="当线索过于抽象时先继续发散" userInput="嗯……想做个跟 AI 有关的东西，但我还没想好具体做什么。">
+  <good-example description="当线索过于抽象时先继续发散" userInput="嗯……想做个跟 AI 有关的东西，但我还没想好具体做什么。">
     这个方向很有潜力！眼下信息还比较抽象，我先不写入文档。可以先聊聊你想解决的痛点、谁会使用，或者你期待看到的理想画面。分享得越具体，我就越容易帮你提炼出可记录的要点。
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="在用户尚未成形时逼问细节" userInput="就想做点酷的，可能是个帮朋友们玩游戏的东西？我还没想明白呢。">
+  <bad-example description="在用户尚未成形时逼问细节" userInput="就想做点酷的，可能是个帮朋友们玩游戏的东西？我还没想明白呢。">
     你必须先确定具体功能，否则没法继续，等你想好了再回来。
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 
@@ -79,19 +80,12 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - 文档类型固定为 "User Requirements Documentation"
 
 ```xml
-<Examples>
-  <Example>
-    # mediacms User Requirements Documentation
-  </Example>
-
-  <Example>
-    # carshoping User Requirements Documentation
-  </Example>
-
-  <Example>
-    # idea-mcp-plugin User Requirements Documentation
-  </Example>
-</Examples>
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<examples>
+  <example># mediacms User Requirements Documentation</example>
+  <example># carshoping User Requirements Documentation</example>
+  <example># idea-mcp-plugin User Requirements Documentation</example>
+</examples>
 ```
 
 空一行后，添加项目简介部分，格式如下：
@@ -109,19 +103,20 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - 长度控制在 2-5 句话内
 
 ```xml
-<Examples>
-  <Example description="MES 系统项目示例">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<examples>
+  <example description="MES 系统项目示例">
     ## Introduction
 
     此文档记录了开发者在开发 MES 系统的详细开发需求，旨在实现生产过程的数字化管理与监控。
-  </Example>
+  </example>
 
-  <Example description="电商项目示例">
+  <example description="电商项目示例">
     ## Introduction
 
     此文档记录了开发者在开发电商前后端分离项目的详细开发需求，涵盖商品管理、订单处理和用户系统等核心功能。
-  </Example>
-</Examples>
+  </example>
+</examples>
 ```
 
 空一行后，定义目标用户群体，格式如下：
@@ -137,27 +132,28 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - 避免主观评价或艺术化表达
 
 ```xml
-<Examples>
-  <GoodExample description="制造业项目">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<examples>
+  <good-example description="制造业项目">
     **Primary Persona:** 制造业员工、制造业开发者
-  </GoodExample>
+  </good-example>
 
-  <GoodExample description="教育类项目">
+  <good-example description="教育类项目">
     **Primary Persona:** 在校大学生、高校老师、社团建模爱好者
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="错误：使用中文标题">
+  <bad-example description="错误：使用中文标题">
     **主要客户群体:** 在校大学生、高校老师、社团建模爱好者
-  </BadExample>
+  </bad-example>
 
-  <BadExample description="错误：包含主观评价">
+  <bad-example description="错误：包含主观评价">
     **Primary Persona:** 富有魅力的企业高管、追求卓越的技术专家
-  </BadExample>
+  </bad-example>
 
-  <BadExample description="错误：描述过于模糊">
+  <bad-example description="错误：描述过于模糊">
     **Primary Persona:** 各类用户、有需求的人士
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 空一行后，添加可选的项目约束条件，格式如下：
@@ -178,36 +174,37 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - 商业因素：预算限制、时间要求、投资回报等
 
 ```xml
-<Examples>
-  <GoodExample description="视频类项目约束">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<examples>
+  <good-example description="视频类项目约束">
     **Operational Constraints:**
     1. 服务器性能有限，需要轻量化部署并控制带宽占用
     2. 默认依赖外部 MySQL 8；视频资源可部署在本地磁盘或 TOS，视成本取舍
     3. 访问与播放量较低，但需确保圈内访问流畅与后台易维护
-  </GoodExample>
+  </good-example>
 
-  <GoodExample description="金融类项目约束">
+  <good-example description="金融类项目约束">
     **Operational Constraints:**
     1. 必须符合国家金融数据安全规范，所有交易数据需加密存储
     2. 系统可用性要求 99.9%，每年停机时间不超过 8.76 小时
     3. 开发团队 3 人，包括 1 名前端、1 名后端、1 名测试
     4. 预算限制在 50 万以内，包含一年的运维成本
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="描述过于模糊">
+  <bad-example description="描述过于模糊">
     **Operational Constraints:**
     1. 服务器要好一点
     2. 需要快点完成
     3. 预算不太够
-  </BadExample>
+  </bad-example>
 
-  <BadExample description="使用不专业的表达">
+  <bad-example description="使用不专业的表达">
     **Operational Constraints:**
     1. 电脑配置不能太差，不然跑不动
     2. 最好用云服务，这样方便些
     3. 找几个人随便做做就行
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 空一行后，添加可选的非功能性优先级说明，格式如下：
@@ -220,43 +217,44 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 ```
 
 ```xml
-<Examples>
-  <GoodExample description="明确的非功能性优先级">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<examples>
+  <good-example description="明确的非功能性优先级">
     **Non-Functional Priorities:**
     1. 默认启用 HTTPS，优先使用云厂商免费证书
     2. 视频与封面优先经由 TOS/CDN；若采用本地存储，需提供容量监控与清理策略
     3. 当前仅需桌面端体验，移动端可在后续需求出现时迭代
     4. 提供容器或脚本化部署以便迁移与快速恢复
     5. 实现轻量日志与监控，并规划数据库与关键数据的定期备份
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="模糊不清的非功能性优先级">
+  <bad-example description="模糊不清的非功能性优先级">
     **Non-Functional Priorities:**
     1. 系统要安全稳定
     2. 速度要快一点
     3. 界面要好看
     4. 后期要方便维护
     5. 部署要简单
-  </BadExample>
+  </bad-example>
 
-  <GoodExample description="可量化的非功能性优先级">
+  <good-example description="可量化的非功能性优先级">
     **Non-Functional Priorities:**
     1. 所有敏感数据必须 AES-256 加密存储，传输使用 TLS 1.3
     2. 核心交易接口响应时间 ≤ 500ms，99% 请求需在 200ms 内完成
     3. 系统可用性 ≥ 99.9%，月度停机时间 ≤ 43.2 分钟
     4. 支持 Chrome/Firefox/Safari 最新两个版本，IE11 最低兼容
     5. 代码覆盖率 ≥ 80%，关键业务 100% 有集成测试
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="技术选型而非优先级">
+  <bad-example description="技术选型而非优先级">
     **Non-Functional Priorities:**
     1. 使用 React 框架开发前端
     2. 后端采用 Spring Boot 框架
     3. 数据库使用 MySQL 8.0
     4. 缓存使用 Redis
     5. 消息队列用 RabbitMQ
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 空一行后，添加可选的后续功能范围说明，格式如下：
@@ -276,35 +274,36 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - 有序列表内容使用 `$1` 语言进行书写
 
 ```xml
-<Examples>
-  <GoodExample description="视频平台后续功能">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<examples>
+  <good-example description="视频平台后续功能">
     **Deferred Scope:**
     1. 人才市场招聘能力，连接创作者与企业
     2. 短剧贩售与付费解锁模块，支持内容变现
     3. 创作者社区功能，支持作品交流与协作
-  </GoodExample>
+  </good-example>
 
-  <GoodExample description="电商平台后续功能">
+  <good-example description="电商平台后续功能">
     **Deferred Scope:**
     1. 社交分享功能，允许用户分享商品至各平台
     2. 会员积分系统，提升用户忠诚度
     3. 多语言国际化支持，拓展海外市场
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="描述过于模糊">
+  <bad-example description="描述过于模糊">
     **Deferred Scope:**
     1. 一些其他功能
     2. 后续再加的东西
     3. 等有钱了再做的
-  </BadExample>
+  </bad-example>
 
-  <BadExample description="与当前需求重复">
+  <bad-example description="与当前需求重复">
     **Deferred Scope:**
     1. 用户登录注册（已在基础功能中）
     2. 商品展示页面（已在核心需求中）
     3. 订单管理功能（已在必须实现中）
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 
@@ -347,8 +346,9 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - 避免过小（少于 2 条验收标准需考虑合并）
 
 ```xml
-<Examples>
-  <GoodExample description="完整的用户需求">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<examples>
+  <good-example description="完整的用户需求">
     ### Requirement 3: 用户作品管理
 
     **User Story:** As 创作者, I want 能够管理我的所有作品, so that 可以随时编辑或删除内容。
@@ -359,9 +359,9 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
     2. WHEN 创作者点击作品编辑按钮 THEN 系统应跳转至编辑页面，保留原有内容并可修改所有信息
     3. WHEN 创作者删除作品 THEN 系统应要求二次确认，成功后从列表中移除并提示用户
     4. WHEN 作品被其他用户收藏或评论 THEN 创作者在管理页面应能看到相关统计数据
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="缺少用户价值">
+  <bad-example description="缺少用户价值">
     ### Requirement 2: 用户登录
 
     **User Story:** As 用户, I want 登录系统。
@@ -371,9 +371,9 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
     1. 输入用户名密码
     2. 点击登录按钮
     3. 登录成功
-  </BadExample>
+  </bad-example>
 
-  <GoodExample description="技术无关的验收标准">
+  <good-example description="技术无关的验收标准">
     ### Requirement 5: 内容推荐
 
     **User Story:** As 观众, I want 系统能推荐我感兴趣的短剧内容, so that 发现更多优质作品。
@@ -383,9 +383,9 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
     1. WHEN 观众浏览首页 THEN 系统应基于其观看历史推荐相似类型作品
     2. WHEN 观众完成观看一个作品 THEN 系统应推荐相关创作者的其他作品
     3. WHEN 观众连续跳过多个推荐 THEN 系统应调整推荐算法，提供更精准的内容
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="包含技术实现">
+  <bad-example description="包含技术实现">
     ### Requirement 4: 视频上传
 
     **User Story:** As 创作者, I want 上传视频。
@@ -395,9 +395,9 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
     1. 调用后端 API 接口 /api/v1/videos
     2. 使用 MySQL 存储视频信息
     3. 视频文件存放在 OSS 对象存储
-  </BadExample>
+  </bad-example>
 
-  <GoodExample description="需求拆分合理">
+  <good-example description="需求拆分合理">
     ### Requirement 7: 评论互动
 
     **User Story:** As 观众, I want 对喜欢的作品进行评论, so that 与创作者和其他观众交流想法。
@@ -408,9 +408,9 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
     2. WHEN 创作者收到评论 THEN 系统应通过站内信通知创作者
     3. WHEN 评论包含敏感词 THEN 系统应自动拦截并提示用户修改
     4. WHEN 观众点击某条评论 THEN 系统应显示该评论的回复和点赞数
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="需求过于复杂">
+  <bad-example description="需求过于复杂">
     ### Requirement 1: 完整的用户系统
 
     **User Story:** As 用户, I want 使用完整的系统功能。
@@ -426,8 +426,8 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
     7. 权限管理控制
     8. 支付功能
     9. 客服系统
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 ### 需求优先级标记（可选）
@@ -437,17 +437,19 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - `[L]` - Low priority（低优先级）
 
 ```xml
-<Examples>
-  <Example description="优先级标记示例">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<examples>
+  <example description="优先级标记示例">
     ### Requirement 1[H]: 用户认证
     ### Requirement 2[M]: 邮件通知
     ### Requirement 3[L]: 主题切换
-  </Example>
-</Examples>
+  </example>
+</examples>
 ```
 
 ```xml
-<Example description="完整示例：在线教育平台需求文档">
+<!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd" >
+<example description="完整示例：在线教育平台需求文档">
   # EduPlatform User Requirements Documentation
 
   ## Introduction
@@ -534,7 +536,7 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
   3. WHEN 学生提交后超时 THEN 系统应自动关闭提交入口
   4. WHEN 教师批改作业 THEN 系统应支持评分、评语和批注功能
   5. WHEN 所有作业批改完成后 THEN 系统应生成班级成绩统计
-</Example>
+</example>
 ```
 
 
