@@ -66,19 +66,19 @@ description: 优化 记忆提示词文件, 使得其记忆提示词文件让 "AI
   - 使用结构化 `XML` 标签包裹示例, 方便解析与复用
   - 将示例置于 ` ```xml ... ``` ` 代码块中, 统一展示格式
   - 标签属性一律使用英文引号, 避免混用
-  - 标签名称必须使用 `PascalCase`, 例如 `<Example>`
+  - 严格复用 `.ai/meta/example-schema.dtd` 定义的标签名称和结构
 
 - **可用标签**
-  - `<Examples>`: 顶层容器, 用于组合同一主题的示例
-  - `<Example>`: 通用示例, 展示标准做法
-  - `<GoodExample>`: 正向示例, 仅能出现在 `<Examples>` 内
-  - `<BadExample>`: 反向示例, 仅能出现在 `<Examples>` 内
-  - `<Thinking>`: 描述思考过程, 只能内嵌于单个示例
-  - `<Tooling>`: 记录示例涉及的工具命令, 必须添加 `name="..."`
+  - `<examples>`: 顶层容器, 用于组合同一主题的示例, 可直接作为根节点
+  - `<example>`: 通用示例, 可作为根节点或嵌入 `<examples>` 内
+  - `<good-example>`: 正向示例, 仅能出现在 `<examples>` 内
+  - `<bad-example>`: 反向示例, 仅能出现在 `<examples>` 内
+  - `<thinking>`: 描述思考过程, 只能内嵌于单个示例节点
+  - `<tooling>`: 记录示例涉及的工具命令, 必须设置 `name="..."`, 且为自闭合标签
 
 - **属性约定**
   - `description="..."`: 可选, 简要说明示例意图
-  - `userInput="..."`: 可选, 展示示例对应的用户输入
+  - `user-input="..."`: 可选, 展示示例对应的用户输入
   - `params:path="..."`: 可选, 记录示例相关的文件路径
   - `params:command="..."`: 可选, 描述执行命令或脚本
   - 其他 `params:*` 属性沿用 `params:<key>="<value>"` 语法, 必须使用英文属性名
@@ -88,31 +88,28 @@ description: 优化 记忆提示词文件, 使得其记忆提示词文件让 "AI
 - **原子化原则**
   - 每个示例只覆盖一个概念, 不拆分多个主题
   - 示例中禁止使用行内注释, 说明信息需放在结构化内容中
-  - `<Tooling>` 节点需包含 `name="<tool-name>"`, 并根据需要补充 `params:*`
+  - `<tooling>` 节点需包含 `name="<tool-name>"`, 并根据需要补充 `params:*`, 因为空元素故需自闭合
   - 仅保留一个连续的代码段或输出片段
   - 示例内容必须自洽, 无需额外上下文即可理解
 
 
 ```xml
-<Examples>
-  <GoodExample>
+<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<examples description="处理 Result 的正误示例">
+  <good-example>
+    <thinking>直接返回 parse_data 结果, 让上层处理错误上下文</thinking>
     fn process_data(data: &str) -> Result<ProcessedData, Error> {
       parse_data(data)
     }
-  </GoodExample>
-
-  <BadExample description="缺少显式错误处理">
+  </good-example>
+  <bad-example description="缺少错误透传">
+    <thinking>忽略错误细节, 只返回默认值</thinking>
+    <tooling name="Search" params:pattern="process_data"/>
     fn process_data(data: &str) -> Result<ProcessedData, Error> {
-      parse_data(data)
+      parse_data(data).unwrap_or_default()
     }
-  </BadExample>
-
-  <BadExample description="同一示例混入额外概念">
-    fn get_optional_value() -> Option<String> {
-      Some("value".to_string())
-    }
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 
@@ -169,19 +166,20 @@ description: 优化 记忆提示词文件, 使得其记忆提示词文件让 "AI
 - **清晰简洁**: 确保结构清晰易读, 避免过度复杂的表示方法
 
 ```xml
-<Examples>
-  <GoodExample>
-    .docs/
-    - `prompts/` - 提示词模板
-    - `user/` - 全局用户提示词
-    - `project/` - 项目级提示词
-    - `slashcommands/` - 斜杠命令提示词
-    - `qa/` - 问答文档
-    - `references/` - 技术参考文档
-    - `other/` - 其他文档(构建, Git, 数据库等)
-  </GoodExample>
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<examples>
+  <good-example>
+    - [.docs/](/.docs)
+      - [prompts/](/.docs/prompts) - 提示词模板
+      - [user/](/.docs/user) - 全局用户提示词
+      - [project/](/.docs/project) - 项目级提示词
+      - [slashcommands/](/.docs/slashcommands) - 斜杠命令提示词
+      - [qa/](/.docs/qa) - 问答文档
+      - [references/](/.docs/references) - 技术参考文档
+      - [other/](/.docs/other) - 其他文档(构建, Git, 数据库等)
+  </good-example>
 
-  <BadExample description="使用树形结构图">
+  <bad-example description="使用树形结构图">
     .docs/
     ├── prompts/ # 提示词模板
     │ ├── user/ # 全局用户提示词
@@ -190,8 +188,8 @@ description: 优化 记忆提示词文件, 使得其记忆提示词文件让 "AI
     ├── qa/ # 问答文档
     ├── references/ # 技术参考文档
     └── other/ # 其他文档(构建, Git, 数据库等)
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 
@@ -223,8 +221,9 @@ description: 优化 记忆提示词文件, 使得其记忆提示词文件让 "AI
 ### 标点符号使用示例
 
 ```xml
-<Examples>
-  <GoodExample description="使用英文标点符号">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<examples>
+  <good-example description="使用英文标点符号">
     # Role: Code Review Assistant
 
     You are an expert code reviewer with 10+ years of experience. Your task is to:
@@ -233,8 +232,8 @@ description: 优化 记忆提示词文件, 使得其记忆提示词文件让 "AI
     3. Ensure code follows best practices and security guidelines
 
     Focus on readability, maintainability, and performance aspects.
-  </GoodExample>
-  <BadExample description="使用中文标点符号">
+  </good-example>
+  <bad-example description="使用中文标点符号">
     # Role: 代码审查助手
 
     你是一位拥有10年以上经验的专家代码审查员。你的任务是:
@@ -243,6 +242,6 @@ description: 优化 记忆提示词文件, 使得其记忆提示词文件让 "AI
     3. 确保代码遵循最佳实践和安全准则
 
     重点关注可读性、可维护性和性能方面。
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
