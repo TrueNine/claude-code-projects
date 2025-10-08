@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    uicontrol_lib::run()
+  uicontrol_lib::run()
 }
