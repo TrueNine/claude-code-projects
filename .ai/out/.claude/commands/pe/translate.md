@@ -21,8 +21,9 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
 | [.ai/locale/`**/AGENTS.locale.md`](/.ai/locale) | `/AGENTS.md`, `/CLAUDE.md`                                            |
 | [.ai/locale/`AGENTS.locale.md`](/.ai/locale)    | `AGENTS.md`, `CLAUDE.md`                                              |
 | [.ai/locale/`README.locale.md`](/.ai/locale)    | `README.md`                                                           |
+| [.ai/locale/`TODO.locale.md`](/.ai/locale)      | `TODO.md`                                                             |
 | [.ai/cmd/`**/*.locale.md`](/.ai/cmd)            | `.ai/out/.claude/commands/**/*.md`, `.claude/commands/**/*.md`        |
-| [.ai/sa/`**/*.locale.md`](/.ai/sa)              | `.ai/out/.claude/agents/**/*.md`, `.claude/agents/**/*.md`            |
+| [.ai/agents/`**/*.locale.md`](/.ai/agents)      | `.ai/out/.claude/agents/**/*.md`, `.claude/agents/**/*.md`            |
 | [.ai/user/`**/*.locale.md`](/.ai/user)          | `.ai/out/global/**/*.md`, `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md` |
 | [.ai/meta/`**/*.locale.md`](/.ai/meta)          | `.ai/meta/**/*.md`                                                    |
 
@@ -40,8 +41,9 @@ Where `<relative_path>` represents the directory structure after removing the `.
 <example description="Directory detected">
   <tooling name="Bash" params:command="find $1 -name \"*.locale.md\" wc -l" />
   I will translate concurrently...
-  <agent name="translate" message="Translate xxx.locale.md to [xxx.md, xxx.md]" />
-  <agent name="translate" message="Translate xxx.locale.md to xxx.md" />
+  <agent name="translate" message="Translate .ai/locale/arch/AGENTS.locale.md to [arch/AGENTS.md, arch/CLAUDE.md]" />
+  <agent name="translate" message="Translate .ai/locale/AGENTS.locale.md to [AGENTS.md, CLAUDE.md]" />
+  <agent name="translate" message="Translate .ai/locale/meta/example.locale.md to .ai/meta/example.md" />
 </example>
 ```
 
@@ -79,12 +81,13 @@ Where `<relative_path>` represents the directory structure after removing the `.
 <examples description="File path conversion">
   <example>.ai/cmd/pe/translate.locale.md -> [.ai/out/.claude/commands/pe/translate.md, .claude/commands/pe/translate.md]</example>
   <example>.ai/cmd/pe/setup.locale.md -> [.ai/out/.claude/commands/pe/setup.md, .claude/commands/pe/setup.md]</example>
-  <example>.ai/sa/pe/translate.locale.md -> [.ai/out/.claude/agents/pe/translate.md, .claude/agents/pe/translate.md]</example>
+  <example>.ai/agents/pe/translate.locale.md -> [.ai/out/.claude/agents/pe/translate.md, .claude/agents/pe/translate.md]</example>
   <example>.ai/user/cc.locale.md -> [.ai/out/GLOBAL/cc.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</example>
   <example>.ai/user/USER_AGENTS.locale.md -> [.ai/out/GLOBAL/USER_AGENTS.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</example>
   <example>.ai/locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]</example>
   <example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
   <example>.ai/locale/README.locale.md -> README.md</example>
+  <example>.ai/locale/TODO.locale.md -> TODO.md</example>
   <example>.ai/locale/.ai/cmd/AGENTS.locale.md -> [.ai/cmd/AGENTS.md, .ai/cmd/CLAUDE.md]</example>
   <example>.ai/locale/meta/examples.locale.md -> .ai/meta/examples.md</example>
   <example>.ai/locale/meta/prompt.locale.md -> .ai/meta/prompt.md</example>
