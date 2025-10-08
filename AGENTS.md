@@ -1,3 +1,4 @@
+
 This file provides guidance for `AI Agent` working in this repository.
 
 
@@ -21,7 +22,7 @@ This is a documentation and configuration repository for `AI Agent` workflows, f
   - [user/](/.ai/user) - Global user memory prompts
   - [project/](/.ai/project) - Project-level memory prompts
   - [cmd/](/.ai/cmd) - Custom command prompts
-  - [sa/](/.ai/sa) - Sub-agent prompts
+  - [agents/](/.ai/agents) - Sub-agent prompts
   - [meta/](/.ai/meta) - Reference prompt writing standards
 - [cli/](/cli) - Command line tools
   - [rust/](/cli/rust) - Rust core tools
