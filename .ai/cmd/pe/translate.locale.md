@@ -21,6 +21,7 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 | [.ai/locale/`**/AGENTS.locale.md`](/.ai/locale) | `/AGENTS.md`, `/CLAUDE.md`                                            |
 | [.ai/locale/`AGENTS.locale.md`](/.ai/locale)    | `AGENTS.md`, `CLAUDE.md`                                              |
 | [.ai/locale/`README.locale.md`](/.ai/locale)    | `README.md`                                                           |
+| [.ai/locale/`TODO.locale.md`](/.ai/locale)      | `TODO.md`                                                             |
 | [.ai/cmd/`**/*.locale.md`](/.ai/cmd)            | `.ai/out/.claude/commands/**/*.md`, `.claude/commands/**/*.md`        |
 | [.ai/sa/`**/*.locale.md`](/.ai/sa)              | `.ai/out/.claude/agents/**/*.md`, `.claude/agents/**/*.md`            |
 | [.ai/user/`**/*.locale.md`](/.ai/user)          | `.ai/out/global/**/*.md`, `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md` |
@@ -86,6 +87,7 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
   <example>.ai/locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]</example>
   <example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
   <example>.ai/locale/README.locale.md -> README.md</example>
+  <example>.ai/locale/TODO.locale.md -> TODO.md</example>
   <example>.ai/locale/.ai/cmd/AGENTS.locale.md -> [.ai/cmd/AGENTS.md, .ai/cmd/CLAUDE.md]</example>
   <example>.ai/locale/meta/examples.locale.md -> .ai/meta/examples.md</example>
   <example>.ai/locale/meta/prompt.locale.md -> .ai/meta/prompt.md</example>
