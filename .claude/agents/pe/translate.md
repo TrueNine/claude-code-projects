@@ -15,7 +15,7 @@ color: blue
 | [.ai/locale/`AGENTS.locale.md`](/.ai/locale)    | `AGENTS.md`, `CLAUDE.md`                                              |
 | [.ai/locale/`README.locale.md`](/.ai/locale)    | `README.md`                                                           |
 | [.ai/cmd/`**/*.locale.md`](/.ai/cmd)            | `.ai/out/.claude/commands/**/*.md`, `.claude/commands/**/*.md`        |
-| [.ai/sa/`**/*.locale.md`](/.ai/sa)              | `.ai/out/.claude/subagents/**/*.md`, `.claude/subagents/**/*.md`      |
+| [.ai/sa/`**/*.locale.md`](/.ai/sa)              | `.ai/out/.claude/agents/**/*.md`, `.claude/agents/**/*.md`            |
 | [.ai/user/`**/*.locale.md`](/.ai/user)          | `.ai/out/global/**/*.md`, `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md` |
 | [.ai/meta/`**/*.locale.md`](/.ai/meta)          | `.ai/meta/**/*.md`                                                    |
 
@@ -28,7 +28,7 @@ Where `<relative_path>` represents the directory structure after removing the `.
 ```
 
 ## [STEP-2] **Check Target File**
-- Use `Glob(pattern: "<target_file>")` to verify if target file exists
+- Use `Glob(pattern: "<target_file>")` to determine if target file already exists
 - Use `Bash(command: "mkdir -p <target_directory>")` to create all required target directories
 
 ## [STEP-3] **Delete Old Files**
@@ -61,6 +61,7 @@ Where `<relative_path>` represents the directory structure after removing the `.
 <examples description="File path conversion">
   <example>.ai/cmd/pe/translate.locale.md -> [.ai/out/.claude/commands/pe/translate.md, .claude/commands/pe/translate.md]</example>
   <example>.ai/cmd/pe/setup.locale.md -> [.ai/out/.claude/commands/pe/setup.md, .claude/commands/pe/setup.md]</example>
+  <example>.ai/sa/pe/translate.locale.md -> [.ai/out/.claude/agents/pe/translate.md, .claude/agents/pe/translate.md]</example>
   <example>.ai/user/cc.locale.md -> [.ai/out/GLOBAL/cc.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</example>
   <example>.ai/user/USER_AGENTS.locale.md -> [.ai/out/GLOBAL/USER_AGENTS.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</example>
   <example>.ai/locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]</example>
