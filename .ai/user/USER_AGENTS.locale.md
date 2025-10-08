@@ -18,25 +18,26 @@
 - 采用顺序: 1) 根目录配置文件; 2) `.tool-versions` 或 `mise`; 3) `README` 指南; 4) 现有脚本与 `CI`。
 
 ```xml
-<Examples>
-  <GoodExample description="示例: 正确识别并使用项目工具链"
-               userInput="帮我运行测试">
-    <Tooling name="Search" 
+<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<examples>
+  <good-example description="示例: 正确识别并使用项目工具链"
+                user-input="帮我运行测试">
+    <tooling name="Search" 
              params:pattern="Cargo.toml">
       Locate Cargo.toml within the workspace
-    </Tooling>
-    <Tooling name="Bash" 
+    </tooling>
+    <tooling name="Bash" 
              params:command="test -f Cargo.toml">
       Confirm Cargo.toml exists at the repository root
-    </Tooling>
-  </GoodExample>
+    </tooling>
+  </good-example>
 
-  <BadExample description="未调查即假设工具链"
+  <bad-example description="未调查即假设工具链"
               userInput="帮我运行测试">
-    <Tooling name="Bash"
+    <tooling name="Bash"
              params:command="npm test" />
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 
@@ -59,19 +60,20 @@
 - 行末: `LF`.
 
 ```xml
-<Examples>
-  <GoodExample description="2 空格缩进">
+<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<examples>
+  <good-example description="2 空格缩进">
     fn main() {
       println!("Hello World");
     }
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="4 空格缩进导致格式错误">
+  <bad-example description="4 空格缩进导致格式错误">
     fn main() {
         println!("Hello World");
     }
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 
@@ -81,37 +83,38 @@
 - 文件名优先顺序: `PascalCase` 或 `camelCase` -> `snake_case` -> 避免 `kebab-case` (除非语言强制)。
 
 ```xml
-<Examples>
-  <GoodExample description="组件文件使用 PascalCase">
+<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<examples>
+  <good-example description="组件文件使用 PascalCase">
     UserAccount.ts
     UserProfile.tsx
-  </GoodExample>
+  </good-example>
 
-  <GoodExample description="工具文件使用 camelCase">
+  <good-example description="工具文件使用 camelCase">
     userUtils.ts
     apiClient.js
-  </GoodExample>
+  </good-example>
 
-  <GoodExample description="配置文件可接受 snake_case">
+  <good-example description="配置文件可接受 snake_case">
     user_config.json
     database_settings.yaml
-  </GoodExample>
+  </good-example>
 
-  <GoodExample description="Rust 模块文件使用 snake_case">
+  <good-example description="Rust 模块文件使用 snake_case">
     user_service.rs
     auth_handler.rs
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="文件名使用 kebab-case">
+  <bad-example description="文件名使用 kebab-case">
     user-utils.ts
     api-client.js
-  </BadExample>
+  </bad-example>
 
-  <BadExample description="组件文件使用小写">
+  <bad-example description="组件文件使用小写">
     useraccount.ts
     userprofile.tsx
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 
@@ -123,27 +126,28 @@
 - 条件语句与循环体必须显式使用大括号, 避免因省略而引入严重漏洞
 
 ```xml
-<Examples>
-  <GoodExample description="条件分支始终使用大括号">
+<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<examples>
+  <good-example description="条件分支始终使用大括号">
     if (is_ready) {
       handle_ready();
     }
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="省略大括号导致逻辑失控">
+  <bad-example description="省略大括号导致逻辑失控">
     if (is_ready)
       handle_ready();
       finalize();
-  </BadExample>
+  </bad-example>
 
-  <BadExample description="行内注释拉长代码行">
+  <bad-example description="行内注释拉长代码行">
     let total = price * quantity; // skip tax for legacy orders
-  </BadExample>
-  <GoodExample description="正确注释方式">
+  </bad-example>
+  <good-example description="正确注释方式">
     // skip tax for legacy orders
     let total = price * quantity;
-  </GoodExample>
-</Examples>
+  </good-example>
+</examples>
 ```
 
 
@@ -156,17 +160,18 @@
 要求使用 `guard clause` 与 `early return` 减少嵌套层级。
 
 ```xml
-<Examples>
-  <GoodExample description="使用 guard clause 降低嵌套">
+<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<examples>
+  <good-example description="使用 guard clause 降低嵌套">
     fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
       let user = user?;
       if !user.is_active { return None; }
       if user.age < 18 { return None; }
       handle_adult_user(user)
     }
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="深层嵌套的写法">
+  <bad-example description="深层嵌套的写法">
     fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
       if let Some(user) = user {
         if user.is_active {
@@ -177,8 +182,8 @@
       }
       None
     }
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 ### 多条件判断优化
@@ -186,8 +191,9 @@
 - 目标: 提升可读性和可维护性, 减少重复判断。
 
 ```xml
-<Examples>
-  <GoodExample description="match 分支覆盖多条件">
+<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<examples>
+  <good-example description="match 分支覆盖多条件">
     fn get_error_message(status_code: u16) -> &'static str {
       match status_code {
         403 => "Permission denied, cannot access this resource",
@@ -197,9 +203,9 @@
         _ => "Unknown error"
       }
     }
-  </GoodExample>
+  </good-example>
 
-  <GoodExample description="查表替代多分支">
+  <good-example description="查表替代多分支">
     use std::collections::HashMap;
 
     fn get_error_message_lookup(status_code: u16) -> &'static str {
@@ -214,9 +220,9 @@
         else { "Unknown error" }
       )
     }
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="大量 if-else 链处理多条件">
+  <bad-example description="大量 if-else 链处理多条件">
     fn get_error_message(status_code: u16) -> &'static str {
       let mut error_message = "Unknown error";
 
@@ -232,8 +238,8 @@
 
       error_message
     }
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 
@@ -265,12 +271,13 @@
 - 默认策略: 在现有基础上扩展能力而非重写。
 
 ```xml
-<Examples>
-  <GoodExample description="开发前调查并复用现有代码"
+<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<examples>
+  <good-example description="开发前调查并复用现有代码"
                userInput="帮我实现一个用户认证功能">
-    <Tooling name="Search"
+    <tooling name="Search"
              params:pattern="auth" />
-    <Tooling name="Read"
+    <tooling name="Read"
              params:path="AuthService" />
     选择扩展现有组件, 避免重造轮子:
 
@@ -288,11 +295,11 @@
       }
     }
     ```
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="跳过调查直接重写功能"
+  <bad-example description="跳过调查直接重写功能"
              userInput="帮我实现一个用户认证功能">
-    <Tooling name="Write"
+    <tooling name="Write"
              params:path="NewAuthSystem" />
     ```rust
     struct NewAuthSystem;
@@ -303,8 +310,8 @@
       }
     }
     ```
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 
@@ -329,11 +336,12 @@
 - 破坏原有组织结构。
 
 ```xml
-<Examples>
-  <GoodExample description="在现有文件内扩展功能"
+<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<examples>
+  <good-example description="在现有文件内扩展功能"
                userInput="添加一个新的工具函数来格式化日期">
     将日期格式化函数合并进现有工具文件。
-    <Tooling name="Update"
+    <tooling name="Update"
              params:path="src/utils/helpers.rs" />
     ```rust
     use chrono::{DateTime, Local};
@@ -347,12 +355,12 @@
     pub fn format_currency(amount: f64) -> String { /* ... */ "".to_string() }
     pub fn format_phone_number(phone: &str) -> String { /* ... */ "".to_string() }
     ```
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="不必要地创建新文件"
+  <bad-example description="不必要地创建新文件"
               userInput="添加一个新的工具函数来格式化日期">
     不必要地拆出新文件:
-    <Tooling name="Write"
+    <tooling name="Write"
              params:path="src/utils/date_utils.rs"
              description="不必要的文件创建" />
     ```rust
@@ -362,8 +370,8 @@
       date.format(format).to_string()
     }
     ```
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 
@@ -381,8 +389,9 @@
 ### 错误处理示例
 
 ```xml
-<Examples>
-  <GoodExample description="完全透明">
+<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<examples>
+  <good-example description="完全透明">
     fn process_file(path: &str) -> Result<ProcessedData, ProcessingError> {
       let file = std::fs::File::open(path)
         .map_err(|e| ProcessingError::FileOpenError {
@@ -398,9 +407,9 @@
 
       Ok(result)
     }
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="掩盖错误">
+  <bad-example description="掩盖错误">
     fn process_file(path: &str) -> Option<ProcessedData> {
       let file = match std::fs::File::open(path) {
         Ok(f) => f,
@@ -415,15 +424,16 @@
         }
       }
     }
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 ### 警告处理示例
 
 ```xml
-<Examples>
-  <GoodExample description="必须传递给调用者">
+<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<examples>
+  <good-example description="必须传递给调用者">
     fn validate_config(config: &Config) -> Result<(), Vec<ValidationWarning>> {
       let mut warnings = Vec::new();
 
@@ -437,9 +447,9 @@
 
       Ok(())
     }
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="镇压警告">
+  <bad-example description="镇压警告">
     fn validate_config(config: &Config) {
       if config.timeout < 1000 {
         // 镇压警告 - 禁止
@@ -448,8 +458,8 @@
 
       // 未告知调用者潜在问题
     }
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 ### 异常处理示例
@@ -459,22 +469,23 @@
 - 优先复用现有异常类型, 避免随意创建新异常导致维护成本上升
 
 ```xml
-<Examples>
-  <GoodExample description="复用现有异常并补充上下文">
+<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<examples>
+  <good-example description="复用现有异常并补充上下文">
     try {
       riskyOperation();
     } catch (Exception e) {
       throw new IOException("Unable to finish task", e);
     }
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="静默吞掉异常导致信息丢失">
+  <bad-example description="静默吞掉异常导致信息丢失">
     try {
       riskyOperation();
     } catch (Exception ignored) {
     }
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 
@@ -516,19 +527,20 @@
 - 给出后续修复计划.
 
 ```xml
-<Examples>
-  <GoodExample description="全面执行验证流程"
-               userInput="帮我修复这个登录功能的bug">
+<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<examples>
+  <good-example description="全面执行验证流程"
+               user-input="帮我修复这个登录功能的bug">
     修复后执行完整验证。
-    <Tooling name="Bash" params:command="diagnostic">
+    <tooling name="Bash" params:command="diagnostic">
       Run project-defined diagnostic command to surface syntax issues
-    </Tooling>
-    <Tooling name="Bash" params:command="cargo test">
+    </tooling>
+    <tooling name="Bash" params:command="cargo test">
       Execute `cargo test` aligned with the detected Cargo configuration
-    </Tooling>
-    <Tooling name="Bash" params:command="manual login flow">
+    </tooling>
+    <tooling name="Bash" params:command="manual login flow">
       Drive a manual login flow check via Bash to confirm behaviour
-    </Tooling>
+    </tooling>
     全部验证通过:
 
     - ✅ 无语法或类型错误。
@@ -536,13 +548,13 @@
     - ✅ 手测登录流程正常。
 
     登录问题已修复并验证。
-  </GoodExample>
+  </good-example>
 
-  <BadExample description="未验证即声称完成"
+  <bad-example description="未验证即声称完成"
              userInput="帮我修复这个登录功能的bug">
     未验证即声称修复完成, 违规。
-  </BadExample>
-</Examples>
+  </bad-example>
+</examples>
 ```
 
 
@@ -563,7 +575,8 @@
 ## 文件结构书写示范
 
 ```xml
-<Example description="使用 md 代码块的嵌套文件列表而不是树形结构">
+<!DOCTYPE example "/.ai/meta/example-schema.dtd">
+<example description="使用 md 代码块的嵌套文件列表而不是树形结构">
 - [.ai](/.ai) - AI Agent 工程目录，类似于 src 的源提示词工作目录
   - [.ai/locale/](/.ai/locale) - 当前项目映射的记忆提示词
   - [.ai/user/](/.ai/user) - 全局用户记忆提示词
@@ -574,7 +587,7 @@
 - [README.md](/README.md) - 项目描述文件
 - [AGENTS.md](/AGENTS.md) - AI 代理记忆提示词
 - [.editorconfig](/.editorconfig) - 编辑器配置文件
-</Example>
+</example>
 ```
 
 ## 参考元定义
