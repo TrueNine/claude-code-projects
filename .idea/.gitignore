@@ -11,3 +11,4 @@
 !/modules/compose-server.iml
 !/misc.xml
 !/vcs.xml
+!/*.iml
