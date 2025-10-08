@@ -29,12 +29,12 @@ Where `<relative_path>` represents the directory structure after removing the `.
 <example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
 ```
 
-**Folder translation examples**
+**Folder Translation Example**
 ```xml
 <!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
-<example description="Folder detected">
+<example description="Folder recognized">
   <tooling name="Bash" params:command="find $1 -name \"*.locale.md\" wc -l" />
-  I will translate in parallel...
+  I will translate concurrently...
   <agent name="translate" message="Translate .ai/locale/arch/AGENTS.locale.md to [arch/AGENTS.md, arch/CLAUDE.md]" />
   <agent name="translate" message="Translate .ai/locale/AGENTS.locale.md to [AGENTS.md, CLAUDE.md]" />
   <agent name="translate" message="Translate .ai/locale/meta/example.locale.md to .ai/meta/example.md" />
@@ -42,7 +42,7 @@ Where `<relative_path>` represents the directory structure after removing the `.
 ```
 
 ## [STEP-2] **Check Target File**
-- Use `Glob(pattern: "<target_file>")` to determine if target file already exists
+- Use `Search(pattern: "<target_file>")` to determine if target file already exists
 - Use `Bash(command: "mkdir -p <target_directory>")` to create all required target directories
 
 ## [STEP-3] **Delete Old Files**
