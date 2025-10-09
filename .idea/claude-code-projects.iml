@@ -10,6 +10,8 @@
       <excludeFolder url="file://$MODULE_DIR$/uicontrol/src-tauri/target" />
       <excludeFolder url="file://$MODULE_DIR$/.ai/middle" />
       <excludeFolder url="file://$MODULE_DIR$/.ai/sources" />
+      <excludeFolder url="file://$MODULE_DIR$/.claude" />
+      <excludeFolder url="file://$MODULE_DIR$/.vscode" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
