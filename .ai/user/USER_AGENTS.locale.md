@@ -552,7 +552,7 @@
 - [.ai/](/.ai) 除了 `meta/**` 下的文件外，其他无任何参考意义, 它们是由 `AI Agent` 自动生成的工程文件
 - [.ai/meta/](/.ai/meta) 下拥有一些确切概念的帮助文档定义
 - [.ai/middle/spec/](/.ai/middle/spec) 下存放当前项目下的 "规范驱动开发" 文档
-- [.ai/middle/spec/](/.ai/middle/spec/SPEC-1-REQUIREMENT.locale.md) 下存放当前项目下的 "规范驱动开发 - 需求文档"，它有且只有一份或没有，该项目基于此需求进行开发
+- [.ai/middle/spec/SPEC-1-REQUIREMENT.locale.md](/.ai/middle/spec/SPEC-1-REQUIREMENT.locale.md) 下存放当前项目下的 "规范驱动开发 - 需求文档"，它有且只有一份或没有，该项目基于此需求进行开发
 
 ## 文件结构书写示范
 
