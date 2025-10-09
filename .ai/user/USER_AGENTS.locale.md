@@ -42,25 +42,16 @@
 
 
 
-
-## 命令生成规范
-- 构建: 根据工具链选择 `cargo build` / `pnpm run build` / `uv install` 等。
-- 测试: 使用 `cargo test` / `pnpm run test` / `pytest` 等, 不得自创命令。
-- 格式化: 遵循项目脚本, 如 `cargo fmt`, `prettier`, `black`。
-- 检查: 根据语言运行 `cargo clippy`, `eslint`, `flake8` 等。
-
-
-
-
 # 代码质量标准
 
 ## 统一格式规范
 - 缩进: 固定 `2 spaces`.
 - 编码: `UTF-8`.
 - 行末: `LF`.
+- 遵循项目下 [.editorconfig](/.editorconfig) 的配置
 
 ```xml
-<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="2 空格缩进">
     fn main() {
@@ -83,7 +74,7 @@
 - 文件名优先顺序: `PascalCase` 或 `camelCase` -> `snake_case` -> 避免 `kebab-case` (除非语言强制)。
 
 ```xml
-<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="组件文件使用 PascalCase">
     UserAccount.ts
@@ -126,7 +117,7 @@
 - 条件语句与循环体必须显式使用大括号, 避免因省略而引入严重漏洞
 
 ```xml
-<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="条件分支始终使用大括号">
     if (is_ready) {
@@ -187,7 +178,7 @@
 ```
 
 ### 多条件判断优化
-- 条件数量≥3 时, 统一改用 `switch` / `match` 或查表方案替代 `if-else` 链。
+- 条件数量 >= 3 时, 统一改用 `switch` / `match` 或查表方案替代 `if-else` 链。
 - 目标: 提升可读性和可维护性, 减少重复判断。
 
 ```xml
@@ -244,16 +235,6 @@
 
 
 
-
-
-## 代码错误检测
-- 每次完成功能后调用项目现成的 `diagnostic` 或 `lint` 指令捕获语法与类型问题。
-- 修改文件即刻重新诊断, 防止错误堆积。
-
-
-
-
-
 # 开发原则与约束
 
 ## 语言策略
@@ -271,10 +252,10 @@
 - 默认策略: 在现有基础上扩展能力而非重写。
 
 ```xml
-<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="开发前调查并复用现有代码"
-               userInput="帮我实现一个用户认证功能">
+                user-input="帮我实现一个用户认证功能">
     <tooling name="Search"
              params:pattern="auth" />
     <tooling name="Read"
@@ -298,7 +279,7 @@
   </good-example>
 
   <bad-example description="跳过调查直接重写功能"
-             userInput="帮我实现一个用户认证功能">
+               user-input="帮我实现一个用户认证功能">
     <tooling name="Write"
              params:path="NewAuthSystem" />
     ```rust
@@ -336,10 +317,10 @@
 - 破坏原有组织结构。
 
 ```xml
-<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="在现有文件内扩展功能"
-               userInput="添加一个新的工具函数来格式化日期">
+                user-input="添加一个新的工具函数来格式化日期">
     将日期格式化函数合并进现有工具文件。
     <tooling name="Update"
              params:path="src/utils/helpers.rs" />
@@ -358,7 +339,7 @@
   </good-example>
 
   <bad-example description="不必要地创建新文件"
-              userInput="添加一个新的工具函数来格式化日期">
+               user-input="添加一个新的工具函数来格式化日期">
     不必要地拆出新文件:
     <tooling name="Write"
              params:path="src/utils/date_utils.rs"
@@ -389,7 +370,7 @@
 ### 错误处理示例
 
 ```xml
-<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="完全透明">
     fn process_file(path: &str) -> Result<ProcessedData, ProcessingError> {
@@ -568,8 +549,10 @@
 - 作为 `AI Agent` 协助用户更新或撰写此类文件时，要假设用户是一名程序员，可能正面临混乱项目或陈旧文档，请主动修正并补齐缺漏。
 - 不要直接照搬现有的 `**.locale.md` 内容；请以英文原稿为权威来源，将其翻译成标准美式英语逻辑下的英式中文，确保 locale 版本准确可读。
 - 当用户提出新的规则或想法时, 需立刻在当前正在编辑的 locale 文件中落实更新, 避免延后处理。
-- [.ai](/.ai) 除了 `meta/**` 下的文件外，其他无任何参考意义, 它们是由 `AI Agent` 自动生成的工程文件
-- [.ai/meta](/.ai/meta) 下拥有一些确切概念的帮助文档定义
+- [.ai/](/.ai) 除了 `meta/**` 下的文件外，其他无任何参考意义, 它们是由 `AI Agent` 自动生成的工程文件
+- [.ai/meta/](/.ai/meta) 下拥有一些确切概念的帮助文档定义
+- [.ai/middle/spec/](/.ai/middle/spec) 下存放当前项目下的 "规范驱动开发" 文档
+- [.ai/middle/spec/](/.ai/middle/spec/SPEC-1-REQUIREMENT.locale.md) 下存放当前项目下的 "规范驱动开发 - 需求文档"，它有且只有一份或没有，该项目基于此需求进行开发
 
 ## 文件结构书写示范
 
