@@ -11,7 +11,10 @@
       <excludeFolder url="file://$MODULE_DIR$/.ai/middle" />
       <excludeFolder url="file://$MODULE_DIR$/.ai/sources" />
       <excludeFolder url="file://$MODULE_DIR$/.claude" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/JimmerBuddy" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/inspectionProfiles" />
       <excludeFolder url="file://$MODULE_DIR$/.vscode" />
+      <excludeFolder url="file://$MODULE_DIR$/uicontrol/src-tauri/gen/schemas" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
