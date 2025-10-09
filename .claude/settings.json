@@ -3,15 +3,12 @@
   "model": "opusplan",
   "permissions": {
     "deny": [
-      "WebFetch",
-      "WebSearch",
       "Bash(git:*)",
       "Bash(npm:*)",
       "Bash(yarn:*)",
       "Bash(docker:*)"
     ],
     "allow": [
-      "mcp__*",
       "Bash",
       "Read"
     ]
