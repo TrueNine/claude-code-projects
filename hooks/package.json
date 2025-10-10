@@ -1,15 +1,19 @@
 {
-  "name": "hooks",
-  "version": "1.0.0",
+  "name": "@truenine/agents-hooks",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
+  "engineStrict": true,
+  "engines": {
+    "node": ">=24.10.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.15.0",
+  "packageManager": "pnpm@10.18.2",
   "devDependencies": {
     "tsx": "^4.20.5",
     "@types/node": "^24.3.0"

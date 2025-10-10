@@ -2,7 +2,11 @@
   "name": "uicontrol",
   "version": "0.0.1",
   "type": "module",
-  "packageManager": "pnpm@10.17.1",
+  "packageManager": "pnpm@10.18.2",
+  "engineStrict": true,
+  "engines": {
+    "node": ">=24.10.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

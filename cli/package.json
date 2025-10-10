@@ -2,7 +2,7 @@
   "name": "@truenine/agents-cli",
   "version": "0.0.1",
   "type": "module",
-  "packageManager": "pnpm@10.17.1",
+  "packageManager": "pnpm@10.18.2",
   "description": "Agent CLI Prompt Management Solution - Initialize and manage .ai/ prompt repositories",
   "author": "truenine",
   "license": "LGPL-3.0-or-later",
@@ -26,7 +26,7 @@
     "dist"
   ],
   "engines": {
-    "node": ">=24.9.0"
+    "node": ">=24.10.0"
   },
   "scripts": {
     "dev": "tsdown watch src/index.ts",

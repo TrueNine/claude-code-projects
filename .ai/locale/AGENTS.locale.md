@@ -27,5 +27,6 @@
   - [meta/](/.ai/meta) - 可参考提示词编写标准
 - [cli/](/cli) - 命令行工具
   - [rust/](/cli/rust) - rust 核心工具
+- [hooks/](/hooks) - 钩子脚本
 ```
 
