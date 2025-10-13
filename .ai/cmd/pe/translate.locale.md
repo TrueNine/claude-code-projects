@@ -15,6 +15,11 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 
 
 ## [STEP-1] **解析输出路径**
+在查表前先规范源路径：
+- 若 `$1` 位于 `.ai/locale/` 下，务必先移除 `.ai/locale/` 前缀，得到 `<relative_path>`。任何目标路径禁止携带 `.ai/locale/` 前缀。
+- 使用 `<relative_path>` 与下表进行匹配；若命中特殊映射，按对应输出列表生成文件。
+- `AGENTS.locale.md` 系列始终基于 `<relative_path>` 生成成对文件，例如 `.ai/locale/deployment/AGENTS.locale.md -> [deployment/AGENTS.md, deployment/CLAUDE.md]`。
+
 **优先匹配特殊路径**，并依据下表生成目标文件：
 
 | SOURCE FILE                                           | OUTPUT FILES                                                   |
@@ -31,7 +36,7 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 
 当未命中特殊路径映射时，套用通用规则：`filename.locale.extension -> filename.extension`。
 
-其中 `<relative_path>` 表示源文件去除 `.ai/locale/` 前缀后的目录结构。
+其中 `<relative_path>` 表示源文件去除 `.ai/locale/` 前缀后的目录结构，后续所有输出路径均以 `<relative_path>` 为准。
 ```xml
 <!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
 <example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
