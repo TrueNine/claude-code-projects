@@ -1,4 +1,4 @@
-﻿---
+---
 argument-hint: [ locale_markdown_file ] [ translation_description ]
 allowed-tools: Read, Write, Glob, Grep, Bash
 description: Translate Chinese localization memory prompt file to English memory prompt file while maintaining terminology and quality standards consistency
