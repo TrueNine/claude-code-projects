@@ -7,7 +7,7 @@
 - 文化取向: 记住用户母语是简体中文, 但工作流程全程对齐美国工程文化, 除用户沟通外一律使用美式英语处理事务。
 - 严格禁止: `Thinking` 字段出现中文字符 => 直接视为违规。
 - "记忆提示词"风格: 只要 `Markdown` 合规就行, 内容保持技术向和精炼, 不为排版对齐或辞藻堆砌浪费时间。
-- [.ai/](/.ai) `**/*.locale.md` 文件: 所有 [.ai/](/.ai) `**/*.locale.md` 统一用英式中文书写, 保持英文逻辑和术语直译, 全文执行。
+- [.ai/](/.ai/) `**/*.locale.md` 文件: 所有 [.ai/](/.ai) `**/*.locale.md` 统一用英式中文书写, 保持英文逻辑和术语直译, 全文执行。
 
 
 
@@ -543,15 +543,15 @@
 
 # 提示词编写规范
 
-- [.ai/locale](/.ai/locale) 下的 `**/*.locale.md` 属于英式中文提示词文件，面向用户阅读，语言需紧贴美式英语的逻辑与思路，专业术语直接保留英文原文。
+- [.ai/locale](/.ai/locale/) 下的 `**/*.locale.md` 属于英式中文提示词文件，面向用户阅读，语言需紧贴美式英语的逻辑与思路，专业术语直接保留英文原文。
 - 这些 `**/*.locale.md` 文件常作为 `AI Agent` 快捷命令、子代理提示词或 `memory prompt file` 的本地化版本，协助用户编辑时，必须优先考虑协助编辑它们。
 - 示例多使用 `xml` 结构呈现，具备高参考价值，遵循示例时优先理解其结构化意图，具体定义可参考 [.ai/meta/example-schema.dtd](/.ai/meta/example-schema.dtd)。
 - 作为 `AI Agent` 协助用户更新或撰写此类文件时，要假设用户是一名程序员，可能正面临混乱项目或陈旧文档，请主动修正并补齐缺漏。
 - 不要直接照搬现有的 `**.locale.md` 内容；请以英文原稿为权威来源，将其翻译成标准美式英语逻辑下的英式中文，确保 locale 版本准确可读。
 - 当用户提出新的规则或想法时, 需立刻在当前正在编辑的 locale 文件中落实更新, 避免延后处理。
-- [.ai/](/.ai) 除了 `meta/**` 下的文件外，其他无任何参考意义, 它们是由 `AI Agent` 自动生成的工程文件
-- [.ai/meta/](/.ai/meta) 下拥有一些确切概念的帮助文档定义
-- [.ai/middle/spec/](/.ai/middle/spec) 下存放当前项目下的 "规范驱动开发" 文档
+- [.ai/](/.ai/) 除了 `meta/**` 下的文件外，其他无任何参考意义, 它们是由 `AI Agent` 自动生成的工程文件
+- [.ai/meta/](/.ai/meta/) 下拥有一些确切概念的帮助文档定义
+- [.ai/middle/spec/](/.ai/middle/spec/) 下存放当前项目下的 "规范驱动开发" 文档
 - [.ai/middle/spec/SPEC-1-REQUIREMENT.locale.md](/.ai/middle/spec/SPEC-1-REQUIREMENT.locale.md) 下存放当前项目下的 "规范驱动开发 - 需求文档"，它有且只有一份或没有，该项目基于此需求进行开发
 
 ## 文件结构书写示范
@@ -559,13 +559,13 @@
 ```xml
 <!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
 <example description="使用 md 代码块的嵌套文件列表而不是树形结构">
-- [.ai](/.ai) - AI Agent 工程目录，类似于 src 的源提示词工作目录
-  - [.ai/locale/](/.ai/locale) - 当前项目映射的记忆提示词
-  - [.ai/user/](/.ai/user) - 全局用户记忆提示词
-  - [.ai/project/](/.ai/project) - 项目级别记忆提示词
-  - [.ai/cmd/](/.ai/cmd) - 自定义命令提示词
-  - [.ai/sa/](/.ai/sa) - 子代理提示词
-  - [.ai/meta/](/.ai/meta) - 确切概念的帮助文档定义
+- [.ai](/.ai/) - AI Agent 工程目录，类似于 src 的源提示词工作目录
+  - [.ai/locale/](/.ai/locale/) - 当前项目映射的记忆提示词
+  - [.ai/user/](/.ai/user/) - 全局用户记忆提示词
+  - [.ai/project/](/.ai/project/) - 项目级别记忆提示词
+  - [.ai/cmd/](/.ai/cmd/) - 自定义命令提示词
+  - [.ai/agents/](/.ai/agents/) - 子代理提示词
+  - [.ai/meta/](/.ai/meta/) - 确切概念的帮助文档定义
 - [README.md](/README.md) - 项目描述文件
 - [AGENTS.md](/AGENTS.md) - AI 代理记忆提示词
 - [.editorconfig](/.editorconfig) - 编辑器配置文件
@@ -582,19 +582,20 @@
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="正确的路径引用格式">
-    [.ai/locale](/.ai/locale) - 当前项目映射的记忆提示词
-    [src/utils](/src/utils) - 工具函数目录
+    [.ai/locale](/.ai/locale/) - 当前项目映射的记忆提示词
+    [src/utils](/src/utils/) - 工具函数目录
     [README.md](/README.md) - 项目描述文件
   </good-example>
 
   <bad-example description="错误的路径引用格式">
-    [.ai/locale/](/.ai/locale/) - 文件夹链接末尾不能有斜杠
+    [.ai/locale/](/.ai/locale) - 文件夹链接末尾不使用斜杠
     /home/user/project/src/utils - 禁止使用绝对路径
+    /c/project/home/user/project/src/utils - 禁止使用绝对路径
     [src/utils/](/src/utils/) - 文件夹链接末尾不能有斜杠
   </bad-example>
 
   <bad-example description="加粗包裹文件引用（禁止）">
-    **[.ai/locale](/.ai/locale)** - 不得使用加粗包裹文件引用
+    **[.ai/locale](/.ai/locale/)** - 不得使用加粗包裹文件引用
     **[src/utils](/src/utils)** - 加粗会分散注意力
     **[README.md](/README.md)** - 禁止此格式
   </bad-example>
@@ -602,4 +603,4 @@
 ```
 
 ## 参考元定义
-项目下 [.ai/meta/](/.ai/meta) 下有些具体的概念定义，请以这些定义为准。
+项目下 [.ai/meta/](/.ai/meta/) 下有些具体的概念定义，请以这些定义为准。

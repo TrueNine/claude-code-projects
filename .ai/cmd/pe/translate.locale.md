@@ -15,17 +15,17 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 ## [STEP-1] **解析输出路径**
 **优先匹配特殊路径**，并依据下表生成目标文件：
 
-| SOURCE FILE                                     | OUTPUT FILES                                                          |
-|-------------------------------------------------|-----------------------------------------------------------------------|
-| [.ai/locale/`**/*.locale.md`](/.ai/locale)      | `**/*.md`                                                             |
-| [.ai/locale/`**/AGENTS.locale.md`](/.ai/locale) | `/AGENTS.md`, `/CLAUDE.md`                                            |
-| [.ai/locale/`AGENTS.locale.md`](/.ai/locale)    | `AGENTS.md`, `CLAUDE.md`                                              |
-| [.ai/locale/`README.locale.md`](/.ai/locale)    | `README.md`                                                           |
-| [.ai/locale/`TODO.locale.md`](/.ai/locale)      | `TODO.md`                                                             |
-| [.ai/cmd/`**/*.locale.md`](/.ai/cmd)            | `.ai/out/.claude/commands/**/*.md`, `.claude/commands/**/*.md`        |
-| [.ai/agents/`**/*.locale.md`](/.ai/agents)      | `.ai/out/.claude/agents/**/*.md`, `.claude/agents/**/*.md`            |
-| [.ai/user/`**/*.locale.md`](/.ai/user)          | `.ai/out/global/**/*.md`, `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md` |
-| [.ai/meta/`**/*.locale.md`](/.ai/meta)          | `.ai/meta/**/*.md`                                                    |
+| SOURCE FILE                                      | OUTPUT FILES                                                          |
+|--------------------------------------------------|-----------------------------------------------------------------------|
+| [.ai/locale/`**/*.locale.md`](/.ai/locale/)      | `**/*.md`                                                             |
+| [.ai/locale/`**/AGENTS.locale.md`](/.ai/locale/) | `/AGENTS.md`, `/CLAUDE.md`                                            |
+| [.ai/locale/`AGENTS.locale.md`](/.ai/locale/)    | `AGENTS.md`, `CLAUDE.md`                                              |
+| [.ai/locale/`README.locale.md`](/.ai/locale/)    | `README.md`                                                           |
+| [.ai/locale/`TODO.locale.md`](/.ai/locale/)      | `TODO.md`                                                             |
+| [.ai/cmd/`**/*.locale.md`](/.ai/cmd/)            | `.ai/out/.claude/commands/**/*.md`, `.claude/commands/**/*.md`        |
+| [.ai/agents/`**/*.locale.md`](/.ai/agents/)      | `.ai/out/.claude/agents/**/*.md`, `.claude/agents/**/*.md`            |
+| [.ai/user/`**/*.locale.md`](/.ai/user/)          | `.ai/out/global/**/*.md`, `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md` |
+| [.ai/meta/`**/*.locale.md`](/.ai/meta/)          | `.ai/meta/**/*.md`                                                    |
 
 当未命中特殊路径映射时，套用通用规则：`filename.locale.extension -> filename.extension`。
 

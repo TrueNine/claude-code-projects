@@ -1,26 +1,26 @@
-# Language Use Standards
-- User Communication: All user-facing output must use Simplified Chinese, preserve common industry English terms, follow English sentence logic, avoid overly formal language.
-- Code Development: Code, comments, and naming must all be in English, Chinese identifiers are forbidden, implement from day one.
-- Internal Thinking: `Thinking` and `Tooling` sections must use American English, examples like `Thinking(desc: "Validate payload schema...")`, avoid mixed usage like `Thinking(desc: "检查文件...")`.
-- Session Self-Check: Before sending, check if `Thinking` and `Tooling` contain Chinese, immediately change to English if found; user-visible output remains in Simplified Chinese.
-- Cultural Orientation: Remember user's native language is Simplified Chinese, but workflow aligns with American engineering culture, use American English for all tasks except user communication.
-- Strict Prohibition: Chinese characters in `Thinking` field => considered violation.
-- "Memory Prompt" Style: Just ensure `Markdown` compliance, keep content technical and concise, don't waste time on layout alignment or rhetorical embellishment.
-- [.ai/](/.ai) `**/*.locale.md` files: All [.ai/](/.ai) `**/*.locale.md` files use British-style Chinese writing, maintain English logic and direct term translation, full document execution.
+# Communication Language Usage Standards
+- User communication: All user-facing outputs use `Simplified Chinese`, industry common English terms may be retained, sentence structure follows English logic, avoid flowery language.
+- Code development: All code, comments, and naming use English, Chinese identifiers are prohibited, effective from day one.
+- Internal thinking: `Thinking` and `Tooling` sections must use American English, examples like `Thinking(desc: "Validate payload schema...")`, avoid mixed usage like `Thinking(desc: "检查文件...")`.
+- Session self-check: Before sending, check if `Thinking` and `Tooling` contain Chinese characters, if found, immediately change to English; user-visible output remains in simplified Chinese.
+- Cultural orientation: Remember user's native language is Chinese, but workflow aligns with American engineering culture, use American English for all affairs except user communication.
+- Strictly prohibited: Chinese characters in `Thinking` field => considered violation, enforcement starts from onboarding.
+- Prompt style: As long as `Markdown` compliant, keep content technical and concise, don't waste time on formatting alignment or rhetoric.
+- [.ai/](/.ai/) `**/*.locale.md` files: All [.ai/](/.ai) `**/*.locale.md` use British Chinese writing, maintain English logic and direct translation of terminology, execute throughout the document.
 
 
 
 
-# Project Tool Chain Configuration Constraints
+# Project Toolchain Configuration Constraints
 
-## Tool Chain Priority
+## Toolchain Priority
 - Adoption order: 1) Root directory configuration files; 2) `.tool-versions` or `mise`; 3) `README` guidelines; 4) Existing scripts and `CI`.
 
 ```xml
 <!DOCTYPE examples "/.ai/meta/example-schema.dtd">
 <examples>
-  <good-example description="Example: Correctly identify and use project tool chain"
-                user-input="帮我运行测试">
+  <good-example description="Example: Correctly identify and use project toolchain"
+               user-input="帮我运行测试">
     <tooling name="Search"
              params:pattern="Cargo.toml">
       Locate Cargo.toml within the workspace
@@ -31,14 +31,13 @@
     </tooling>
   </good-example>
 
-  <bad-example description="Assume tool chain without investigation"
+  <bad-example description="Counterexample: Assuming toolchain without investigation"
               userInput="帮我运行测试">
     <tooling name="Bash"
              params:command="npm test" />
   </bad-example>
 </examples>
 ```
-
 
 
 
@@ -53,13 +52,13 @@
 ```xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
-  <good-example description="2-space indentation">
+  <good-example description="2 space indentation">
     fn main() {
       println!("Hello World");
     }
   </good-example>
 
-  <bad-example description="4-space indentation causing format error">
+  <bad-example description="4 space indentation causes format error">
     fn main() {
         println!("Hello World");
     }
@@ -70,7 +69,7 @@
 
 
 
-## File Naming Standards
+## File Naming Conventions
 - File name priority order: `PascalCase` or `camelCase` -> `snake_case` -> avoid `kebab-case` (unless language requires).
 
 ```xml
@@ -86,7 +85,7 @@
     apiClient.js
   </good-example>
 
-  <good-example description="Configuration files accept snake_case">
+  <good-example description="Configuration files acceptable snake_case">
     user_config.json
     database_settings.yaml
   </good-example>
@@ -113,28 +112,28 @@
 
 ## Code Style Constraints
 
-- Comments should be placed above statements, avoid inline comments to prevent code line lengthening and reduce readability
-- Conditional statements and loop bodies must explicitly use braces, avoid serious vulnerabilities from omission
+- Comments should be placed above statements, prohibited inline supplements, to avoid elongating code lines and reducing readability
+- Conditional statements and loop bodies must explicitly use braces, to avoid introducing serious vulnerabilities due to omission
 
 ```xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
-  <good-example description="Always use braces for conditional branches">
+  <good-example description="Conditional branches always use braces">
     if (is_ready) {
       handle_ready();
     }
   </good-example>
 
-  <bad-example description="Omitting braces causes logic失控">
+  <bad-example description="Omitting braces leads to logic out of control">
     if (is_ready)
       handle_ready();
       finalize();
   </bad-example>
 
-  <bad-example description="Inline comments lengthen code lines">
+  <bad-example description="Inline comments elongate code lines">
     let total = price * quantity; // skip tax for legacy orders
   </bad-example>
-  <good-example description="Correct comment style">
+  <good-example description="Correct comment method">
     // skip tax for legacy orders
     let total = price * quantity;
   </good-example>
@@ -147,7 +146,7 @@
 ## Code Writing Techniques
 
 ### `Guard Clauses` & `Early Return`
-Require using `guard clause` and `early return` to reduce nesting levels.
+Require use of `guard clause` and `early return` to reduce nesting levels.
 
 ```xml
 <!DOCTYPE examples "/.ai/meta/example-schema.dtd">
@@ -161,7 +160,7 @@ Require using `guard clause` and `early return` to reduce nesting levels.
     }
   </good-example>
 
-  <bad-example description="Deep nesting style">
+  <bad-example description="Deep nesting writing style">
     fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
       if let Some(user) = user {
         if user.is_active {
@@ -176,9 +175,9 @@ Require using `guard clause` and `early return` to reduce nesting levels.
 </examples>
 ```
 
-### Multi-conditional Optimization
-- When conditions ≥3, use `switch` / `match` or lookup table instead of `if-else` chain.
-- Goal: Improve readability and maintainability, reduce repeated judgments.
+### Multi-condition Judgment Optimization
+- When condition count ≥3, uniformly switch to `switch` / `match` or lookup table to replace `if-else` chains.
+- Goal: Improve readability and maintainability, reduce repetitive judgments.
 
 ```xml
 <!DOCTYPE examples "/.ai/meta/example-schema.dtd">
@@ -195,7 +194,7 @@ Require using `guard clause` and `early return` to reduce nesting levels.
     }
   </good-example>
 
-  <good-example description="Lookup table instead of multiple branches">
+  <good-example description="Lookup table replaces multiple branches">
     use std::collections::HashMap;
 
     fn get_error_message_lookup(status_code: u16) -> &'static str {
@@ -212,7 +211,7 @@ Require using `guard clause` and `early return` to reduce nesting levels.
     }
   </good-example>
 
-  <bad-example description="Large if-else chain for multiple conditions">
+  <bad-example description="Large if-else chains handle multiple conditions">
     fn get_error_message(status_code: u16) -> &'static str {
       let mut error_message = "Unknown error";
 
@@ -234,28 +233,27 @@ Require using `guard clause` and `early return` to reduce nesting levels.
 
 
 
-
 # Development Principles and Constraints
 
 ## Language Strategy
-- Technical selection and architecture adjustments default to static type language stacks (like Rust, TypeScript, Go, Java, Kotlin) to ensure type safety and long-term maintainability.
-- Even if existing project is built on dynamic languages, proposed solutions must plan migration to static types with stage goals and risk warnings.
-- Prohibit actively expanding new dynamic language components; if user insists on dynamic languages, reconfirm and fully document potential risks.
+- Technology selection and architecture adjustments default to prioritizing statically typed language stacks (like Rust, TypeScript, Go, Java, Kotlin) to ensure type safety and long-term maintainability.
+- Even if existing projects are built on dynamic languages, propose solutions that plan migration routes to static types, including phase goals and risk warnings.
+- Prohibit actively expanding new dynamic language components; if users insist on dynamic languages, need to reconfirm and fully document potential risks.
 
 
 
 
 ## Prohibit Reinventing the Wheel
 - Investigate existing functionality and architecture before development.
-- Mandatory reuse of existing components, tools, or functions, no reimplementation.
-- Prioritize reviewing and optimizing existing implementations and prompts, gain incremental value through adding tests, improving maintainability, or enhancing readability.
+- Mandatory reuse of existing components, tools, or functions, no reimplementation allowed.
+- Prioritize reviewing and optimizing existing implementations and prompts, gain incremental value through supplementing tests, improving maintainability, or enhancing readability.
 - Default strategy: Extend capabilities on existing foundation rather than rewrite.
 
 ```xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
-  <good-example description="Investigate before development and reuse existing code"
-                user-input="帮我实现一个用户认证功能">
+  <good-example description="Investigate and reuse existing code before development"
+               user-input="帮我实现一个用户认证功能">
     <tooling name="Search"
              params:pattern="auth" />
     <tooling name="Read"
@@ -300,21 +298,21 @@ Require using `guard clause` and `early return` to reduce nesting levels.
 
 ## File Management Principles
 - Prioritize editing existing files, avoid creating new files.
-- New files must have sufficient reason and conform to architectural specifications.
-- Follow existing directory and module organization.
+- New files must have sufficient justification and comply with architectural specifications.
+- Follow existing directory and module organization methods.
 
 ### File Creation Decision Standards
 Reasonable file creation:
 - Module functionality is independent and large (>=100 lines).
 - Responsibilities clearly differ from existing files.
-- Need independent test files.
-- Align with project's modular design.
+- Requires independent test files.
+- Aligns with project's modular design.
 
 Avoid creating new files:
-- Only contain few functions or constants.
+- Only contains a few functions or constants.
 - Functionality highly related to existing files.
-- Just to avoid single file being too long (unless necessary).
-- Break existing organizational structure.
+- Just to avoid single file being too long (unless truly necessary).
+- Breaks original organizational structure.
 
 ```xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
@@ -338,7 +336,7 @@ Avoid creating new files:
     ```
   </good-example>
 
-  <bad-example description="Unnecessarily create new files"
+  <bad-example description="Unnecessarily creating new files"
               user-input="添加一个新的工具函数来格式化日期">
     不必要地拆出新文件:
     <tooling name="Write"
@@ -359,20 +357,20 @@ Avoid creating new files:
 
 
 ## Error Handling Transparency Principle
-- Prohibit covering or suppressing any errors and warnings.
-- Prohibit suppressing warnings,私自捕获不抛出, empty exception blocks, ignoring error codes, hiding exception details, modifying inspector configuration.
+- Prohibit covering up or suppressing any errors and warnings.
+- Prohibit suppressing warnings, privately catching without throwing, empty exception blocks, ignoring error codes, hiding exception details, tampering with checker configurations.
 
 ### Error Handling Standards
-- Transparency: All errors/warnings fully exposed to users or calling layers.
+- Transparency: All errors/warnings fully exposed to users or calling layer.
 - Traceability: Preserve complete stack and context.
-- Responsibility: Calling layer decides how to handle, no silent swallowing at bottom layer.
+- Responsibility: Calling layer decides how to handle, not silently swallowed at bottom layer.
 
 ### Error Handling Examples
 
 ```xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
-  <good-example description="完全透明">
+  <good-example description="Completely transparent">
     fn process_file(path: &str) -> Result<ProcessedData, ProcessingError> {
       let file = std::fs::File::open(path)
         .map_err(|e| ProcessingError::FileOpenError {
@@ -390,7 +388,7 @@ Avoid creating new files:
     }
   </good-example>
 
-  <bad-example description="掩盖错误">
+  <bad-example description="Covering up errors">
     fn process_file(path: &str) -> Option<ProcessedData> {
       let file = match std::fs::File::open(path) {
         Ok(f) => f,
@@ -414,7 +412,7 @@ Avoid creating new files:
 ```xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
-  <good-example description="必须传递给调用者">
+  <good-example description="Must pass to caller">
     fn validate_config(config: &Config) -> Result<(), Vec<ValidationWarning>> {
       let mut warnings = Vec::new();
 
@@ -430,7 +428,7 @@ Avoid creating new files:
     }
   </good-example>
 
-  <bad-example description="镇压警告">
+  <bad-example description="Suppressing warnings">
     fn validate_config(config: &Config) {
       if config.timeout < 1000 {
         // 镇压警告 - 禁止
@@ -446,13 +444,13 @@ Avoid creating new files:
 ### Exception Handling Examples
 
 - Keep exceptions transparent, prioritize letting exceptions bubble up
-- If catching, must add context and rethrow or return error object,禁止静默吞掉
-- Prioritize reusing existing exception types, avoid casually creating new exceptions that increase maintenance costs
+- If catching is needed, must supplement context and rethrow or return error objects, prohibit silent swallowing
+- Prioritize reusing existing exception types, avoid arbitrarily creating new exceptions leading to increased maintenance costs
 
 ```xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
-  <good-example description="复用现有异常并补充上下文">
+  <good-example description="Reuse existing exceptions and supplement context">
     try {
       riskyOperation();
     } catch (Exception e) {
@@ -460,7 +458,7 @@ Avoid creating new files:
     }
   </good-example>
 
-  <bad-example description="静默吞掉异常导致信息丢失">
+  <bad-example description="Silent swallowing exceptions causes information loss">
     try {
       riskyOperation();
     } catch (Exception ignored) {
@@ -471,45 +469,44 @@ Avoid creating new files:
 
 
 
+# Strict Verification Mechanism
 
-# Strict Validation Mechanism
+## Completion Verification Requirements
+- Strictly prohibit claiming completion without verification.
+- Must use actual verification actions rather than subjective judgment to support results.
+- Progress feedback: When task not yet completed, must directly state current progress and blocking points, avoid vague promises like "I'll implement in a simpler way," and don't fabricate completion results; if stuck, actively request developer guidance.
 
-## Completion Validation Requirements
-- Strictly prohibit claiming completion without validation.
-- Must use actual validation actions rather than subjective judgment to support results.
-- Progress feedback: When task not yet completed, must directly explain current progress and blocking points, avoid vague promises like "I'll implement in a simpler way", don't fabricate completion results; if stuck, actively request developer guidance.
-
-## Validation Step Checklist
-1. Code Quality Validation:
+## Verification Checklist
+1. Code quality verification:
   - Run project-defined `diagnostic` / `lint` commands to check syntax and type issues.
-  - Detect project tool chain, use corresponding check commands:
-    - `Rust`: `cargo clippy`, `cargo fmt --check`.
-    - `Node.js`: Run `lint` script according to `package.json`.
-    - `Gradle`: `build.gradle.kts`, `settings.gradle.kts` etc.
-2. Functionality Validation:
-  - Run tests according to tool chain:
-    - `Rust`: `cargo test`.
-    - `Node.js`: `yarn test` / `pnpm test`.
-    - `Gradle`: `./gradlew test`.
-  - Execute necessary manual validation via `Bash` tool.
-  - Confirm all modifications run as expected.
-3. Completeness Validation:
+  - Detect project toolchain, use corresponding check commands:
+    - `Rust`: `cargo clippy`, `cargo fmt --check`。
+    - `Node.js`: Run `lint` scripts according to `package.json`。
+    - `Gradle`: `build.gradle.kts`, `settings.gradle.kts` etc.。
+2. Functionality verification:
+  - Run tests according to toolchain:
+    - `Rust`: `cargo test`。
+    - `Node.js`: `yarn test` / `pnpm test`。
+    - `Gradle`: `./gradlew test`。
+  - Execute necessary manual verification through `Bash` tool.
+  - Confirm all modifications work as expected.
+3. Completeness verification:
   - Check if user requirements are covered.
-  - Confirm all `TodoWrite` tasks marked as `completed`.
-  - Verify changes haven't broken existing functionality.
+  - Confirm all `TodoWrite` tasks marked as `completed`。
+  - Verify changes don't break existing functionality.
 
 
 
 
-## Validation Failure Handling
-- Report discovered problems truthfully.
-- Explain failure reasons transparently.
-- Provide follow-up fix plan.
+## Verification Failure Handling
+- Honestly report discovered issues.
+- Transparently explain failure reasons.
+- Provide follow-up fix plans.
 
 ```xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
-  <good-example description="全面执行验证流程"
+  <good-example description="Comprehensively execute verification process"
                user-input="帮我修复这个登录功能的bug">
     修复后执行完整验证。
     <tooling name="Bash" params:command="diagnostic">
@@ -530,7 +527,7 @@ Avoid creating new files:
     登录问题已修复并验证。
   </good-example>
 
-  <bad-example description="未验证即声称完成"
+  <bad-example description="Claiming completion without verification"
              userInput="帮我修复这个登录功能的bug">
     未验证即声称修复完成, 违规。
   </bad-example>
@@ -539,66 +536,66 @@ Avoid creating new files:
 
 
 
-
 # Prompt Writing Standards
 
-- `**/*.locale.md` files under [.ai/locale](/.ai/locale) are British-style Chinese prompt files,面向用户阅读, language must closely follow American English logic and thinking, professional terms directly retain English original text.
-- These `**/*.locale.md` files often serve as `AI Agent` shortcut commands, sub-agent prompts, or `memory prompt file` localized versions, when assisting users in editing, must prioritize assisting with editing them.
-- Examples often use `xml` structure presentation, with high reference value, when following examples prioritize understanding their structured intent, specific definitions can reference [.ai/meta/example-schema.dtd](/.ai/meta/example-schema.dtd).
-- When `AI Agent` assists users in updating or writing such files, assume user is a programmer, possibly facing messy projects or outdated documentation, proactively correct and fill in omissions.
-- Don't directly copy existing `**.locale.md` content; use English original manuscript as authoritative source, translate into standard American English logic下的英式中文, ensure locale version accurate and readable.
-- When users propose new rules or ideas, immediately implement updates in the currently editing locale file, avoid delayed processing.
-- [.ai](/.ai) files except under `meta/**` have no reference significance, they are engineering files automatically generated by `AI Agent`
-- [.ai/meta](/.ai/meta) contains some specific concept help documentation definitions
-- [.ai/middle/spec](/.ai/middle/spec) stores current project's "规范驱动开发" documents
-- [.ai/middle/spec/SPEC-1-REQUIREMENT.locale.md](/.ai/middle/spec/SPEC-1-REQUIREMENT.locale.md) stores current project's "规范驱动开发 - 需求文档", it has and only has one copy or none, the project is developed based on this requirement
+- [.ai/locale](/.ai/locale/) under `**/*.locale.md` are British Chinese prompt files, facing user reading, language needs to closely follow American English logic and thinking, professional terms directly retain English original.
+- These `**/*.locale.md` files often serve as `AI Agent` shortcut commands, sub-agent prompts, or localized versions of `memory prompt file`, when assisting users to edit, must prioritize assisting in editing them.
+- Examples mostly use `xml` structure presentation, have high reference value, when following examples prioritize understanding their structured intent, specific definitions can refer to [.ai/meta/example-schema.dtd](/.ai/meta/example-schema.dtd).
+- When as `AI Agent` assisting users to update or write such files, assume user is a programmer, possibly facing chaotic projects or outdated documents, please proactively correct and fill gaps.
+- Don't directly copy existing `**.locale.md` content; please use English original as authoritative source, translate it into British Chinese under standard American English logic, ensure locale version accurate and readable.
+- When user proposes new rules or ideas, need to immediately implement updates in the currently editing locale file, avoid delayed processing.
+- [.ai/](/.ai/) except under `meta/**` files, others have no reference significance, they are engineering files automatically generated by `AI Agent`
+- [.ai/meta/](/.ai/meta/) under has some exact concept help documentation definitions
+- [.ai/middle/spec/](/.ai/middle/spec/) under stores "specification-driven development" documents for the current project
+- [.ai/middle/spec/SPEC-1-REQUIREMENT.locale.md](/.ai/middle/spec/SPEC-1-REQUIREMENT.locale.md) under stores "specification-driven development - requirements document" for the current project, it has and only has one copy or none, the project develops based on this requirement
 
-## File Structure Writing Examples
+## File Structure Writing Demonstration
 
 ```xml
 <!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
-<example description="使用 md 代码块的嵌套文件列表而不是树形结构">
-- [.ai](/.ai) - AI Agent 工程目录，类似于 src 的源提示词工作目录
-  - [.ai/locale/](/.ai/locale) - 当前项目映射的记忆提示词
-  - [.ai/user/](/.ai/user) - 全局用户记忆提示词
-  - [.ai/project/](/.ai/project) - 项目级别记忆提示词
-  - [.ai/cmd/](/.ai/cmd) - 自定义命令提示词
-  - [.ai/sa/](/.ai/sa) - 子代理提示词
-  - [.ai/meta/](/.ai/meta) - 确切概念的帮助文档定义
-- [README.md](/README.md) - 项目描述文件
-- [AGENTS.md](/AGENTS.md) - AI 代理记忆提示词
-- [.editorconfig](/.editorconfig) - 编辑器配置文件
+<example description="Use md code block nested file list instead of tree structure">
+- [.ai](/.ai/) - AI Agent engineering directory, similar to src source prompt working directory
+  - [.ai/locale/](/.ai/locale/) - Current project mapping memory prompts
+  - [.ai/user/](/.ai/user/) - Global user memory prompts
+  - [.ai/project/](/.ai/project/) - Project-level memory prompts
+  - [.ai/cmd/](/.ai/cmd/) - Custom command prompts
+  - [.ai/agents/](/.ai/agents/) - Sub-agent prompts
+  - [.ai/meta/](/.ai/meta/) - Exact concept help documentation definitions
+- [README.md](/README.md) - Project description file
+- [AGENTS.md](/AGENTS.md) - AI agent memory prompts
+- [.editorconfig](/.editorconfig) - Editor configuration file
 </example>
 ```
 
 ## Path Reference Standards
-- When writing prompt table references, must use `/` starting current project-based absolute paths as baseline
-- Even for folder links, `/` ending cannot appear in `()`
-- Absolute paths must not appear
-- Don't wrap file references in bold, greatly distracts attention
+- When writing prompt table references, must use absolute path starting with `/` based on current project as benchmark
+- Even for folder connections, `()` cannot have `/` ending
+- Absolutely cannot have absolute paths
+- Cannot wrap file references in bold, will extremely distract attention
 
 ```xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
-  <good-example description="正确的路径引用格式">
-    [.ai/locale](/.ai/locale) - 当前项目映射的记忆提示词
-    [src/utils](/src/utils) - 工具函数目录
-    [README.md](/README.md) - 项目描述文件
+  <good-example description="Correct path reference format">
+    [.ai/locale](/.ai/locale/) - Current project mapping memory prompts
+    [src/utils](/src/utils/) - Tool function directory
+    [README.md](/README.md) - Project description file
   </good-example>
 
-  <bad-example description="错误的路径引用格式">
-    [.ai/locale/](/.ai/locale/) - 文件夹链接末尾不能有斜杠
-    /home/user/project/src/utils - 禁止使用绝对路径
-    [src/utils/](/src/utils/) - 文件夹链接末尾不能有斜杠
+  <bad-example description="Incorrect path reference format">
+    [.ai/locale/](/.ai/locale) - Folder link end does not use slash
+    /home/user/project/src/utils - Prohibit using absolute paths
+    /c/project/home/user/project/src/utils - Prohibit using absolute paths
+    [src/utils/](/src/utils/) - Folder link end cannot have slash
   </bad-example>
 
-  <bad-example description="加粗包裹文件引用（禁止）">
-    **[.ai/locale](/.ai/locale)** - 不得使用加粗包裹文件引用
-    **[src/utils](/src/utils)** - 加粗会分散注意力
-    **[README.md](/README.md)** - 禁止此格式
+  <bad-example description="Bold wrapping file references (prohibited)">
+    **[.ai/locale](/.ai/locale/)** - Cannot use bold wrapping file references
+    **[src/utils](/src/utils)** - Bold will distract attention
+    **[README.md](/README.md)** - Prohibit this format
   </bad-example>
 </examples>
 ```
 
 ## Reference Meta Definitions
-Project under [.ai/meta](/.ai/meta) has some specific concept definitions, please use these definitions as standard.
+Project under [.ai/meta/](/.ai/meta/) has some specific concept definitions, please refer to these definitions as authoritative.
