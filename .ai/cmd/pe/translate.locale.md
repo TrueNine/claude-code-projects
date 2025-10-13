@@ -4,12 +4,14 @@ allowed-tools: Read, Write, Glob, Grep, Bash
 description: 将中文本地化记忆提示词文件翻译为英文记忆提示词文件，保持术语与质量标准一致
 ---
 
-将中文本地化记忆提示词文件 #$1 (.locale.md) 翻译为英文记忆提示词文件，同时维持既定质量标准与术语一致性。
+将中文本地化记忆提示词文件 `$1` (.locale.md) 翻译为英文记忆提示词文件，同时维持既定质量标准与术语一致性。
 
 # 任务执行流程
 ## [STEP-0] **处理文件夹输入**
 - 当 `$1` 指向目录时，先统计该目录下符合翻译规则的文件，确保翻译范围明确
+- 当 `$1` 以 `/` 结尾时，可以直接识别为目录
 - 按文件划分任务，以多线程并发方式调用 `pe:translate` aagent，避免上下文互相污染并缩短整体耗时
+- 如果 `$1` 以 `@` 开头，直接忽略掉 `@` 符号，使用剩余部分作为实际路径
 
 
 ## [STEP-1] **解析输出路径**
@@ -75,6 +77,28 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 - **格式保持**：保留标题层级、列表缩进、表格和行内代码，禁止增删空行
 - **空白忠实**：严格保留原有空格与空行，它们也是提示词的一部分
 - **代码完整**：除翻译注释外保持代码块原样，并确认语句缩进正确
+- **大写规则**：某些关键词必须翻译为全大写形式：
+  - IF：条件判断关键词
+  - WHEN：时机或条件关键词
+  - THEN：结果或执行关键词
+  - ELSE：否则或替代关键词
+
+```xml
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<examples description="大写关键词翻译">
+  <good-example description="正确使用全大写关键词">
+    IF the user provides a file path, THEN read the file content.
+    WHEN validation fails, THEN return an error message.
+    IF the condition is met, THEN execute the action, ELSE skip it.
+  </good-example>
+
+  <bad-example description="错误使用小写或首字母大写">
+    If the user provides a file path, then read the file content.
+    When validation fails, then return an error message.
+    If the condition is met, Then execute the action, else skip it.
+  </bad-example>
+</examples>
+```
 
 ```xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
