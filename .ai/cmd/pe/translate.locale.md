@@ -82,6 +82,14 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
   - WHEN：时机或条件关键词
   - THEN：结果或执行关键词
   - ELSE：否则或替代关键词
+  - CALL：调用关键词
+  - EXECUTE：执行关键词
+  - RUN：运行关键词
+  - MUST：必须关键词
+  - SHOULD：应该关键词
+  - MAY：可能关键词
+  - NEVER：禁止关键词
+  - ALWAYS：总是关键词
 
 ```xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
@@ -90,12 +98,22 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
     IF the user provides a file path, THEN read the file content.
     WHEN validation fails, THEN return an error message.
     IF the condition is met, THEN execute the action, ELSE skip it.
+    CALL the translation tool to process the file.
+    EXECUTE the command and RUN the tests.
+    You MUST follow these rules and NEVER skip validation.
+    You SHOULD use the standard format and MAY add comments.
+    ALWAYS check the file existence before writing.
   </good-example>
 
   <bad-example description="错误使用小写或首字母大写">
     If the user provides a file path, then read the file content.
     When validation fails, then return an error message.
     If the condition is met, Then execute the action, else skip it.
+    Call the translation tool to process the file.
+    Execute the command and run the tests.
+    You must follow these rules and never skip validation.
+    You should use the standard format and may add comments.
+    Always check the file existence before writing.
   </bad-example>
 </examples>
 ```
