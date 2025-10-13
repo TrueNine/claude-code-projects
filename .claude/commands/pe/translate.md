@@ -15,17 +15,17 @@ Translate Chinese localization memory prompt file #$1 (.locale.md) to English me
 ## [STEP-1] **Parse Output Path**
 **Priority match special paths**, and generate target files according to the following table:
 
-| SOURCE FILE                                     | OUTPUT FILES                                                          |
-|-------------------------------------------------|-----------------------------------------------------------------------|
-| [.ai/locale/`**/*.locale.md`](/.ai/locale)      | `**/*.md`                                                             |
-| [.ai/locale/`**/AGENTS.locale.md`](/.ai/locale) | `/AGENTS.md`, `/CLAUDE.md`                                            |
-| [.ai/locale/`AGENTS.locale.md`](/.ai/locale)    | `AGENTS.md`, `CLAUDE.md`                                              |
-| [.ai/locale/`README.locale.md`](/.ai/locale)    | `README.md`                                                           |
-| [.ai/locale/`TODO.locale.md`](/.ai/locale)      | `TODO.md`                                                             |
-| [.ai/cmd/`**/*.locale.md`](/.ai/cmd)            | `.ai/out/.claude/commands/**/*.md`, `.claude/commands/**/*.md`        |
-| [.ai/agents/`**/*.locale.md`](/.ai/agents)      | `.ai/out/.claude/agents/**/*.md`, `.claude/agents/**/*.md`            |
-| [.ai/user/`**/*.locale.md`](/.ai/user)          | `.ai/out/global/**/*.md`, `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md` |
-| [.ai/meta/`**/*.locale.md`](/.ai/meta)          | `.ai/meta/**/*.md`                                                    |
+| SOURCE FILE                                           | OUTPUT FILES                                                          |
+|-------------------------------------------------------|-----------------------------------------------------------------------|
+| [.ai/locale/`**/*.locale.md`](/.ai/locale/)           | `**/*.md`                                                             |
+| [.ai/locale/`**/AGENTS.locale.md`](/.ai/locale/)      | `/AGENTS.md`, `/CLAUDE.md`                                            |
+| [AGENTS.locale.md](/.ai/locale/AGENTS.locale.md)      | `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/all.mdc`                     |
+| [README.locale.md](/.ai/locale/README.locale.md)      | `README.md`                                                           |
+| [TODO.locale.md](/.ai/locale/)                        | `TODO.md`                                                             |
+| [.ai/cmd/`**/*.locale.md`](/.ai/cmd/)                 | `.ai/out/.claude/commands/**/*.md`, `.claude/commands/**/*.md`        |
+| [.ai/agents/`**/*.locale.md`](/.ai/agents/)           | `.ai/out/.claude/agents/**/*.md`, `.claude/agents/**/*.md`            |
+| [.ai/user/`**/*.locale.md`](/.ai/user/)               | `.ai/out/global/**/*.md`, `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md` |
+| [.ai/locale/meta/`**/*.locale.md`](/.ai/locale/meta/) | `.ai/meta/**/*.md`                                                    |
 
 When special path mappings don't match, apply the general rule: `filename.locale.extension -> filename.extension`.
 
