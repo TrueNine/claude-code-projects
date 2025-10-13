@@ -20,7 +20,7 @@ Translate Chinese localization memory prompt file `$1` (.locale.md) to English m
 | SOURCE FILE                                           | OUTPUT FILES                                                   |
 |-------------------------------------------------------|----------------------------------------------------------------|
 | [.ai/locale/`**/*.locale.md`](/.ai/locale/)           | `**/*.md`                                                      |
-| [.ai/locale/`**/AGENTS.locale.md`](/.ai/locale/)      | `/AGENTS.md`, `/CLAUDE.md`                                     |
+| [.ai/locale/`**/AGENTS.locale.md`](/.ai/locale/)      | `/**/AGENTS.md`, `/**/CLAUDE.md`                               |
 | [AGENTS.locale.md](/.ai/locale/AGENTS.locale.md)      | `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/all.mdc`              |
 | [README.locale.md](/.ai/locale/README.locale.md)      | `README.md`                                                    |
 | [TODO.locale.md](/.ai/locale/)                        | `TODO.md`                                                      |
