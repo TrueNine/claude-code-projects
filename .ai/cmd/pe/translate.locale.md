@@ -37,13 +37,13 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 当未命中特殊路径映射时，套用通用规则：`filename.locale.extension -> filename.extension`。
 
 其中 `<relative_path>` 表示源文件去除 `.ai/locale/` 前缀后的目录结构，后续所有输出路径均以 `<relative_path>` 为准。
-```xml
+````xml
 <!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
 <example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
-```
+````
 
 **文件夹翻译示例**
-```xml
+````xml
 <!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
 <example description="识别到文件夹">
   <tooling name="Bash" params:command="find $1 -name \"*.locale.md\" wc -l" />
@@ -52,7 +52,7 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
   <agent name="translate" message="Translate .ai/locale/AGENTS.locale.md to [AGENTS.md, CLAUDE.md]" />
   <agent name="translate" message="Translate .ai/locale/meta/example.locale.md to .ai/meta/example.md" />
 </example>
-```
+````
 
 ## [STEP-2] **检查目标文件**
 - 使用 `Search(pattern: "<target_file>")` 判断目标文件是否已存在
@@ -96,7 +96,7 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
   - NEVER：禁止关键词
   - ALWAYS：总是关键词
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples description="大写关键词翻译">
   <good-example description="正确使用全大写关键词">
@@ -121,9 +121,9 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
     Always check the file existence before writing.
   </bad-example>
 </examples>
-```
+````
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples description="文件路径转换">
   <example>.ai/cmd/pe/translate.locale.md -> [.ai/out/.claude/commands/pe/translate.md, .claude/commands/pe/translate.md]</example>
@@ -140,4 +140,4 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
   <example>.ai/locale/meta/prompt.locale.md -> .ai/meta/prompt.md</example>
   <example>.ai/locale/meta/AGENTS.locale.md -> [.ai/meta/AGENTS.md, .ai/meta/CLAUDE.md]</example>
 </examples>
-```
+````
