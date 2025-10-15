@@ -13,6 +13,12 @@
 - 技术参考和最佳实践资料
 
 
+# 适配目标
+
+- `OpenAI Codex` - CLI 工具
+- `Anthropic Claude Code` - CLI 工具
+- `Cursor` - Vscode 魔改IDE
+- `Factory Droid` - CLI 工具
 
 
 # 文档结构
