@@ -17,8 +17,8 @@
 ## 工具链优先级
 - 采用顺序: 1) 根目录配置文件; 2) `.tool-versions` 或 `mise`; 3) `README` 指南; 4) 现有脚本与 `CI`。
 
-```xml
-<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+````xml
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="示例: 正确识别并使用项目工具链"
                 user-input="帮我运行测试">
@@ -38,7 +38,7 @@
              params:command="npm test" />
   </bad-example>
 </examples>
-```
+````
 
 
 
@@ -50,22 +50,26 @@
 - 行末: `LF`.
 - 遵循项目下 [.editorconfig](/.editorconfig) 的配置
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="2 空格缩进">
+    ```rust
     fn main() {
       println!("Hello World");
     }
+    ```
   </good-example>
 
   <bad-example description="4 空格缩进导致格式错误">
+    ```rust
     fn main() {
         println!("Hello World");
     }
+    ```
   </bad-example>
 </examples>
-```
+````
 
 
 
@@ -73,40 +77,39 @@
 ## 文件命名规范
 - 文件名优先顺序: `PascalCase` 或 `camelCase` -> `snake_case` -> 避免 `kebab-case` (除非语言强制)。
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="组件文件使用 PascalCase">
-    UserAccount.ts
-    UserProfile.tsx
+    <tooling name="Create" params:name="UserAccount.ts"/>
+    <tooling name="Create" params:name="UserProfile.tsx"/>
   </good-example>
-
   <good-example description="工具文件使用 camelCase">
-    userUtils.ts
-    apiClient.js
+    <tooling name="Create" params:name="userUtils.ts" />
+    <tooling name="Create" params:name="apiClient.js" />
   </good-example>
 
   <good-example description="配置文件可接受 snake_case">
-    user_config.json
-    database_settings.yaml
+    <tooling name="Create" params:name="user_config.json" />
+    <tooling name="Create" params:name="database_settings.yaml" />
   </good-example>
 
   <good-example description="Rust 模块文件使用 snake_case">
-    user_service.rs
-    auth_handler.rs
+    <tooling name="Create" params:name="user_service.rs"/>
+    <tooling name="Create" params:name="auth_handler.rs" />
   </good-example>
 
   <bad-example description="文件名使用 kebab-case">
-    user-utils.ts
-    api-client.js
+    <tooling name="Create" params:name="user-utils.ts"/>
+    <tooling name="Create" params:name="api-client.js" />
   </bad-example>
 
   <bad-example description="组件文件使用小写">
-    useraccount.ts
-    userprofile.tsx
+    <tooling name="Create" params:name="useraccount.ts" />
+    <tooling name="Create" params:name="userprofile.tsx" />
   </bad-example>
 </examples>
-```
+````
 
 
 
@@ -116,30 +119,38 @@
 - 注释应当置于语句上方, 禁止行尾补充, 以免拉长代码行并降低可读性
 - 条件语句与循环体必须显式使用大括号, 避免因省略而引入严重漏洞
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="条件分支始终使用大括号">
+    ```rust
     if (is_ready) {
       handle_ready();
     }
+    ```
   </good-example>
 
   <bad-example description="省略大括号导致逻辑失控">
+    ```rust
     if (is_ready)
       handle_ready();
       finalize();
+    ```
   </bad-example>
 
   <bad-example description="行内注释拉长代码行">
+    ```rust
     let total = price * quantity; // skip tax for legacy orders
+    ```
   </bad-example>
   <good-example description="正确注释方式">
+    ```rust
     // skip tax for legacy orders
     let total = price * quantity;
+    ```
   </good-example>
 </examples>
-```
+````
 
 
 
@@ -150,19 +161,22 @@
 ### `Guard Clauses` & `Early Return`
 要求使用 `guard clause` 与 `early return` 减少嵌套层级。
 
-```xml
+````xml
 <!DOCTYPE examples "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="使用 guard clause 降低嵌套">
+    ```rust
     fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
       let user = user?;
       if !user.is_active { return None; }
       if user.age < 18 { return None; }
       handle_adult_user(user)
     }
+    ```
   </good-example>
 
   <bad-example description="深层嵌套的写法">
+    ```rust
     fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
       if let Some(user) = user {
         if user.is_active {
@@ -173,18 +187,20 @@
       }
       None
     }
+    ```
   </bad-example>
 </examples>
-```
+````
 
 ### 多条件判断优化
 - 条件数量 >= 3 时, 统一改用 `switch` / `match` 或查表方案替代 `if-else` 链。
 - 目标: 提升可读性和可维护性, 减少重复判断。
 
-```xml
+````xml
 <!DOCTYPE examples "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="match 分支覆盖多条件">
+    ```rust
     fn get_error_message(status_code: u16) -> &'static str {
       match status_code {
         403 => "Permission denied, cannot access this resource",
@@ -194,9 +210,11 @@
         _ => "Unknown error"
       }
     }
+    ```
   </good-example>
 
   <good-example description="查表替代多分支">
+    ```rust
     use std::collections::HashMap;
 
     fn get_error_message_lookup(status_code: u16) -> &'static str {
@@ -211,9 +229,11 @@
         else { "Unknown error" }
       )
     }
+    ```
   </good-example>
 
   <bad-example description="大量 if-else 链处理多条件">
+    ```rust
     fn get_error_message(status_code: u16) -> &'static str {
       let mut error_message = "Unknown error";
 
@@ -229,9 +249,10 @@
 
       error_message
     }
+    ```
   </bad-example>
 </examples>
-```
+````
 
 
 
@@ -251,7 +272,7 @@
 - 优先审视并优化现有实现与提示词, 通过补充测试、提升可维护性或强化可读性来获得增量价值。
 - 默认策略: 在现有基础上扩展能力而非重写。
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="开发前调查并复用现有代码"
@@ -293,7 +314,7 @@
     ```
   </bad-example>
 </examples>
-```
+````
 
 
 
@@ -317,7 +338,7 @@
 - 只是为了避免单文件过长 (除非确有必要)。
 - 破坏原有组织结构。
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="在现有文件内扩展功能"
@@ -354,7 +375,7 @@
     ```
   </bad-example>
 </examples>
-```
+````
 
 
 
@@ -370,10 +391,11 @@
 
 ### 错误处理示例
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="完全透明">
+    ```rust
     fn process_file(path: &str) -> Result<ProcessedData, ProcessingError> {
       let file = std::fs::File::open(path)
         .map_err(|e| ProcessingError::FileOpenError {
@@ -389,9 +411,11 @@
 
       Ok(result)
     }
+    ```
   </good-example>
 
   <bad-example description="掩盖错误">
+    ```rust
     fn process_file(path: &str) -> Option<ProcessedData> {
       let file = match std::fs::File::open(path) {
         Ok(f) => f,
@@ -406,16 +430,18 @@
         }
       }
     }
+    ```
   </bad-example>
 </examples>
-```
+````
 
 ### 警告处理示例
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="必须传递给调用者">
+    ```rust
     fn validate_config(config: &Config) -> Result<(), Vec<ValidationWarning>> {
       let mut warnings = Vec::new();
 
@@ -429,9 +455,11 @@
 
       Ok(())
     }
+    ```
   </good-example>
 
   <bad-example description="镇压警告">
+    ```rust
     fn validate_config(config: &Config) {
       if config.timeout < 1000 {
         // 镇压警告 - 禁止
@@ -440,9 +468,10 @@
 
       // 未告知调用者潜在问题
     }
+    ```
   </bad-example>
 </examples>
-```
+````
 
 ### 异常处理示例
 
@@ -450,25 +479,29 @@
 - 如需捕获, 必须补充上下文并重新抛出或返回错误对象, 禁止静默吞掉
 - 优先复用现有异常类型, 避免随意创建新异常导致维护成本上升
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="复用现有异常并补充上下文">
+    ```java
     try {
       riskyOperation();
     } catch (Exception e) {
       throw new IOException("Unable to finish task", e);
     }
+    ```
   </good-example>
 
   <bad-example description="静默吞掉异常导致信息丢失">
+    ```java
     try {
       riskyOperation();
     } catch (Exception ignored) {
     }
+    ```
   </bad-example>
 </examples>
-```
+````
 
 
 
@@ -508,7 +541,7 @@
 - 透明说明失败原因.
 - 给出后续修复计划.
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="全面执行验证流程"
@@ -537,7 +570,7 @@
     未验证即声称修复完成, 违规。
   </bad-example>
 </examples>
-```
+````
 
 
 
@@ -557,9 +590,10 @@
 
 ## 文件结构书写示范
 
-```xml
+````xml
 <!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
 <example description="使用 md 代码块的嵌套文件列表而不是树形结构">
+```md
 - [.ai](/.ai/) - AI Agent 工程目录，类似于 src 的源提示词工作目录
   - [.ai/locale/](/.ai/locale/) - 当前项目映射的记忆提示词
   - [.ai/user/](/.ai/user/) - 全局用户记忆提示词
@@ -570,8 +604,9 @@
 - [README.md](/README.md) - 项目描述文件
 - [AGENTS.md](/AGENTS.md) - AI 代理记忆提示词
 - [.editorconfig](/.editorconfig) - 编辑器配置文件
-</example>
 ```
+</example>
+````
 
 ## 路径引用规范
 - 提示词表写引用时，必须以 `/` 开头的基于当前项目的绝对路径为基准
@@ -579,29 +614,35 @@
 - 绝对不能出现绝对路径
 - 不得以加粗包裹文件引用，会极度分散注意力
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="正确的路径引用格式">
+    ```md
     [.ai/locale](/.ai/locale/) - 当前项目映射的记忆提示词
     [src/utils](/src/utils/) - 工具函数目录
     [README.md](/README.md) - 项目描述文件
+    ```
   </good-example>
 
   <bad-example description="错误的路径引用格式">
+    ```md
     [.ai/locale/](/.ai/locale) - 文件夹链接末尾不使用斜杠
     /home/user/project/src/utils - 禁止使用绝对路径
     /c/project/home/user/project/src/utils - 禁止使用绝对路径
     [src/utils/](/src/utils/) - 文件夹链接末尾不能有斜杠
+    ```
   </bad-example>
 
   <bad-example description="加粗包裹文件引用（禁止）">
+    ```md
     **[.ai/locale](/.ai/locale/)** - 不得使用加粗包裹文件引用
     **[src/utils](/src/utils)** - 加粗会分散注意力
     **[README.md](/README.md)** - 禁止此格式
+    ```
   </bad-example>
 </examples>
-```
+````
 
 ## 参考元定义
 项目下 [.ai/meta/](/.ai/meta/) 下有些具体的概念定义，请以这些定义为准。
