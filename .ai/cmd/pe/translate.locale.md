@@ -71,6 +71,13 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 ## [STEP-6] **写入目标文件**
 - 创建新的目标文件并写入翻译结果
 - 若存在多个目标路径，先写入第一个文件，再使用 `Bash(command: "cp -R <first_file> <target_file>")` 复制至剩余路径，避免偏差
+- 若输出目标位于 `.cursor/rules/` 目录下（即 `.cursor/rules/**/*.mdc`），在写入前必须于文件开头插入以下 YAML 头部，且禁止省略：
+
+  ```
+  ---
+  alwaysApply: true
+  ---
+  ```
 
 ## [STEP-7] **错误处理**
 - 如 `Write` 调用失败，立即执行 `Bash(command: "rm <target_file>")` 清理
