@@ -11,6 +11,12 @@ This is a documentation and configuration repository for `AI Agent` workflows, f
 - Technical reference and best practice materials
 
 
+# Adaptation Targets
+
+- `OpenAI Codex` - CLI tool
+- `Anthropic Claude Code` - CLI tool
+- `Cursor` - Vscode modified IDE
+- `Factory Droid` - CLI tool
 
 
 # Documentation Structure
