@@ -16,8 +16,8 @@
 ## Toolchain Priority
 - Adoption order: 1) Root directory configuration files; 2) `.tool-versions` or `mise`; 3) `README` guidelines; 4) Existing scripts and `CI`.
 
-```xml
-<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+````xml
+<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Example: Correctly identify and use project toolchain"
                user-input="帮我运行测试">
@@ -37,7 +37,7 @@
              params:command="npm test" />
   </bad-example>
 </examples>
-```
+````
 
 
 
@@ -49,22 +49,26 @@
 - Line ending: `LF`.
 - Follow project under [.editorconfig](/.editorconfig) configuration
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="2 space indentation">
+    ```rust
     fn main() {
       println!("Hello World");
     }
+    ```
   </good-example>
 
   <bad-example description="4 space indentation causes format error">
+    ```rust
     fn main() {
         println!("Hello World");
     }
+    ```
   </bad-example>
 </examples>
-```
+````
 
 
 
@@ -72,40 +76,39 @@
 ## File Naming Conventions
 - File name priority order: `PascalCase` or `camelCase` -> `snake_case` -> avoid `kebab-case` (unless language requires).
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Component files use PascalCase">
-    UserAccount.ts
-    UserProfile.tsx
+    <tooling name="Create" params:name="UserAccount.ts"/>
+    <tooling name="Create" params:name="UserProfile.tsx"/>
   </good-example>
-
   <good-example description="Utility files use camelCase">
-    userUtils.ts
-    apiClient.js
+    <tooling name="Create" params:name="userUtils.ts" />
+    <tooling name="Create" params:name="apiClient.js" />
   </good-example>
 
   <good-example description="Configuration files acceptable snake_case">
-    user_config.json
-    database_settings.yaml
+    <tooling name="Create" params:name="user_config.json" />
+    <tooling name="Create" params:name="database_settings.yaml" />
   </good-example>
 
   <good-example description="Rust module files use snake_case">
-    user_service.rs
-    auth_handler.rs
+    <tooling name="Create" params:name="user_service.rs"/>
+    <tooling name="Create" params:name="auth_handler.rs" />
   </good-example>
 
   <bad-example description="File names use kebab-case">
-    user-utils.ts
-    api-client.js
+    <tooling name="Create" params:name="user-utils.ts"/>
+    <tooling name="Create" params:name="api-client.js" />
   </bad-example>
 
   <bad-example description="Component files use lowercase">
-    useraccount.ts
-    userprofile.tsx
+    <tooling name="Create" params:name="useraccount.ts" />
+    <tooling name="Create" params:name="userprofile.tsx" />
   </bad-example>
 </examples>
-```
+````
 
 
 
@@ -115,30 +118,38 @@
 - Comments should be placed above statements, prohibited inline supplements, to avoid elongating code lines and reducing readability
 - Conditional statements and loop bodies must explicitly use braces, to avoid introducing serious vulnerabilities due to omission
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Conditional branches always use braces">
+    ```rust
     if (is_ready) {
       handle_ready();
     }
+    ```
   </good-example>
 
   <bad-example description="Omitting braces leads to logic out of control">
+    ```rust
     if (is_ready)
       handle_ready();
       finalize();
+    ```
   </bad-example>
 
   <bad-example description="Inline comments elongate code lines">
+    ```rust
     let total = price * quantity; // skip tax for legacy orders
+    ```
   </bad-example>
   <good-example description="Correct comment method">
+    ```rust
     // skip tax for legacy orders
     let total = price * quantity;
+    ```
   </good-example>
 </examples>
-```
+````
 
 
 
@@ -148,19 +159,22 @@
 ### `Guard Clauses` & `Early Return`
 Require use of `guard clause` and `early return` to reduce nesting levels.
 
-```xml
+````xml
 <!DOCTYPE examples "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Use guard clause to reduce nesting">
+    ```rust
     fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
       let user = user?;
       if !user.is_active { return None; }
       if user.age < 18 { return None; }
       handle_adult_user(user)
     }
+    ```
   </good-example>
 
   <bad-example description="Deep nesting writing style">
+    ```rust
     fn process_user(user: Option<&User>) -> Option<ProcessedUser> {
       if let Some(user) = user {
         if user.is_active {
@@ -171,18 +185,20 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
       }
       None
     }
+    ```
   </bad-example>
 </examples>
-```
+````
 
 ### Multi-condition Judgment Optimization
 - When condition count ≥3, uniformly switch to `switch` / `match` or lookup table to replace `if-else` chains.
 - Goal: Improve readability and maintainability, reduce repetitive judgments.
 
-```xml
+````xml
 <!DOCTYPE examples "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="match branches cover multiple conditions">
+    ```rust
     fn get_error_message(status_code: u16) -> &'static str {
       match status_code {
         403 => "Permission denied, cannot access this resource",
@@ -192,9 +208,11 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
         _ => "Unknown error"
       }
     }
+    ```
   </good-example>
 
   <good-example description="Lookup table replaces multiple branches">
+    ```rust
     use std::collections::HashMap;
 
     fn get_error_message_lookup(status_code: u16) -> &'static str {
@@ -209,9 +227,11 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
         else { "Unknown error" }
       )
     }
+    ```
   </good-example>
 
   <bad-example description="Large if-else chains handle multiple conditions">
+    ```rust
     fn get_error_message(status_code: u16) -> &'static str {
       let mut error_message = "Unknown error";
 
@@ -227,9 +247,10 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
 
       error_message
     }
+    ```
   </bad-example>
 </examples>
-```
+````
 
 
 
@@ -249,7 +270,7 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
 - Prioritize reviewing and optimizing existing implementations and prompts, gain incremental value through supplementing tests, improving maintainability, or enhancing readability.
 - Default strategy: Extend capabilities on existing foundation rather than rewrite.
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Investigate and reuse existing code before development"
@@ -291,7 +312,7 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
     ```
   </bad-example>
 </examples>
-```
+````
 
 
 
@@ -300,6 +321,7 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
 - Prioritize editing existing files, avoid creating new files.
 - New files must have sufficient justification and comply with architectural specifications.
 - Follow existing directory and module organization methods.
+- **Strictly prohibited editing** [AGENTS.md](/AGENTS.md) or [CLAUDE.md](/CLAUDE.md) files, these files are maintained by users personally, must not be modified under any circumstances.
 
 ### File Creation Decision Standards
 Reasonable file creation:
@@ -314,7 +336,7 @@ Avoid creating new files:
 - Just to avoid single file being too long (unless truly necessary).
 - Breaks original organizational structure.
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Extend functionality within existing files"
@@ -351,7 +373,7 @@ Avoid creating new files:
     ```
   </bad-example>
 </examples>
-```
+````
 
 
 
@@ -367,10 +389,11 @@ Avoid creating new files:
 
 ### Error Handling Examples
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Completely transparent">
+    ```rust
     fn process_file(path: &str) -> Result<ProcessedData, ProcessingError> {
       let file = std::fs::File::open(path)
         .map_err(|e| ProcessingError::FileOpenError {
@@ -386,9 +409,11 @@ Avoid creating new files:
 
       Ok(result)
     }
+    ```
   </good-example>
 
   <bad-example description="Covering up errors">
+    ```rust
     fn process_file(path: &str) -> Option<ProcessedData> {
       let file = match std::fs::File::open(path) {
         Ok(f) => f,
@@ -403,16 +428,18 @@ Avoid creating new files:
         }
       }
     }
+    ```
   </bad-example>
 </examples>
-```
+````
 
 ### Warning Handling Examples
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Must pass to caller">
+    ```rust
     fn validate_config(config: &Config) -> Result<(), Vec<ValidationWarning>> {
       let mut warnings = Vec::new();
 
@@ -426,9 +453,11 @@ Avoid creating new files:
 
       Ok(())
     }
+    ```
   </good-example>
 
   <bad-example description="Suppressing warnings">
+    ```rust
     fn validate_config(config: &Config) {
       if config.timeout < 1000 {
         // 镇压警告 - 禁止
@@ -437,9 +466,10 @@ Avoid creating new files:
 
       // 未告知调用者潜在问题
     }
+    ```
   </bad-example>
 </examples>
-```
+````
 
 ### Exception Handling Examples
 
@@ -447,25 +477,30 @@ Avoid creating new files:
 - If catching is needed, must supplement context and rethrow or return error objects, prohibit silent swallowing
 - Prioritize reusing existing exception types, avoid arbitrarily creating new exceptions leading to increased maintenance costs
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Reuse existing exceptions and supplement context">
+    ```java
     try {
       riskyOperation();
     } catch (Exception e) {
       throw new IOException("Unable to finish task", e);
     }
+    ```
   </good-example>
 
   <bad-example description="Silent swallowing exceptions causes information loss">
+    ```java
     try {
       riskyOperation();
     } catch (Exception ignored) {
     }
+    ```
   </bad-example>
 </examples>
-```
+````
+
 
 
 
@@ -503,7 +538,7 @@ Avoid creating new files:
 - Transparently explain failure reasons.
 - Provide follow-up fix plans.
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Comprehensively execute verification process"
@@ -532,7 +567,7 @@ Avoid creating new files:
     未验证即声称修复完成, 违规。
   </bad-example>
 </examples>
-```
+````
 
 
 
@@ -551,21 +586,23 @@ Avoid creating new files:
 
 ## File Structure Writing Demonstration
 
-```xml
+````xml
 <!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
-<example description="Use md code block nested file list instead of tree structure">
-- [.ai](/.ai/) - AI Agent engineering directory, similar to src source prompt working directory
-  - [.ai/locale/](/.ai/locale/) - Current project mapping memory prompts
-  - [.ai/user/](/.ai/user/) - Global user memory prompts
-  - [.ai/project/](/.ai/project/) - Project-level memory prompts
-  - [.ai/cmd/](/.ai/cmd/) - Custom command prompts
-  - [.ai/agents/](/.ai/agents/) - Sub-agent prompts
-  - [.ai/meta/](/.ai/meta/) - Exact concept help documentation definitions
-- [README.md](/README.md) - Project description file
-- [AGENTS.md](/AGENTS.md) - AI agent memory prompts
-- [.editorconfig](/.editorconfig) - Editor configuration file
-</example>
+<example description="使用 md 代码块的嵌套文件列表而不是树形结构">
+```md
+- [.ai](/.ai/) - AI Agent 工程目录，类似于 src 的源提示词工作目录
+  - [.ai/locale/](/.ai/locale/) - 当前项目映射的记忆提示词
+  - [.ai/user/](/.ai/user/) - 全局用户记忆提示词
+  - [.ai/project/](/.ai/project/) - 项目级别记忆提示词
+  - [.ai/cmd/](/.ai/cmd/) - 自定义命令提示词
+  - [.ai/agents/](/.ai/agents/) - 子代理提示词
+  - [.ai/meta/](/.ai/meta/) - 确切概念的帮助文档定义
+- [README.md](/README.md) - 项目描述文件
+- [AGENTS.md](/AGENTS.md) - AI 代理记忆提示词
+- [.editorconfig](/.editorconfig) - 编辑器配置文件
 ```
+</example>
+````
 
 ## Path Reference Standards
 - When writing prompt table references, must use absolute path starting with `/` based on current project as benchmark
@@ -573,29 +610,35 @@ Avoid creating new files:
 - Absolutely cannot have absolute paths
 - Cannot wrap file references in bold, will extremely distract attention
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
-  <good-example description="Correct path reference format">
-    [.ai/locale](/.ai/locale/) - Current project mapping memory prompts
-    [src/utils](/src/utils/) - Tool function directory
-    [README.md](/README.md) - Project description file
+  <good-example description="正确的路径引用格式">
+    ```md
+    [.ai/locale](/.ai/locale/) - 当前项目映射的记忆提示词
+    [src/utils](/src/utils/) - 工具函数目录
+    [README.md](/README.md) - 项目描述文件
+    ```
   </good-example>
 
-  <bad-example description="Incorrect path reference format">
-    [.ai/locale/](/.ai/locale) - Folder link end does not use slash
-    /home/user/project/src/utils - Prohibit using absolute paths
-    /c/project/home/user/project/src/utils - Prohibit using absolute paths
-    [src/utils/](/src/utils/) - Folder link end cannot have slash
+  <bad-example description="错误的路径引用格式">
+    ```md
+    [.ai/locale/](/.ai/locale) - 文件夹链接末尾不使用斜杠
+    /home/user/project/src/utils - 禁止使用绝对路径
+    /c/project/home/user/project/src/utils - 禁止使用绝对路径
+    [src/utils/](/src/utils/) - 文件夹链接末尾不能有斜杠
+    ```
   </bad-example>
 
-  <bad-example description="Bold wrapping file references (prohibited)">
-    **[.ai/locale](/.ai/locale/)** - Cannot use bold wrapping file references
-    **[src/utils](/src/utils)** - Bold will distract attention
-    **[README.md](/README.md)** - Prohibit this format
+  <bad-example description="加粗包裹文件引用（禁止）">
+    ```md
+    **[.ai/locale](/.ai/locale/)** - 不得使用加粗包裹文件引用
+    **[src/utils](/src/utils)** - 加粗会分散注意力
+    **[README.md](/README.md)** - 禁止此格式
+    ```
   </bad-example>
 </examples>
-```
+````
 
 ## Reference Meta Definitions
 Project under [.ai/meta/](/.ai/meta/) has some specific concept definitions, please refer to these definitions as authoritative.
