@@ -1,7 +1,7 @@
 ---
 argument-hint: [ locale_markdown_file ] [ translation_description ]
 allowed-tools: Read, Write, Glob, Grep, Bash
-description: Translate Chinese localization memory prompt file to English memory prompt file while maintaining terminology and quality standards consistency
+description: Translate Chinese localization memory prompt file `$1` (.locale.md) to English memory prompt file while maintaining established quality standards and terminology consistency
 ---
 
 Translate Chinese localization memory prompt file `$1` (.locale.md) to English memory prompt file while maintaining established quality standards and terminology consistency.
@@ -15,6 +15,11 @@ Translate Chinese localization memory prompt file `$1` (.locale.md) to English m
 
 
 ## [STEP-1] **Parse Output Path**
+Standardize the source path before table lookup:
+- IF `$1` is located under `.ai/locale/`, MUST first remove the `.ai/locale/` prefix to get `<relative_path>`. Any target path is prohibited from carrying the `.ai/locale/` prefix.
+- Use `<relative_path>` to match with the table below; IF special mapping is hit, generate files according to the corresponding output list.
+- `AGENTS.locale.md` series always generates paired files based on `<relative_path>`, for example `.ai/locale/deployment/AGENTS.locale.md -> [deployment/AGENTS.md, deployment/CLAUDE.md]`.
+
 **Priority match special paths**, and generate target files according to the following table:
 
 | SOURCE FILE                                           | OUTPUT FILES                                                   |
@@ -32,13 +37,13 @@ Translate Chinese localization memory prompt file `$1` (.locale.md) to English m
 WHEN special path mappings don't match, apply the general rule: `filename.locale.extension -> filename.extension`.
 
 Where `<relative_path>` represents the directory structure after removing the `.ai/locale/` prefix from the source file.
-```xml
+````xml
 <!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
 <example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
-```
+````
 
 **Directory translation example**
-```xml
+````xml
 <!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
 <example description="Directory detected">
   <tooling name="Bash" params:command="find $1 -name \"*.locale.md\" wc -l" />
@@ -47,7 +52,7 @@ Where `<relative_path>` represents the directory structure after removing the `.
   <agent name="translate" message="Translate .ai/locale/AGENTS.locale.md to [AGENTS.md, CLAUDE.md]" />
   <agent name="translate" message="Translate .ai/locale/meta/example.locale.md to .ai/meta/example.md" />
 </example>
-```
+````
 
 ## [STEP-2] **Check Target Files**
 - Use `Search(pattern: "<target_file>")` to determine IF the target file already exists
@@ -91,7 +96,7 @@ Where `<relative_path>` represents the directory structure after removing the `.
   - NEVER: prohibition keyword
   - ALWAYS: absolute keyword
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples description="Uppercase keyword translation">
   <good-example description="Correctly use all-uppercase keywords">
@@ -116,9 +121,9 @@ Where `<relative_path>` represents the directory structure after removing the `.
     Always check the file existence before writing.
   </bad-example>
 </examples>
-```
+````
 
-```xml
+````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples description="File path conversion">
   <example>.ai/cmd/pe/translate.locale.md -> [.ai/out/.claude/commands/pe/translate.md, .claude/commands/pe/translate.md]</example>
@@ -135,4 +140,4 @@ Where `<relative_path>` represents the directory structure after removing the `.
   <example>.ai/locale/meta/prompt.locale.md -> .ai/meta/prompt.md</example>
   <example>.ai/locale/meta/AGENTS.locale.md -> [.ai/meta/AGENTS.md, .ai/meta/CLAUDE.md]</example>
 </examples>
-```
+````
