@@ -26,7 +26,7 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 |-------------------------------------------------------|----------------------------------------------------------------|
 | [.ai/locale/`**/*.locale.md`](/.ai/locale/)           | `**/*.md`                                                      |
 | [.ai/locale/`**/AGENTS.locale.md`](/.ai/locale/)      | `/**/AGENTS.md`, `/**/CLAUDE.md`                               |
-| [AGENTS.locale.md](/.ai/locale/AGENTS.locale.md)      | `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/all.mdc`              |
+| [AGENTS.locale.md](/.ai/locale/AGENTS.locale.md)      | `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/project.mdc`          |
 | [README.locale.md](/.ai/locale/README.locale.md)      | `README.md`                                                    |
 | [TODO.locale.md](/.ai/locale/)                        | `TODO.md`                                                      |
 | [.ai/cmd/`**/*.locale.md`](/.ai/cmd/)                 | `.ai/out/.claude/commands/**/*.md`, `.claude/commands/**/*.md` |

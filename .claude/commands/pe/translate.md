@@ -71,6 +71,13 @@ Where `<relative_path>` represents the directory structure after removing the `.
 ## [STEP-6] **Write Target File**
 - Create new target file and write translation results
 - IF multiple target paths exist, THEN write to the first file first, THEN use `Bash(command: "cp -R <first_file> <target_file>")` to copy to remaining paths, avoiding discrepancies
+- IF output target is located under `.cursor/rules/` directory (i.e., `.cursor/rules/**/*.mdc`), MUST insert the following YAML header at the beginning of the file before writing, and omission is prohibited:
+
+  ```
+  ---
+  alwaysApply: true
+  ---
+  ```
 
 ## [STEP-7] **Error Handling**
 - IF `Write` call fails, THEN immediately EXECUTE `Bash(command: "rm <target_file>")` to clean up
