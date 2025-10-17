@@ -37,5 +37,9 @@ next-env.d.ts
 
 ### AI Coding ###
 .mcp.json
+__ai/
+__aiissues/
+AGENTS.md
+CLAUDE.md
 
 nul

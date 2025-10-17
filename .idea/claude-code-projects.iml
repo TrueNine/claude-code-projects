@@ -15,9 +15,11 @@
       <excludeFolder url="file://$MODULE_DIR$/.cursor" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/.factory" />
+      <excludeFolder url="file://$MODULE_DIR$/__ai" />
       <excludeFolder url="file://$MODULE_DIR$/__ai/middle" />
       <excludeFolder url="file://$MODULE_DIR$/__ai/out" />
       <excludeFolder url="file://$MODULE_DIR$/__ai/sources" />
+      <excludeFolder url="file://$MODULE_DIR$/__aiissues" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
