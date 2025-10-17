@@ -1,7 +1,7 @@
 ---
 argument-hint: [ locale_markdown_file ] [ translation_description ]
 allowed-tools: Read, Write, Glob, Grep, Bash
-description: Translate Chinese localization memory prompt file to English memory prompt file while maintaining terminology and quality standards
+description: Translate Chinese localization memory prompt file `$1` (.locale.md) to English memory prompt file while maintaining established quality standards and terminology consistency
 ---
 
 Translate Chinese localization memory prompt file `$1` (.locale.md) to English memory prompt file while maintaining established quality standards and terminology consistency.
@@ -57,6 +57,7 @@ Where `<relative_path>` represents the directory structure after removing the `.
 ## [STEP-2] **Prepare Target Path**
 - ALWAYS CALL `Bash(command: "mkdir -p <target_directory>")`, even if the directory already exists
 - ALWAYS CALL `Bash(command: "rm -f <target_file>")` to clean up old files, ignoring any deletion errors
+- ALWAYS CALL `TodoWrite` tool to record complete todo list and maintain status synchronization during task execution
 
 ## [STEP-3] **Read and Translate Source File**
 - CALL `Read($1)` to get the source file content
