@@ -1,7 +1,6 @@
 ---
 alwaysApply: true
 ---
-
 This file provides guidance for `AI Agent` when working in this repository.
 
 
@@ -23,12 +22,14 @@ This is a documentation and configuration repository for `AI Agent` workflows, f
 - `Factory Droid` - CLI tool
 
 
-# Documentation Structure
+# Project Structure
 
-````md
+```md
 - [.ai/](/.ai/) - Source prompt working directory similar to src
   - [locale/](/.ai/locale/) - Current project mapping memory prompts
-  - [user/](/.ai/user/) - Global user memory prompts
+    - [.ai/](/.ai/locale/.ai/) - Mapping memory prompts for `.ai/`
+    - [meta/](/.ai/locale/meta/) - Chinese version meta information and explanation standards
+  - [user/](/.ai/GLOBAL.locale.md) - Global user memory prompts
   - [project/](/.ai/project/) - Project-level memory prompts
   - [cmd/](/.ai/cmd/) - Custom command prompts
   - [agents/](/.ai/agents/) - Sub-agent prompts
@@ -36,4 +37,4 @@ This is a documentation and configuration repository for `AI Agent` workflows, f
 - [cli/](/cli/) - Command line tools
   - [rust/](/cli/rust/) - Rust core tools
 - [hooks/](/hooks/) - Hook scripts
-````
+```

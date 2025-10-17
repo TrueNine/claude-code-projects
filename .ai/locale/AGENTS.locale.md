@@ -28,7 +28,7 @@
   - [locale/](/.ai/locale/) - 当前项目映射记忆提示词
     - [.ai/](/.ai/locale/.ai/) - 针对于 `.ai/` 的映射记忆提示词
     - [meta/](/.ai/locale/meta/) - 中文版的元信息以及解释标准
-  - [user/](/.ai/user/) - 全局用户记忆提示词
+  - [user/](/.ai/GLOCAL.locale.md) - 全局用户记忆提示词
   - [project/](/.ai/project/) - 项目级记忆提示词
   - [cmd/](/.ai/cmd/) - 自定义命令提示词
   - [agents/](/.ai/agents/) - 子代理提示词

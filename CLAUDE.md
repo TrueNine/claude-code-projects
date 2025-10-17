@@ -26,7 +26,7 @@ This is a documentation and configuration repository for `AI Agent` workflows, f
   - [locale/](/.ai/locale/) - Current project mapping memory prompts
     - [.ai/](/.ai/locale/.ai/) - Mapping memory prompts for `.ai/`
     - [meta/](/.ai/locale/meta/) - Chinese version meta information and explanation standards
-  - [user/](/.ai/user/) - Global user memory prompts
+  - [user/](/.ai/GLOBAL.locale.md) - Global user memory prompts
   - [project/](/.ai/project/) - Project-level memory prompts
   - [cmd/](/.ai/cmd/) - Custom command prompts
   - [agents/](/.ai/agents/) - Sub-agent prompts
