@@ -6,7 +6,7 @@
 - Cultural orientation: Remember user's native language is Chinese, but workflow aligns with American engineering culture, use American English for all affairs except user communication.
 - Strictly prohibited: Chinese characters in `Thinking` field => considered violation, enforcement starts from onboarding.
 - Prompt style: As long as `Markdown` compliant, keep content technical and concise, don't waste time on formatting alignment or rhetoric.
-- [.ai/](/.ai/) `**/*.locale.md` files: All [.ai/](/.ai) `**/*.locale.md` use British Chinese writing, maintain English logic and direct translation of terminology, execute throughout the document.
+- [__ai/](/__ai/) `**/*.locale.md` files: All [__ai/](/__ai) `**/*.locale.md` use British Chinese writing, maintain English logic and direct translation of terminology, execute throughout the document.
 
 
 
@@ -17,7 +17,7 @@
 - Adoption order: 1) Root directory configuration files; 2) `.tool-versions` or `mise`; 3) `README` guidelines; 4) Existing scripts and `CI`.
 
 ````xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Example: Correctly identify and use project toolchain"
                user-input="帮我运行测试">
@@ -57,7 +57,7 @@
 - Avoid `kebab-case`.
 
 ````xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Component files use PascalCase">
     <tooling name="Create" params:name="UserAccount.ts"/>
@@ -99,7 +99,7 @@
 - Conditional statements and loop bodies must explicitly use braces, to avoid introducing serious vulnerabilities due to omission
 
 ````xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Conditional branches always use braces">
     ```rust
@@ -140,7 +140,7 @@
 Require use of `guard clause` and `early return` to reduce nesting levels.
 
 ````xml
-<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples "/__ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Use guard clause to reduce nesting">
     ```rust
@@ -175,7 +175,7 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
 - Goal: Improve readability and maintainability, reduce repetitive judgments.
 
 ````xml
-<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples "/__ai/meta/example-schema.dtd">
 <examples>
   <good-example description="match branches cover multiple conditions">
     ```rust
@@ -250,7 +250,7 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
 - Default strategy: Extend capabilities on existing foundation rather than rewrite.
 
 ````xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Investigate and reuse existing code before development"
                user-input="帮我实现一个用户认证功能">
@@ -316,7 +316,7 @@ Avoid creating new files:
 - Breaks original organizational structure.
 
 ````xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Extend functionality within existing files"
                user-input="添加一个新的工具函数来格式化日期">
@@ -369,7 +369,7 @@ Avoid creating new files:
 ### Error Handling Examples
 
 ````xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Completely transparent">
     ```rust
@@ -415,7 +415,7 @@ Avoid creating new files:
 ### Warning Handling Examples
 
 ````xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Must pass to caller">
     ```rust
@@ -457,7 +457,7 @@ Avoid creating new files:
 - Prioritize reusing existing exception types, avoid arbitrarily creating new exceptions leading to increased maintenance costs
 
 ````xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Reuse existing exceptions and supplement context">
     ```java
@@ -518,7 +518,7 @@ Avoid creating new files:
 - Provide follow-up fix plans.
 
 ````xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Comprehensively execute verification process"
                user-input="帮我修复这个登录功能的bug">
@@ -553,30 +553,30 @@ Avoid creating new files:
 
 # Prompt Writing Standards
 
-- [.ai/locale](/.ai/locale/) under `**/*.locale.md` are British Chinese prompt files, facing user reading, language needs to closely follow American English logic and thinking, professional terms directly retain English original.
+- [__ai/locale](/__ai/locale/) under `**/*.locale.md` are British Chinese prompt files, facing user reading, language needs to closely follow American English logic and thinking, professional terms directly retain English original.
 - These `**/*.locale.md` files often serve as `AI Agent` shortcut commands, sub-agent prompts, or localized versions of `memory prompt file`, when assisting users to edit, must prioritize assisting in editing them.
-- Examples mostly use `xml` structure presentation, have high reference value, when following examples prioritize understanding their structured intent, specific definitions can refer to [.ai/meta/example-schema.dtd](/.ai/meta/example-schema.dtd).
+- Examples mostly use `xml` structure presentation, have high reference value, when following examples prioritize understanding their structured intent, specific definitions can refer to [__ai/meta/example-schema.dtd](/__ai/meta/example-schema.dtd).
 - When as `AI Agent` assisting users to update or write such files, assume user is a programmer, possibly facing chaotic projects or outdated documents, please proactively correct and fill gaps.
 - Don't directly copy existing `**.locale.md` content; please use English original as authoritative source, translate it into British Chinese under standard American English logic, ensure locale version accurate and readable.
 - When user proposes new rules or ideas, need to immediately implement updates in the currently editing locale file, avoid delayed processing.
-- [.ai/](/.ai/) except under `meta/**` files, others have no reference significance, they are engineering files automatically generated by `AI Agent`
-- [.ai/meta/](/.ai/meta/) under has some exact concept help documentation definitions
-- [.ai/middle/spec/](/.ai/middle/spec/) under stores "specification-driven development" documents for the current project
-- [.ai/middle/spec/SPEC-1-REQUIREMENT.locale.md](/.ai/middle/spec/SPEC-1-REQUIREMENT.locale.md) under stores "specification-driven development - requirements document" for the current project, it has and only has one copy or none, the project develops based on this requirement
+- [__ai/](/__ai/) except under `meta/**` files, others have no reference significance, they are engineering files automatically generated by `AI Agent`
+- [__ai/meta/](/__ai/meta/) under has some exact concept help documentation definitions
+- [__ai/middle/spec/](/__ai/middle/spec/) under stores "specification-driven development" documents for the current project
+- [__ai/middle/spec/SPEC-1-REQUIREMENT.locale.md](/__ai/middle/spec/SPEC-1-REQUIREMENT.locale.md) under stores "specification-driven development - requirements document" for the current project, it has and only has one copy or none, the project develops based on this requirement
 
 ## File Structure Writing Demonstration
 
 ````xml
-<!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE example SYSTEM "/__ai/meta/example-schema.dtd">
 <example description="使用 md 代码块的嵌套文件列表而不是树形结构">
 ```md
-- [.ai](/.ai/): AI Agent 工程目录，类似于 src 的源提示词工作目录
-  - [.ai/locale/](/.ai/locale/): 当前项目映射的记忆提示词
-  - [.ai/user/](/.ai/user/): 全局用户记忆提示词
-  - [.ai/project/](/.ai/project/): 项目级别记忆提示词
-  - [.ai/cmd/](/.ai/cmd/): 自定义命令提示词
-  - [.ai/agents/](/.ai/agents/): 子代理提示词
-  - [.ai/meta/](/.ai/meta/): 确切概念的帮助文档定义
+- [__ai](/__ai/): AI Agent 工程目录，类似于 src 的源提示词工作目录
+  - [__ai/locale/](/__ai/locale/): 当前项目映射的记忆提示词
+  - [__ai/user/](/__ai/user/): 全局用户记忆提示词
+  - [__ai/project/](/__ai/project/): 项目级别记忆提示词
+  - [__ai/cmd/](/__ai/cmd/): 自定义命令提示词
+  - [__ai/agents/](/__ai/agents/): 子代理提示词
+  - [__ai/meta/](/__ai/meta/): 确切概念的帮助文档定义
 - [README.md](/README.md): 项目描述文件
 - [AGENTS.md](/AGENTS.md): AI 代理记忆提示词
 - [.editorconfig](/.editorconfig): 编辑器配置文件
@@ -591,11 +591,11 @@ Avoid creating new files:
 - Cannot wrap file references in bold, will extremely distract attention
 
 ````xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples>
   <good-example description="正确的路径引用格式">
     ```md
-    [.ai/locale](/.ai/locale/): 当前项目映射的记忆提示词
+    [__ai/locale](/__ai/locale/): 当前项目映射的记忆提示词
     [src/utils](/src/utils/): 工具函数目录
     [README.md](/README.md): 项目描述文件
     ```
@@ -603,7 +603,7 @@ Avoid creating new files:
 
   <bad-example description="错误的路径引用格式">
     ```md
-    [.ai/locale/](/.ai/locale): 文件夹链接末尾不使用斜杠
+    [__ai/locale/](/__ai/locale): 文件夹链接末尾不使用斜杠
     /home/user/project/src/utils: 禁止使用绝对路径
     /c/project/home/user/project/src/utils: 禁止使用绝对路径
     [src/utils/](/src/utils/): 文件夹链接末尾不能有斜杠
@@ -612,7 +612,7 @@ Avoid creating new files:
 
   <bad-example description="加粗包裹文件引用（禁止）">
     ```md
-    **[.ai/locale](/.ai/locale/)**: 不得使用加粗包裹文件引用
+    **[__ai/locale](/__ai/locale/)**: 不得使用加粗包裹文件引用
     **[src/utils](/src/utils)**: 加粗会分散注意力
     **[README.md](/README.md)**: 禁止此格式
     ```
@@ -621,4 +621,4 @@ Avoid creating new files:
 ````
 
 ## Reference Meta Definitions
-Project under [.ai/meta/](/.ai/meta/) has some specific concept definitions, please refer to these definitions as authoritative.
+Project under [__ai/meta/](/__ai/meta/) has some specific concept definitions, please refer to these definitions as authoritative.
