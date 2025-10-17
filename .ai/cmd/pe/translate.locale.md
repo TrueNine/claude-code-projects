@@ -57,6 +57,7 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 ## [STEP-2] **准备目标路径**
 - ALWAYS 调用 `Bash(command: "mkdir -p <target_directory>")`，即便目录已存在也必须执行
 - ALWAYS 调用 `Bash(command: "rm -f <target_file>")` 清理旧文件，忽略任何删除错误
+- ALWAYS 调用 `TodoWrite` 工具记录完整的代办事项列表，并在任务执行过程中保持状态同步
 
 ## [STEP-3] **读取并翻译源文件**
 - 调用 `Read($1)` 获取源文件内容
