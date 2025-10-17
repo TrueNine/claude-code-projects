@@ -8,8 +8,8 @@ This document guides users through the first step of specification-driven develo
 
 # [STEP-1]: Preparation
 
-- Use `Search(pattern: ".ai/middle/spec/SPEC-1-REQUIREMENT.locale.md")` to check if `.ai/middle/spec/SPEC-1-REQUIREMENTS.locale.md` exists
-- If the file exists, use `Read(path: ".ai/middle/spec/SPEC-1-REQUIREMENT.locale.md")` to load content and provide a brief overview; otherwise use `Write(content: "")` to initialize an empty file
+- Use `Search(pattern: "__ai/middle/spec/SPEC-1-REQUIREMENT.locale.md")` to check if `__ai/middle/spec/SPEC-1-REQUIREMENTS.locale.md` exists
+- If the file exists, use `Read(path: "__ai/middle/spec/SPEC-1-REQUIREMENT.locale.md")` to load content and provide a brief overview; otherwise use `Write(content: "")` to initialize an empty file
 - Identify the user's preferred language represented by the first parameter `$1`, subsequent free text output defaults to this language; if the user specifies otherwise, follow the latest instructions
 - After completing the overview, invite the user to stay relaxed, use their imagination, and describe the ideal system completion form, then wait for user input to proceed to [STEP-2]
 
@@ -26,11 +26,11 @@ This document guides users through the first step of specification-driven develo
 - After user confirms completion, remind them to use `/translate` or other tools to translate the document into English, and record the translation link in `project/CLAUDE.md` to improve subsequent coding experience
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <good-example description="Actively encourage users to continue diverging" userInput="I want to create a system to help remote teams collaborate, but for now I just want to make communication smoother.">
     <tooling name="Update"
-             params:path=".ai/middle/spec/SPEC-1-REQUIREMENT.locale.md"
+             params:path="__ai/middle/spec/SPEC-1-REQUIREMENT.locale.md"
              description="Make remote team communication smoother" />
     Great starting point! I've recorded that. You can imagine what this system would look like when it's working perfectly, for example, how would team members collaborate throughout a day? Feel free to share any fragments that come to mind, and we'll organize them into structured points together.
   </good-example>
@@ -41,7 +41,7 @@ This document guides users through the first step of specification-driven develo
 
   <good-example description="Maintain friendly guidance when facing particularly vague inspirations" userInput="I want to do something cool, maybe something to help friends play games together? I haven't figured it out yet.">
     <tooling name="Update"
-             params:path=".ai/middle/SPEC-1-REQUIREMENT.locale.md"
+             params:path="__ai/middle/SPEC-1-REQUIREMENT.locale.md"
              description="Help friends play games together more smoothly" />
     That sounds interesting! I've noted down this goal for now. No need to rush into specific features, you can start with small annoyances you encounter when playing games, like voice communication, team formation processes, or activity scheduling. Share a few real scenarios, and I'll help you organize which ones are worth recording.
   </good-example>
@@ -80,7 +80,7 @@ When outputting requirements documentation, you must strictly follow the followi
 - Document type is fixed as "User Requirements Documentation"
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <example># mediacms User Requirements Documentation</example>
   <example># carshoping User Requirements Documentation</example>
@@ -103,7 +103,7 @@ This document records the detailed development requirements for developers devel
 - Length控制在 2-5 sentences
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <example description="MES system project example">
     ## Introduction
@@ -132,7 +132,7 @@ After a blank line, define the target user groups in the following format:
 - Avoid subjective evaluations or artistic expressions
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <good-example description="Manufacturing project">
     **Primary Persona:** Manufacturing employees, Manufacturing developers
@@ -174,7 +174,7 @@ Constraint type references (can be flexibly adjusted according to actual situati
 - Business factors: budget limitations, time requirements, return on investment, etc.
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <good-example description="Video project constraints">
     **Operational Constraints:**
@@ -217,7 +217,7 @@ After a blank line, add optional non-functional priority descriptions in the fol
 ```
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <good-example description="Clear non-functional priorities">
     **Non-Functional Priorities:**
@@ -274,7 +274,7 @@ After a blank line, add optional deferred scope descriptions in the following fo
 - Ordered list content should be written in `$1` language
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <good-example description="Video platform deferred features">
     **Deferred Scope:**
@@ -346,7 +346,7 @@ Then follows the core requirements list, which is the most important part of the
 - Avoid being too small (consider merging if fewer than 2 acceptance criteria)
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <good-example description="Complete user requirement">
     ### Requirement 3: User Work Management
@@ -437,7 +437,7 @@ If you need to identify requirement priorities, you can use markers after the nu
 - `[L]` - Low priority
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <example description="Priority marking example">
     ### Requirement 1[H]: User Authentication
@@ -448,7 +448,7 @@ If you need to identify requirement priorities, you can use markers after the nu
 ```
 
 ```xml
-<!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE example SYSTEM "/__ai/meta/example-schema.dtd" >
 <example description="Complete example: Online education platform requirements document">
   # EduPlatform User Requirements Documentation
 

@@ -11,33 +11,33 @@ color: blue
 
 | SOURCE FILE                                     | OUTPUT FILES                                                          |
 |-------------------------------------------------|-----------------------------------------------------------------------|
-| [.ai/locale/`**/*.locale.md`](/.ai/locale)      | `**/*.md`                                                             |
-| [.ai/locale/`**/AGENTS.locale.md`](/.ai/locale) | `/AGENTS.md`, `/CLAUDE.md`                                            |
-| [.ai/locale/`AGENTS.locale.md`](/.ai/locale)    | `AGENTS.md`, `CLAUDE.md`                                              |
-| [.ai/locale/`README.locale.md`](/.ai/locale)    | `README.md`                                                           |
-| [.ai/locale/`TODO.locale.md`](/.ai/locale)      | `TODO.md`                                                             |
-| [.ai/cmd/`**/*.locale.md`](/.ai/cmd)            | `.ai/out/.claude/commands/**/*.md`, `.claude/commands/**/*.md`        |
-| [.ai/agents/`**/*.locale.md`](/.ai/agents)      | `.ai/out/.claude/agents/**/*.md`, `.claude/agents/**/*.md`            |
-| [.ai/user/`**/*.locale.md`](/.ai/user)          | `.ai/out/global/**/*.md`, `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md` |
-| [.ai/meta/`**/*.locale.md`](/.ai/meta)          | `.ai/meta/**/*.md`                                                    |
+| [__ai/locale/`**/*.locale.md`](/__ai/locale)      | `**/*.md`                                                             |
+| [__ai/locale/`**/AGENTS.locale.md`](/__ai/locale) | `/AGENTS.md`, `/CLAUDE.md`                                            |
+| [__ai/locale/`AGENTS.locale.md`](/__ai/locale)    | `AGENTS.md`, `CLAUDE.md`                                              |
+| [__ai/locale/`README.locale.md`](/__ai/locale)    | `README.md`                                                           |
+| [__ai/locale/`TODO.locale.md`](/__ai/locale)      | `TODO.md`                                                             |
+| [__ai/cmd/`**/*.locale.md`](/__ai/cmd)            | `__ai/out/.claude/commands/**/*.md`, `.claude/commands/**/*.md`        |
+| [__ai/agents/`**/*.locale.md`](/__ai/agents)      | `__ai/out/.claude/agents/**/*.md`, `.claude/agents/**/*.md`            |
+| [__ai/user/`**/*.locale.md`](/__ai/user)          | `__ai/out/global/**/*.md`, `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md` |
+| [__ai/meta/`**/*.locale.md`](/__ai/meta)          | `__ai/meta/**/*.md`                                                    |
 
 When special path mappings don't match, apply the general rule: `filename.locale.extension -> filename.extension`.
 
-Where `<relative_path>` represents the directory structure after removing the `.ai/locale/` prefix from the source file.
+Where `<relative_path>` represents the directory structure after removing the `__ai/locale/` prefix from the source file.
 ```xml
-<!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
-<example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
+<!DOCTYPE example SYSTEM "/__ai/meta/example-schema.dtd">
+<example>__ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
 ```
 
 **Folder translation example**
 ```xml
-<!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE example SYSTEM "/__ai/meta/example-schema.dtd">
 <example description="Folder detected">
   <tooling name="Bash" params:command="find $1 -name \"*.locale.md\" wc -l" />
   I will translate concurrently...
-  <agent name="translate" message="Translate .ai/locale/arch/AGENTS.locale.md to [arch/AGENTS.md, arch/CLAUDE.md]" />
-  <agent name="translate" message="Translate .ai/locale/AGENTS.locale.md to [AGENTS.md, CLAUDE.md]" />
-  <agent name="translate" message="Translate .ai/locale/meta/example.locale.md to .ai/meta/example.md" />
+  <agent name="translate" message="Translate __ai/locale/arch/AGENTS.locale.md to [arch/AGENTS.md, arch/CLAUDE.md]" />
+  <agent name="translate" message="Translate __ai/locale/AGENTS.locale.md to [AGENTS.md, CLAUDE.md]" />
+  <agent name="translate" message="Translate __ai/locale/meta/example.locale.md to __ai/meta/example.md" />
 </example>
 ```
 
@@ -71,20 +71,20 @@ Where `<relative_path>` represents the directory structure after removing the `.
 - **Code integrity**: Keep code block content unchanged except translating comments, verify statement indentation is correct
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples description="File path conversion">
-  <example>.ai/cmd/pe/translate.locale.md -> [.ai/out/.claude/commands/pe/translate.md, .claude/commands/pe/translate.md]</example>
-  <example>.ai/cmd/pe/setup.locale.md -> [.ai/out/.claude/commands/pe/setup.md, .claude/commands/pe/setup.md]</example>
-  <example>.ai/agents/pe/translate.locale.md -> [.ai/out/.claude/agents/pe/translate.md, .claude/agents/pe/translate.md]</example>
-  <example>.ai/user/cc.locale.md -> [.ai/out/global/cc.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</example>
-  <example>.ai/user/USER_AGENTS.locale.md -> [.ai/out/global/USER_AGENTS.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</example>
-  <example>.ai/locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]</example>
-  <example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
-  <example>.ai/locale/README.locale.md -> README.md</example>
-  <example>.ai/locale/TODO.locale.md -> TODO.md</example>
-  <example>.ai/locale/.ai/cmd/AGENTS.locale.md -> [.ai/cmd/AGENTS.md, .ai/cmd/CLAUDE.md]</example>
-  <example>.ai/locale/meta/examples.locale.md -> .ai/meta/examples.md</example>
-  <example>.ai/locale/meta/prompt.locale.md -> .ai/meta/prompt.md</example>
-  <example>.ai/locale/meta/AGENTS.locale.md -> [.ai/meta/AGENTS.md, .ai/meta/CLAUDE.md]</example>
+  <example>__ai/cmd/pe/translate.locale.md -> [__ai/out/.claude/commands/pe/translate.md, .claude/commands/pe/translate.md]</example>
+  <example>__ai/cmd/pe/setup.locale.md -> [__ai/out/.claude/commands/pe/setup.md, .claude/commands/pe/setup.md]</example>
+  <example>__ai/agents/pe/translate.locale.md -> [__ai/out/.claude/agents/pe/translate.md, .claude/agents/pe/translate.md]</example>
+  <example>__ai/user/cc.locale.md -> [__ai/out/global/cc.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</example>
+  <example>__ai/user/USER_AGENTS.locale.md -> [__ai/out/global/USER_AGENTS.md, ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md]</example>
+  <example>__ai/locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]</example>
+  <example>__ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
+  <example>__ai/locale/README.locale.md -> README.md</example>
+  <example>__ai/locale/TODO.locale.md -> TODO.md</example>
+  <example>__ai/locale/__ai/cmd/AGENTS.locale.md -> [__ai/cmd/AGENTS.md, __ai/cmd/CLAUDE.md]</example>
+  <example>__ai/locale/meta/examples.locale.md -> __ai/meta/examples.md</example>
+  <example>__ai/locale/meta/prompt.locale.md -> __ai/meta/prompt.md</example>
+  <example>__ai/locale/meta/AGENTS.locale.md -> [__ai/meta/AGENTS.md, __ai/meta/CLAUDE.md]</example>
 </examples>
 ```

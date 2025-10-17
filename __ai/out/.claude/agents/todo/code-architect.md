@@ -140,7 +140,7 @@ If not worth doing:
 When you see code, immediately make a three-layer judgment:
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples description="Code review three-layer judgment examples">
   <good-example>
     【Taste Rating】
