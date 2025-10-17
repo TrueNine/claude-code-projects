@@ -8,6 +8,7 @@ Translate Chinese localization memory prompt file `$1` (.locale.md) to English m
 
 # Task Execution Workflow
 ## [STEP-0] **Handle Directory Input**
+- Extract parameter `$1` and optional parameter `$2` from `$ARGUMENTS`
 - WHEN `$1` points to a directory, first count the files in that directory that meet translation rules to ensure the translation scope is clear
 - WHEN `$1` ends with `/`, it can be directly recognized as a directory
 - Divide tasks by file and CALL `pe:translate` agent concurrently in a multi-threaded manner to avoid context pollution and reduce overall time consumption
