@@ -169,14 +169,14 @@ description: 优化 记忆提示词文件, 使得其记忆提示词文件让 "AI
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
 <examples>
   <good-example>
-    - [.docs/](/.docs)
-      - [prompts/](/.docs/prompts) - 提示词模板
-      - [user/](/.docs/user) - 全局用户提示词
-      - [project/](/.docs/project) - 项目级提示词
-      - [slashcommands/](/.docs/slashcommands) - 斜杠命令提示词
-      - [qa/](/.docs/qa) - 问答文档
-      - [references/](/.docs/references) - 技术参考文档
-      - [other/](/.docs/other) - 其他文档(构建, Git, 数据库等)
+    - [.docs/](/.docs/)
+      - [prompts/](/.docs/prompts/) - 提示词模板
+      - [user/](/.docs/user/) - 全局用户提示词
+      - [project/](/.docs/project/) - 项目级提示词
+      - [slashcommands/](/.docs/slashcommands/) - 斜杠命令提示词
+      - [qa/](/.docs/qa/) - 问答文档
+      - [references/](/.docs/references/) - 技术参考文档
+      - [other/](/.docs/other/) - 其他文档(构建, Git, 数据库等)
   </good-example>
 
   <bad-example description="使用树形结构图">
