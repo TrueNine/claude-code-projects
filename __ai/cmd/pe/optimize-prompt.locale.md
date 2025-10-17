@@ -66,7 +66,7 @@ description: 优化 记忆提示词文件, 使得其记忆提示词文件让 "AI
   - 使用结构化 `XML` 标签包裹示例, 方便解析与复用
   - 将示例置于 ` ````xml ... ```` ` 代码块中, 统一展示格式
   - 标签属性一律使用英文引号, 避免混用
-  - 严格复用 `.ai/meta/example-schema.dtd` 定义的标签名称和结构
+  - 严格复用 `__ai/meta/example-schema.dtd` 定义的标签名称和结构
 
 - **可用标签**
   - `<examples>`: 顶层容器, 用于组合同一主题的示例, 可直接作为根节点
@@ -94,7 +94,7 @@ description: 优化 记忆提示词文件, 使得其记忆提示词文件让 "AI
 
 
 ````xml
-<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples "/__ai/meta/example-schema.dtd">
 <examples description="处理 Result 的正误示例">
   <good-example>
     <thinking>直接返回 parse_data 结果, 让上层处理错误上下文</thinking>
@@ -166,7 +166,7 @@ description: 优化 记忆提示词文件, 使得其记忆提示词文件让 "AI
 - **清晰简洁**: 确保结构清晰易读, 避免过度复杂的表示方法
 
 ````xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples>
   <good-example>
     - [.docs/](/.docs/)
@@ -221,7 +221,7 @@ description: 优化 记忆提示词文件, 使得其记忆提示词文件让 "AI
 ### 标点符号使用示例
 
 ````xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples>
   <good-example description="使用英文标点符号">
     # Role: Code Review Assistant

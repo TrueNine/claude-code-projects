@@ -140,7 +140,7 @@ model: sonnet
 看到代码时，立即进行三层判断：
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples description="代码审查的三层判断示例">
   <good-example>
     【品味评分】

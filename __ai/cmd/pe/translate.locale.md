@@ -17,41 +17,41 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 
 ## [STEP-1] **解析输出路径**
 在查表前先规范源路径：
-- 若 `$1` 位于 `.ai/locale/` 下，务必先移除 `.ai/locale/` 前缀，得到 `<relative_path>`。任何目标路径禁止携带 `.ai/locale/` 前缀。
+- 若 `$1` 位于 `__ai/locale/` 下，务必先移除 `__ai/locale/` 前缀，得到 `<relative_path>`。任何目标路径禁止携带 `__ai/locale/` 前缀。
 - 使用 `<relative_path>` 与下表进行匹配；若命中特殊映射，按对应输出列表生成文件。
-- `AGENTS.locale.md` 系列始终基于 `<relative_path>` 生成成对文件，例如 `.ai/locale/deployment/AGENTS.locale.md -> [deployment/AGENTS.md, deployment/CLAUDE.md]`。
+- `AGENTS.locale.md` 系列始终基于 `<relative_path>` 生成成对文件，例如 `__ai/locale/deployment/AGENTS.locale.md -> [deployment/AGENTS.md, deployment/CLAUDE.md]`。
 
 **优先匹配特殊路径**，并依据下表生成目标文件：
 
 | SOURCE FILE                                           | OUTPUT FILES                                                   |
 |-------------------------------------------------------|----------------------------------------------------------------|
-| [.ai/locale/`**/*.locale.md`](/.ai/locale/)           | `**/*.md`                                                      |
-| [.ai/locale/`**/AGENTS.locale.md`](/.ai/locale/)      | `/**/AGENTS.md`, `/**/CLAUDE.md`                               |
-| [AGENTS.locale.md](/.ai/locale/AGENTS.locale.md)      | `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/project.mdc`          |
-| [README.locale.md](/.ai/locale/README.locale.md)      | `README.md`                                                    |
-| [TODO.locale.md](/.ai/locale/)                        | `TODO.md`                                                      |
-| [.ai/cmd/`**/*.locale.md`](/.ai/cmd/)                 | `.ai/out/.claude/commands/**/*.md`, `.claude/commands/**/*.md` |
-| [.ai/agents/`**/*.locale.md`](/.ai/agents/)           | `.ai/out/.claude/agents/**/*.md`, `.claude/agents/**/*.md`     |
-| [.ai/GLOBAL.locale.md](/.ai/GLOBAL.locale.md)         | `.ai/out/GLOBAL.md`                                            |
-| [.ai/locale/meta/`**/*.locale.md`](/.ai/locale/meta/) | `.ai/meta/**/*.md`                                             |
+| [__ai/locale/`**/*.locale.md`](/__ai/locale/)           | `**/*.md`                                                      |
+| [__ai/locale/`**/AGENTS.locale.md`](/__ai/locale/)      | `/**/AGENTS.md`, `/**/CLAUDE.md`                               |
+| [AGENTS.locale.md](/__ai/locale/AGENTS.locale.md)      | `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/project.mdc`          |
+| [README.locale.md](/__ai/locale/README.locale.md)      | `README.md`                                                    |
+| [TODO.locale.md](/__ai/locale/)                        | `TODO.md`                                                      |
+| [__ai/cmd/`**/*.locale.md`](/__ai/cmd/)                 | `__ai/out/.claude/commands/**/*.md`, `.claude/commands/**/*.md` |
+| [__ai/agents/`**/*.locale.md`](/__ai/agents/)           | `__ai/out/.claude/agents/**/*.md`, `.claude/agents/**/*.md`     |
+| [__ai/GLOBAL.locale.md](/__ai/GLOBAL.locale.md)         | `__ai/out/GLOBAL.md`                                            |
+| [__ai/locale/meta/`**/*.locale.md`](/__ai/locale/meta/) | `__ai/meta/**/*.md`                                             |
 
 当未命中特殊路径映射时，套用通用规则：`filename.locale.extension -> filename.extension`。
 
-其中 `<relative_path>` 表示源文件去除 `.ai/locale/` 前缀后的目录结构，后续所有输出路径均以 `<relative_path>` 为准。
+其中 `<relative_path>` 表示源文件去除 `__ai/locale/` 前缀后的目录结构，后续所有输出路径均以 `<relative_path>` 为准。
 ````xml
-<!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
-<example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
+<!DOCTYPE example SYSTEM "/__ai/meta/example-schema.dtd">
+<example>__ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
 ````
 
 **文件夹翻译示例**
 ````xml
-<!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE example SYSTEM "/__ai/meta/example-schema.dtd">
 <example description="识别到文件夹">
   <tooling name="Bash" params:command="find $1 -name \"*.locale.md\" wc -l" />
   我将并发翻译...
-  <agent name="translate" message="Translate .ai/locale/arch/AGENTS.locale.md to [arch/AGENTS.md, arch/CLAUDE.md]" />
-  <agent name="translate" message="Translate .ai/locale/AGENTS.locale.md to [AGENTS.md, CLAUDE.md]" />
-  <agent name="translate" message="Translate .ai/locale/meta/example.locale.md to .ai/meta/example.md" />
+  <agent name="translate" message="Translate __ai/locale/arch/AGENTS.locale.md to [arch/AGENTS.md, arch/CLAUDE.md]" />
+  <agent name="translate" message="Translate __ai/locale/AGENTS.locale.md to [AGENTS.md, CLAUDE.md]" />
+  <agent name="translate" message="Translate __ai/locale/meta/example.locale.md to __ai/meta/example.md" />
 </example>
 ````
 
@@ -104,7 +104,7 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
   - ALWAYS：总是关键词
 
 ````xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples description="大写关键词翻译">
   <good-example description="正确使用全大写关键词">
     IF the user provides a file path, THEN read the file content.
@@ -131,19 +131,19 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 ````
 
 ````xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples description="文件路径转换">
-  <example>.ai/cmd/pe/translate.locale.md -> [.ai/out/.claude/commands/pe/translate.md, .claude/commands/pe/translate.md]</example>
-  <example>.ai/cmd/pe/setup.locale.md -> [.ai/out/.claude/commands/pe/setup.md, .claude/commands/pe/setup.md]</example>
-  <example>.ai/agents/pe/translate.locale.md -> [.ai/out/.claude/agents/pe/translate.md, .claude/agents/pe/translate.md]</example>
-  <example>.ai/GLOBAL.locale.md -> .ai/out/GLOBAL.md</example>
-  <example>.ai/locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]</example>
-  <example>.ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
-  <example>.ai/locale/README.locale.md -> README.md</example>
-  <example>.ai/locale/TODO.locale.md -> TODO.md</example>
-  <example>.ai/locale/.ai/cmd/AGENTS.locale.md -> [.ai/cmd/AGENTS.md, .ai/cmd/CLAUDE.md]</example>
-  <example>.ai/locale/meta/examples.locale.md -> .ai/meta/examples.md</example>
-  <example>.ai/locale/meta/prompt.locale.md -> .ai/meta/prompt.md</example>
-  <example>.ai/locale/meta/AGENTS.locale.md -> [.ai/meta/AGENTS.md, .ai/meta/CLAUDE.md]</example>
+  <example>__ai/cmd/pe/translate.locale.md -> [__ai/out/.claude/commands/pe/translate.md, .claude/commands/pe/translate.md]</example>
+  <example>__ai/cmd/pe/setup.locale.md -> [__ai/out/.claude/commands/pe/setup.md, .claude/commands/pe/setup.md]</example>
+  <example>__ai/agents/pe/translate.locale.md -> [__ai/out/.claude/agents/pe/translate.md, .claude/agents/pe/translate.md]</example>
+  <example>__ai/GLOBAL.locale.md -> __ai/out/GLOBAL.md</example>
+  <example>__ai/locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]</example>
+  <example>__ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
+  <example>__ai/locale/README.locale.md -> README.md</example>
+  <example>__ai/locale/TODO.locale.md -> TODO.md</example>
+  <example>__ai/locale/__ai/cmd/AGENTS.locale.md -> [__ai/cmd/AGENTS.md, __ai/cmd/CLAUDE.md]</example>
+  <example>__ai/locale/meta/examples.locale.md -> __ai/meta/examples.md</example>
+  <example>__ai/locale/meta/prompt.locale.md -> __ai/meta/prompt.md</example>
+  <example>__ai/locale/meta/AGENTS.locale.md -> [__ai/meta/AGENTS.md, __ai/meta/CLAUDE.md]</example>
 </examples>
 ````

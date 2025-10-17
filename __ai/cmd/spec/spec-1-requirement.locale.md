@@ -8,8 +8,8 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 
 # [STEP-1]: 准备工作
 
-- 使用 `Search(pattern: ".ai/middle/spec/SPEC-1-REQUIREMENT.locale.md")` 检查 `.ai/middle/spec/SPEC-1-REQUIREMENTS.locale.md` 是否存在
-- 如果文件存在则使用 `Read(path: ".ai/middle/spec/SPEC-1-REQUIREMENT.locale.md")` 载入内容并输出简明概述；否则使用 `Write(content: "")` 初始化一个空文件
+- 使用 `Search(pattern: "__ai/middle/spec/SPEC-1-REQUIREMENT.locale.md")` 检查 `__ai/middle/spec/SPEC-1-REQUIREMENTS.locale.md` 是否存在
+- 如果文件存在则使用 `Read(path: "__ai/middle/spec/SPEC-1-REQUIREMENT.locale.md")` 载入内容并输出简明概述；否则使用 `Write(content: "")` 初始化一个空文件
 - 识别第一个参数 `$1` 所代表的用户首选语言，后续自由文本输出默认使用该语言；若用户另有指定，以最新指示为准
 - 在完成概述后，邀请用户保持放松、发挥想象，描绘理想的系统完成形态，然后等待用户输入第一次想法以进入 [STEP-2]
 
@@ -26,11 +26,11 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - 用户确认完成后，提醒其使用 `/translate` 或其他工具将文档翻译为英文，并把译文外链记录在 `project/CLAUDE.md` 以提升后续编码体验
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <good-example description="积极鼓励用户继续发散" userInput="我想做一个帮助远程团队协作的系统，但暂时只想到要让大家沟通更顺畅。">
     <tooling name="Update"
-             params:path=".ai/middle/spec/SPEC-1-REQUIREMENT.locale.md"
+             params:path="__ai/middle/spec/SPEC-1-REQUIREMENT.locale.md"
              description="让远程团队沟通更顺畅" />
     很棒的初衷！记录好了。可以先想象一下这个系统完美运行时的场景，例如团队成员在一天里会怎样协作？随意分享任何浮现的片段, 我们再一起把它们补充成结构化要点。
   </good-example>
@@ -41,7 +41,7 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 
   <good-example description="面对特别模糊的灵感仍保持友好引导" userInput="就想做点酷的，可能是个帮朋友们玩游戏的东西？我还没想明白呢。">
     <tooling name="Update"
-             params:path=".ai/middle/SPEC-1-REQUIREMENT.locale.md"
+             params:path="__ai/middle/SPEC-1-REQUIREMENT.locale.md"
              description="帮朋友们更顺利地一起玩游戏" />
     听起来很有趣！已经先记下这个目标。暂时不用急着定具体功能，可以先从你们玩游戏时遇到的小烦恼入手，比如语音沟通、组队流程或活动安排。随便说几个真实场景，我来帮你梳理哪些值得记录。
   </good-example>
@@ -80,7 +80,7 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - 文档类型固定为 "User Requirements Documentation"
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <example># mediacms User Requirements Documentation</example>
   <example># carshoping User Requirements Documentation</example>
@@ -103,7 +103,7 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - 长度控制在 2-5 句话内
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <example description="MES 系统项目示例">
     ## Introduction
@@ -132,7 +132,7 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - 避免主观评价或艺术化表达
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <good-example description="制造业项目">
     **Primary Persona:** 制造业员工、制造业开发者
@@ -174,7 +174,7 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - 商业因素：预算限制、时间要求、投资回报等
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <good-example description="视频类项目约束">
     **Operational Constraints:**
@@ -217,7 +217,7 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 ```
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <good-example description="明确的非功能性优先级">
     **Non-Functional Priorities:**
@@ -274,7 +274,7 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - 有序列表内容使用 `$1` 语言进行书写
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <good-example description="视频平台后续功能">
     **Deferred Scope:**
@@ -346,7 +346,7 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - 避免过小（少于 2 条验收标准需考虑合并）
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <good-example description="完整的用户需求">
     ### Requirement 3: 用户作品管理
@@ -437,7 +437,7 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 - `[L]` - Low priority（低优先级）
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd" >
 <examples>
   <example description="优先级标记示例">
     ### Requirement 1[H]: 用户认证
@@ -448,7 +448,7 @@ description: 渐进式引导用户以指定语言完成规范驱动开发第一�
 ```
 
 ```xml
-<!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd" >
+<!DOCTYPE example SYSTEM "/__ai/meta/example-schema.dtd" >
 <example description="完整示例：在线教育平台需求文档">
   # EduPlatform User Requirements Documentation
 

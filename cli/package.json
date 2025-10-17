@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "type": "module",
   "packageManager": "pnpm@10.18.2",
-  "description": "Agent CLI Prompt Management Solution - Initialize and manage .ai/ prompt repositories",
+  "description": "Agent CLI Prompt Management Solution - Initialize and manage __ai/ prompt repositories",
   "author": "truenine",
   "license": "LGPL-3.0-or-later",
   "keywords": [

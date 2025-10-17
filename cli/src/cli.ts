@@ -21,7 +21,7 @@ program
 // Initialize command
 program
   .command('init')
-  .description('Initialize a new .ai/ repository')
+  .description('Initialize a new __ai/ repository')
   .option('-f, --force', 'Force overwrite existing files')
   .option('-t, --template <template>', 'Use specific template')
   .option('--use-rust', 'Use Rust core engine for initialization')
@@ -29,7 +29,7 @@ program
     if (options.useRust) {
       await runRustCommand(['init', options.force ? '--force' : '', options.template ? `--template ${options.template}` : ''].filter(Boolean))
     } else {
-      console.log(chalk.blue('🚀 Initializing .ai/ repository...'))
+      console.log(chalk.blue('🚀 Initializing __ai/ repository...'))
       // TODO: Implement TypeScript initialization logic
       console.log(chalk.green('✅ Repository initialized successfully!'))
     }
