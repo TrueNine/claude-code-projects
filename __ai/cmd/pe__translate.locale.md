@@ -23,15 +23,15 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 
 **优先匹配特殊路径**，并依据下表生成目标文件：
 
-| SOURCE FILE                                           | OUTPUT FILES                                                   |
-|-------------------------------------------------------|----------------------------------------------------------------|
-| [__ai/locale/`**/*.locale.md`](/__ai/locale/)           | `**/*.md`                                                      |
-| [__ai/locale/`**/AGENTS.locale.md`](/__ai/locale/)      | `/**/AGENTS.md`, `/**/CLAUDE.md`                               |
-| [AGENTS.locale.md](/__ai/locale/AGENTS.locale.md)      | `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/project.mdc`          |
-| [README.locale.md](/__ai/locale/README.locale.md)      | `README.md`                                                    |
-| [TODO.locale.md](/__ai/locale/)                        | `TODO.md`                                                      |
-| [__ai/cmd/`**/*.locale.md`](/__ai/cmd/)                 | `__ai/out/.claude/commands/**/*.md`, `.claude/commands/**/*.md` |
-| [__ai/agents/`**/*.locale.md`](/__ai/agents/)           | `__ai/out/.claude/agents/**/*.md`, `.claude/agents/**/*.md`     |
+| SOURCE FILE                                             | OUTPUT FILES                                                    |
+|---------------------------------------------------------|-----------------------------------------------------------------|
+| [__ai/locale/`**/*.locale.md`](/__ai/locale/)           | `**/*.md`                                                       |
+| [__ai/locale/`**/AGENTS.locale.md`](/__ai/locale/)      | `/**/AGENTS.md`, `/**/CLAUDE.md`                                |
+| [AGENTS.locale.md](/__ai/locale/AGENTS.locale.md)       | `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/project.mdc`           |
+| [README.locale.md](/__ai/locale/README.locale.md)       | `README.md`                                                     |
+| [TODO.locale.md](/__ai/locale/)                         | `TODO.md`                                                       |
+| [__ai/cmd/`**/*.locale.md`](/__ai/cmd/)                 | `__ai/out/.claude/commands/**/*.md`                             |
+| [__ai/agents/`**/*.locale.md`](/__ai/agents/)           | `__ai/out/.claude/agents/**/*.md`                               |
 | [__ai/GLOBAL.locale.md](/__ai/GLOBAL.locale.md)         | `__ai/out/GLOBAL.md`                                            |
 | [__ai/locale/meta/`**/*.locale.md`](/__ai/locale/meta/) | `__ai/meta/**/*.md`                                             |
 
@@ -133,9 +133,9 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 ````xml
 <!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples description="文件路径转换">
-  <example>__ai/cmd/pe/translate.locale.md -> [__ai/out/.claude/commands/pe/translate.md, .claude/commands/pe/translate.md]</example>
-  <example>__ai/cmd/pe/setup.locale.md -> [__ai/out/.claude/commands/pe/setup.md, .claude/commands/pe/setup.md]</example>
-  <example>__ai/agents/pe/translate.locale.md -> [__ai/out/.claude/agents/pe/translate.md, .claude/agents/pe/translate.md]</example>
+  <example>__ai/cmd/pe/translate.locale.md -> __ai/out/.claude/commands/pe/translate.md</example>
+  <example>__ai/cmd/pe/setup.locale.md -> __ai/out/.claude/commands/pe/setup.md</example>
+  <example>__ai/agents/pe/translate.locale.md -> __ai/out/.claude/agents/pe/translate.md</example>
   <example>__ai/GLOBAL.locale.md -> __ai/out/GLOBAL.md</example>
   <example>__ai/locale/AGENTS.locale.md -> [AGENTS.md, CLAUDE.md]</example>
   <example>__ai/locale/templates/AGENTS.locale.md -> [templates/AGENTS.md, templates/CLAUDE.md]</example>
