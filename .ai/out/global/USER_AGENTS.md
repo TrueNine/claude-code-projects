@@ -41,40 +41,20 @@
 
 
 
+
 # Code Quality Standards
 
 ## Unified Format Standards
-- Indentation: Fixed `2 spaces`.
-- Encoding: `UTF-8`.
-- Line ending: `LF`.
+- Follow project under [.idea/codeStyles/Project.xml](/.idea/codeStyles/Project.xml) configuration
 - Follow project under [.editorconfig](/.editorconfig) configuration
-
-````xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
-<examples>
-  <good-example description="2 space indentation">
-    ```rust
-    fn main() {
-      println!("Hello World");
-    }
-    ```
-  </good-example>
-
-  <bad-example description="4 space indentation causes format error">
-    ```rust
-    fn main() {
-        println!("Hello World");
-    }
-    ```
-  </bad-example>
-</examples>
-````
 
 
 
 
 ## File Naming Conventions
-- File name priority order: `PascalCase` or `camelCase` -> `snake_case` -> avoid `kebab-case` (unless language requires).
+- File name priority: `PascalCase` naming or `camelCase` naming
+- Secondary option: `snake_case` naming
+- Avoid `kebab-case`.
 
 ````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
@@ -83,7 +63,7 @@
     <tooling name="Create" params:name="UserAccount.ts"/>
     <tooling name="Create" params:name="UserProfile.tsx"/>
   </good-example>
-  <good-example description="Utility files use camelCase">
+  <good-example description="Tool files use camelCase">
     <tooling name="Create" params:name="userUtils.ts" />
     <tooling name="Create" params:name="apiClient.js" />
   </good-example>
@@ -253,7 +233,6 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
 ````
 
 
-
 # Development Principles and Constraints
 
 ## Language Strategy
@@ -279,16 +258,16 @@ Require use of `guard clause` and `early return` to reduce nesting levels.
              params:pattern="auth" />
     <tooling name="Read"
              params:path="AuthService" />
-    选择扩展现有组件, 避免重造轮子:
+    Choose to extend existing components, avoid reinventing the wheel:
 
     ```rust
-    // 扩展现有 AuthService
+    // Extend existing AuthService
     impl AuthService {
       pub async fn login(&self, credentials: LoginCredentials) -> Result<AuthResult, AuthError> {
         // ... existing implementation
       }
 
-      // 新增多因素认证能力
+      // Add multi-factor authentication capability
       pub async fn enable_two_factor(&self, user_id: &str) -> Result<TwoFactorSetup, AuthError> {
         let user = self.validate_user(user_id).await?;
         self.setup_two_factor(&user).await
@@ -341,18 +320,18 @@ Avoid creating new files:
 <examples>
   <good-example description="Extend functionality within existing files"
                user-input="添加一个新的工具函数来格式化日期">
-    将日期格式化函数合并进现有工具文件。
+    Merge date formatting function into existing tool file.
     <tooling name="Update"
              params:path="src/utils/helpers.rs" />
     ```rust
     use chrono::{DateTime, Local};
 
-    // 在 helpers.rs 中新增函数
+    // Add new function in helpers.rs
     pub fn format_date(date: DateTime<Local>, format: &str) -> String {
       date.format(format).to_string()
     }
 
-    // 保持与现有函数风格一致
+    // Maintain consistent style with existing functions
     pub fn format_currency(amount: f64) -> String { /* ... */ "".to_string() }
     pub fn format_phone_number(phone: &str) -> String { /* ... */ "".to_string() }
     ```
@@ -360,10 +339,10 @@ Avoid creating new files:
 
   <bad-example description="Unnecessarily creating new files"
               user-input="添加一个新的工具函数来格式化日期">
-    不必要地拆出新文件:
+    Unnecessarily split into new file:
     <tooling name="Write"
              params:path="src/utils/date_utils.rs"
-             description="不必要的文件创建" />
+             description="Unnecessary file creation" />
     ```rust
     use chrono::{DateTime, Local};
 
@@ -460,11 +439,11 @@ Avoid creating new files:
     ```rust
     fn validate_config(config: &Config) {
       if config.timeout < 1000 {
-        // 镇压警告 - 禁止
+        // Suppress warning - prohibited
         // println!("Warning: timeout is very short");
       }
 
-      // 未告知调用者潜在问题
+      // Not informing caller of potential issues
     }
     ```
   </bad-example>
@@ -543,7 +522,7 @@ Avoid creating new files:
 <examples>
   <good-example description="Comprehensively execute verification process"
                user-input="帮我修复这个登录功能的bug">
-    修复后执行完整验证。
+    Execute complete verification after fix.
     <tooling name="Bash" params:command="diagnostic">
       Run project-defined diagnostic command to surface syntax issues
     </tooling>
@@ -553,21 +532,22 @@ Avoid creating new files:
     <tooling name="Bash" params:command="manual login flow">
       Drive a manual login flow check via Bash to confirm behaviour
     </tooling>
-    全部验证通过:
+    All verifications passed:
 
-    - ✅ 无语法或类型错误。
-    - ✅ `cargo test` 全绿。
-    - ✅ 手测登录流程正常。
+    - ✅ No syntax or type errors.
+    - ✅ `cargo test` all green.
+    - ✅ Manual login flow normal.
 
-    登录问题已修复并验证。
+    Login issue fixed and verified.
   </good-example>
 
   <bad-example description="Claiming completion without verification"
              userInput="帮我修复这个登录功能的bug">
-    未验证即声称修复完成, 违规。
+    Claiming fix completed without verification, violation.
   </bad-example>
 </examples>
 ````
+
 
 
 
@@ -590,16 +570,16 @@ Avoid creating new files:
 <!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
 <example description="使用 md 代码块的嵌套文件列表而不是树形结构">
 ```md
-- [.ai](/.ai/) - AI Agent 工程目录，类似于 src 的源提示词工作目录
-  - [.ai/locale/](/.ai/locale/) - 当前项目映射的记忆提示词
-  - [.ai/user/](/.ai/user/) - 全局用户记忆提示词
-  - [.ai/project/](/.ai/project/) - 项目级别记忆提示词
-  - [.ai/cmd/](/.ai/cmd/) - 自定义命令提示词
-  - [.ai/agents/](/.ai/agents/) - 子代理提示词
-  - [.ai/meta/](/.ai/meta/) - 确切概念的帮助文档定义
-- [README.md](/README.md) - 项目描述文件
-- [AGENTS.md](/AGENTS.md) - AI 代理记忆提示词
-- [.editorconfig](/.editorconfig) - 编辑器配置文件
+- [.ai](/.ai/): AI Agent 工程目录，类似于 src 的源提示词工作目录
+  - [.ai/locale/](/.ai/locale/): 当前项目映射的记忆提示词
+  - [.ai/user/](/.ai/user/): 全局用户记忆提示词
+  - [.ai/project/](/.ai/project/): 项目级别记忆提示词
+  - [.ai/cmd/](/.ai/cmd/): 自定义命令提示词
+  - [.ai/agents/](/.ai/agents/): 子代理提示词
+  - [.ai/meta/](/.ai/meta/): 确切概念的帮助文档定义
+- [README.md](/README.md): 项目描述文件
+- [AGENTS.md](/AGENTS.md): AI 代理记忆提示词
+- [.editorconfig](/.editorconfig): 编辑器配置文件
 ```
 </example>
 ````
@@ -615,26 +595,26 @@ Avoid creating new files:
 <examples>
   <good-example description="正确的路径引用格式">
     ```md
-    [.ai/locale](/.ai/locale/) - 当前项目映射的记忆提示词
-    [src/utils](/src/utils/) - 工具函数目录
-    [README.md](/README.md) - 项目描述文件
+    [.ai/locale](/.ai/locale/): 当前项目映射的记忆提示词
+    [src/utils](/src/utils/): 工具函数目录
+    [README.md](/README.md): 项目描述文件
     ```
   </good-example>
 
   <bad-example description="错误的路径引用格式">
     ```md
-    [.ai/locale/](/.ai/locale) - 文件夹链接末尾不使用斜杠
-    /home/user/project/src/utils - 禁止使用绝对路径
-    /c/project/home/user/project/src/utils - 禁止使用绝对路径
-    [src/utils/](/src/utils/) - 文件夹链接末尾不能有斜杠
+    [.ai/locale/](/.ai/locale): 文件夹链接末尾不使用斜杠
+    /home/user/project/src/utils: 禁止使用绝对路径
+    /c/project/home/user/project/src/utils: 禁止使用绝对路径
+    [src/utils/](/src/utils/): 文件夹链接末尾不能有斜杠
     ```
   </bad-example>
 
   <bad-example description="加粗包裹文件引用（禁止）">
     ```md
-    **[.ai/locale](/.ai/locale/)** - 不得使用加粗包裹文件引用
-    **[src/utils](/src/utils)** - 加粗会分散注意力
-    **[README.md](/README.md)** - 禁止此格式
+    **[.ai/locale](/.ai/locale/)**: 不得使用加粗包裹文件引用
+    **[src/utils](/src/utils)**: 加粗会分散注意力
+    **[README.md](/README.md)**: 禁止此格式
     ```
   </bad-example>
 </examples>
