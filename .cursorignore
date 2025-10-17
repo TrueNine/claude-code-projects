@@ -1,2 +1,11 @@
-.ai/out/
+CLAUDE.md
+AGENTS.md
+**/*.db
+attachments/**
+.ai/locale/**
+.ai/out/**
+.ai/source/**
 .claude/
+
+
+## others
