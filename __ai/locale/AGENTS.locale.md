@@ -34,6 +34,7 @@
   - [cmd/](/__ai/cmd/) - 自定义命令提示词
   - [agents/](/__ai/agents/) - 子代理提示词
   - [meta/](/__ai/meta/) - 可参考提示词编写标准
+- [__projects_prompts__](/__projects_prompts__/): 用户用于管理编译生成提示词的特殊目录，原始提示词多以中文维护，再按领域需求编译成英文文件。该目录内容通常不随日常编码交付以保持仓库结构整洁。
 - [cli/](/cli/) - 命令行工具
   - [rust/](/cli/rust/) - rust 核心工具
 - [hooks/](/hooks/) - 钩子脚本
