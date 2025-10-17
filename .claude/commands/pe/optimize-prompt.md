@@ -64,7 +64,7 @@ description: Optimize memory prompt files to improve readability for AI agents a
   - Use structured `XML` tags to wrap examples for easy parsing and reuse
   - Place examples in ` ```xml ... ``` ` code blocks for unified display format
   - Tag attributes must use English quotes, avoid mixing
-  - Strictly reuse tag names and structures defined in `.ai/meta/example-schema.dtd`
+  - Strictly reuse tag names and structures defined in `__ai/meta/example-schema.dtd`
 
 - **Available Tags**
   - `<examples>`: Top-level container for grouping examples of the same theme, can be used as root node directly
@@ -92,7 +92,7 @@ description: Optimize memory prompt files to improve readability for AI agents a
 
 
 ```xml
-<!DOCTYPE examples "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples "/__ai/meta/example-schema.dtd">
 <examples description="Correct and incorrect examples for handling Result">
   <good-example>
     <thinking>Directly return parse_data result, let upper layer handle error context</thinking>
@@ -164,7 +164,7 @@ description: Optimize memory prompt files to improve readability for AI agents a
 - **Clear and Concise**: Ensure structure is clear and readable, avoid overly complex representation methods
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples>
   <good-example>
     - [.docs/](/.docs)
@@ -219,7 +219,7 @@ description: Optimize memory prompt files to improve readability for AI agents a
 ### Punctuation Usage Examples
 
 ```xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
+<!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples>
   <good-example description="Using English punctuation">
     # Role: Code Review Assistant

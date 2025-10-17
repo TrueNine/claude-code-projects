@@ -18,7 +18,7 @@ description: Synchronize current file content with latest public standards and u
 2. Confirm current file path and type; if not a supported prompt or configuration file, record the reason and stop.
 
 ### STEP-1 Standard Extraction
-1. Use `Read` or `Glob` to locate the standard file corresponding to `$1`; if multiple versions exist, prioritize the one with the latest timestamp or marked as the latest version in `/.ai/meta/` or `/.ai/cmd/pe/`.
+1. Use `Read` or `Glob` to locate the standard file corresponding to `$1`; if multiple versions exist, prioritize the one with the latest timestamp or marked as the latest version in `/__ai/meta/` or `/__ai/cmd/pe/`.
 2. Extract mandatory items, prohibited items, and format requirements from the standard to form an executable checklist.
 
 ### STEP-2 User Requirement Analysis
