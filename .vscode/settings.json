@@ -1,22 +1,7 @@
 {
   "explorer.excludeGitIgnore": true,
   "files.exclude": {
-    "**/.gradle": true,
-    "**/build": true,
-    "**/build-cache": true,
-    "**/generated": true,
-    "**/.generated": true,
-    "**/.xcodemap": true,
-    "**/logs": true,
-    "**/.logs": true,
-    "**/*.log": true,
-    "**/.intellijPlatform": true,
-    "**/node_modules": true,
-    "**/.obsidian": true,
-    "**/.claude": true,
-    "**/.cursor": true,
     "**/.playwright-mcp": true,
-    "**/.mcp.json": true,
     "**/pnpm-lock.yaml": true,
     "**/.env": true
   },
