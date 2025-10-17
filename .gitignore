@@ -41,5 +41,9 @@ __ai/
 __aiissues/
 AGENTS.md
 CLAUDE.md
+.claude/
+.cursor/
+.factory/
+.cursorignore
 
 nul
