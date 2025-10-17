@@ -1,66 +1,66 @@
-# Agent CLI Prompt Management Solution
+# Agent CLI Prompt Management Plan
 
 ## Project Positioning
-- Provide `npx -y @truenine/agent-cli` entry point for quick initialization or updates of `__ai/` prompt repositories, with user experience similar to `pnpm create vite`.
-- All core capabilities are implemented in Rust, with TypeScript responsible only for parameter parsing and scheduling, ensuring performance and multi-platform consistency.
-- Cover three types of content: memory prompts, sub-agent prompts, and shortcut command prompts, keeping the `__ai/` directory prompt system centralized and controllable.
+- Provide the `npx -y @truenine/agent-cli` entry to quickly initialize or update the `__ai/` prompt repository with an experience similar to `pnpm create vite`.
+- Implement all core capabilities in Rust while TypeScript only handles argument parsing and orchestration to ensure performance and cross-platform consistency.
+- Cover memory prompts, sub-agent prompts, and shortcut command prompts so the prompt system under the `__ai/` directory stays centralized and controllable.
 
 ## User Scenarios
-- **Initialization**: One-time generation of `__ai/` directory structure, creating example memory, sub-agent, and cmd prompts, configuring multi-platform usable scripts.
-- **Update**: Detect repository status, apply latest templates or snippets, replace outdated files, preserve backups.
-- **Cleanup**: Identify invalid prompts and safely delete them, avoiding interference with team collaboration from stale content.
-- **Sync**: Execute `npx -y @truenine/agent-cli sync` to push latest prompts to Codex and Claude Code usage scenarios.
+- Initialization: Generate the `__ai/` directory structure in one go, create sample memory, sub-agent, and cmd prompts, and configure scripts usable across platforms.
+- Update: Detect repository status, apply the latest templates or snippets, replace outdated files, and keep backups.
+- Cleanup: Identify invalid prompts and remove them safely to keep outdated content from disrupting team collaboration.
+- Synchronization: RUN `npx -y @truenine/agent-cli sync` to push the latest prompts to Codex and Claude Code usage scenarios.
 
-## Technology Stack
-- **TypeScript (Entry Layer)**: Managed using `pnpm`, providing minimal CLI startup and parameter collection.
-- **Rust (Core Engine)**: Responsible for file scanning, difference analysis, writing, rollback, platform detection, exposed to TypeScript through `napi-rs`.
-- **Target Platforms**: macOS (universal), Linux (x64, arm64), Windows (x64).
+## Tech Stack
+- TypeScript (entry layer): Managed with `pnpm`, provides the minimal CLI bootstrap and parameter collection.
+- Rust (core engine): Handles file scanning, diff analysis, writing, rollback, and platform detection, exposed to TypeScript through `napi-rs`.
+- Target platforms: macOS (universal), Linux (x64, arm64), Windows (x64).
 
 ## Architecture
-- **CLI Frontend (TS)**: Parse subcommands like `init`, `update`, `compose`, `prune`, `sync`, forwarding requests to Rust.
-- **Orchestrator (Rust)**: Execute template composition, validation, cleanup according to commands, output unified event logs.
-- **Storage Manager (Rust)**: Maintain `__ai/` directory tree and prompt index, supporting snapshots, rollbacks, atomic writes.
-- **Template Registry (Rust)**: Built-in standard snippets and metadata, facilitating future remote repository integration.
+- CLI Frontend (TS): Parses subcommands such as `init`, `update`, `compose`, `prune`, and `sync`, then forwards requests to Rust.
+- Orchestrator (Rust): Executes template composition, validation, and cleanup based on the command and outputs unified event logs.
+- Storage Manager (Rust): Maintains the `__ai/` directory tree and prompt index, supporting snapshots, rollback, and atomic writes.
+- Template Registry (Rust): Bundles standard snippets and metadata, making it easier to introduce remote repositories later.
 
 ## Command Design
 - `agent-cli init`
-  - Generate `__ai/locale`, `__ai/user`, `__ai/project`, `__ai/cmd`, `__ai/sa` and other directories
-  - Inject example memory prompts, sub-agent scripts, shortcut command templates
-  - Create `agents.prompts.json` to record structure version
+  - Generate the `__ai/locale`, `__ai/user`, `__ai/project`, `__ai/cmd`, `__ai/sa`, and other directories.
+  - Inject sample memory prompts, sub-agent scripts, and shortcut command templates.
+  - Create `agents.prompts.json` to record the structure version.
 - `agent-cli compose <type>`
-  - `type` supports `memory | sub-agent | cmd`
-  - Rust reads snippet repository, interactively composes and writes to target files
+  - `type` supports `memory | sub-agent | cmd`.
+  - Rust reads the snippet repository, composes content interactively, and writes it to the target file.
 - `agent-cli update`
-  - Compare current version with template repository, apply incremental updates, automatically replace old prompts and write changelog
+  - Compare the current version with the template repository, apply incremental updates, automatically replace outdated prompts, and write a changelog.
 - `agent-cli prune`
-  - Scan `__ai/` for orphaned prompts, delete after confirmation
+  - Scan for orphaned prompts under `__ai/`, prompt for confirmation, and delete them.
 - `agent-cli sync`
-  - Core command: Supports `npx -y @truenine/agent-cli sync` to one-time launch CLI, merge local changes and sync to shared paths
+  - Core command: RUN `npx -y @truenine/agent-cli sync` to start the CLI, merge local changes, and synchronize them to the shared path.
 
-## File Specifications
-- **Memory Prompts**: `__ai/locale/**/*.locale.md`, `__ai/user/**/*.md`, `__ai/project/**/*.md`
-- **Sub-agent Prompts**: `__ai/sa/**/*.md`
-- **Shortcut Command Prompts**: `__ai/cmd/**/*.md`
-- **Configuration File**: `agents.prompts.json` describes directory mapping, template versions, platform support
-- **Backups**: `.agents/backups/<timestamp>/` saves pre-update state, supports `agent-cli rollback <timestamp>`
+## File Conventions
+- Memory prompts: `__ai/locale/**/*.locale.md`, `__ai/user/**/*.md`, `__ai/project/**/*.md`
+- Sub-agent prompts: `__ai/sa/**/*.md`
+- Shortcut command prompts: `__ai/cmd/**/*.md`
+- Configuration file: `agents.prompts.json` describes directory mappings, template versions, and platform support.
+- Backups: `.agents/backups/<timestamp>/` saves the state before updates and supports `agent-cli rollback <timestamp>`.
 
 ## Workflow
-- **Install Dependencies**: `pnpm install`, Rust dependencies managed through `cargo`
-- **Development Mode**: `pnpm dev` starts TypeScript watcher, `cargo watch -x "test" -x "build"` monitors core engine
-- **Quality Assurance**: `pnpm lint`, `pnpm test`, `cargo fmt --check`, `cargo clippy -- -D warnings`, `cargo test`
-- **Release**: Rust compiles cross-platform binaries, TypeScript retains lightweight entry, published through npm as `@truenine/agent-cli`
+- Install dependencies: `pnpm install`; Rust dependencies are managed through `cargo`.
+- Development mode: RUN `pnpm dev` to start the TypeScript watcher and RUN `cargo watch -x "test" -x "build"` to monitor the core engine.
+- Quality assurance: RUN `pnpm lint`, RUN `pnpm test`, RUN `cargo fmt --check`, RUN `cargo clippy -- -D warnings`, RUN `cargo test`.
+- Release: Rust compiles cross-platform binaries, TypeScript keeps the lightweight entry point, and the package is published to npm as `@truenine/agent-cli`.
 
 ## Multi-platform Strategy
-- Rust uses `napi-rs` or `tauri bundler` to generate target platform binaries, distributed with npm package
-- CLI runtime automatically detects platform, selects corresponding binary, ensuring consistent Windows/macOS/Linux behavior
+- Rust uses `napi-rs` or `tauri bundler` to produce binaries for target platforms, distributed with the npm package.
+- The CLI runtime detects the platform automatically, selects the corresponding binary, and ensures consistent behavior across Windows, macOS, and Linux.
 
-## Security and Rollback
-- All writes use temporary files + rename to guarantee atomicity
-- Deletion defaults to moving to `.agents/trash`, only truly cleared when using `--force`
-- Rollback commands use unified semantics across multiple platforms, ensuring consistent team member experience
+## Safety and Rollback
+- All writes use temporary files plus rename to guarantee atomicity.
+- Deletions default to moving content into `.agents/trash`, and only remove it permanently when `--force` is specified.
+- The rollback command keeps unified semantics across platforms to give team members a consistent experience.
 
 ## Future Directions
-- **Remote Template Repository**: Support syncing snippets from private Git repositories
-- **Snippet Scoring**: Recommend commonly used combinations based on usage frequency
-- **GUI Wrapper**: Leverage Rust core + Tauri to provide lightweight interface
-- **DevOps Integration**: Provide `agent-cli verify` to check if `__ai/` structure complies with latest specifications
+- Remote template repository: Support synchronizing snippets from private Git repositories.
+- Snippet scoring: Recommend frequently used combinations based on usage frequency.
+- GUI wrapper: Provide a lightweight interface via the Rust core plus Tauri.
+- DevOps integration: Offer `agent-cli verify` to check whether the `__ai/` structure satisfies the latest specifications.
