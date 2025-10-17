@@ -54,21 +54,16 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
 </example>
 ````
 
-## [STEP-2] **检查目标文件**
-- 使用 `Search(pattern: "<target_file>")` 判断目标文件是否已存在
-- 使用 `Bash(command: "mkdir -p <target_directory>")` 创建所有需要的目标目录
+## [STEP-2] **准备目标路径**
+- ALWAYS 调用 `Bash(command: "mkdir -p <target_directory>")`，即便目录已存在也必须执行
+- ALWAYS 调用 `Bash(command: "rm -f <target_file>")` 清理旧文件，忽略任何删除错误
 
-## [STEP-3] **删除旧文件**
-- 若目标文件已存在，则调用 `Bash(command: "rm <target_file>")` 清理，确保后续写入干净
-
-## [STEP-4] **读取源文件**
+## [STEP-3] **读取并翻译源文件**
 - 调用 `Read($1)` 获取源文件内容
-
-## [STEP-5] **执行翻译**
 - 保留 Markdown 结构与格式
 - 维持代码块内容不变，仅翻译其中的中文注释或说明
 
-## [STEP-6] **写入目标文件**
+## [STEP-4] **写入目标文件**
 - 创建新的目标文件并写入翻译结果
 - 若存在多个目标路径，先写入第一个文件，再使用 `Bash(command: "cp -R <first_file> <target_file>")` 复制至剩余路径，避免偏差
 - 若输出目标位于 `.cursor/rules/` 目录下（即 `.cursor/rules/**/*.mdc`），在写入前必须于文件开头插入以下 YAML 头部，且禁止省略：
@@ -79,9 +74,12 @@ description: 将中文本地化记忆提示词文件翻译为英文记忆提示�
   ---
   ```
 
-## [STEP-7] **错误处理**
+## [STEP-5] **错误处理**
 - 如 `Write` 调用失败，立即执行 `Bash(command: "rm <target_file>")` 清理
 - 清理后重新从步骤 1 开始，拒绝局部修补
+
+
+
 
 # 质量标准
 - **术语一致**：逐条对照术语表，确保大小写和标点完全吻合

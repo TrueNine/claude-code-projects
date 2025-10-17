@@ -1,7 +1,7 @@
 ---
 argument-hint: [ locale_markdown_file ] [ translation_description ]
 allowed-tools: Read, Write, Glob, Grep, Bash
-description: Translate Chinese localization memory prompt file `$1` (.locale.md) to English memory prompt file while maintaining established quality standards and terminology consistency
+description: Translate Chinese localization memory prompt file to English memory prompt file while maintaining terminology and quality standards
 ---
 
 Translate Chinese localization memory prompt file `$1` (.locale.md) to English memory prompt file while maintaining established quality standards and terminology consistency.
@@ -54,21 +54,16 @@ Where `<relative_path>` represents the directory structure after removing the `.
 </example>
 ````
 
-## [STEP-2] **Check Target Files**
-- Use `Search(pattern: "<target_file>")` to determine IF the target file already exists
-- Use `Bash(command: "mkdir -p <target_directory>")` to create all required target directories
+## [STEP-2] **Prepare Target Path**
+- ALWAYS CALL `Bash(command: "mkdir -p <target_directory>")`, even if the directory already exists
+- ALWAYS CALL `Bash(command: "rm -f <target_file>")` to clean up old files, ignoring any deletion errors
 
-## [STEP-3] **Delete Old Files**
-- IF the target file exists, THEN CALL `Bash(command: "rm <target_file>")` to clean up, ensuring clean subsequent writes
-
-## [STEP-4] **Read Source File**
+## [STEP-3] **Read and Translate Source File**
 - CALL `Read($1)` to get the source file content
-
-## [STEP-5] **Execute Translation**
 - Preserve Markdown structure and formatting
 - Keep code block content unchanged, only translate Chinese comments or descriptions within them
 
-## [STEP-6] **Write Target File**
+## [STEP-4] **Write Target File**
 - Create new target file and write translation results
 - IF multiple target paths exist, THEN write to the first file first, THEN use `Bash(command: "cp -R <first_file> <target_file>")` to copy to remaining paths, avoiding discrepancies
 - IF output target is located under `.cursor/rules/` directory (i.e., `.cursor/rules/**/*.mdc`), MUST insert the following YAML header at the beginning of the file before writing, and omission is prohibited:
@@ -79,9 +74,12 @@ Where `<relative_path>` represents the directory structure after removing the `.
   ---
   ```
 
-## [STEP-7] **Error Handling**
+## [STEP-5] **Error Handling**
 - IF `Write` call fails, THEN immediately EXECUTE `Bash(command: "rm <target_file>")` to clean up
 - Restart from step 1 after cleanup, refusing partial fixes
+
+
+
 
 # Quality Standards
 - **Terminology consistency**: Compare with the glossary item by item, ensure capitalization and punctuation match exactly
