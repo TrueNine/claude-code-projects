@@ -1,13 +1,27 @@
 
 # 交流语言使用规范
-- 用户交流: 所有面向用户的输出统一使用 `简体中文`, 保留行业常见英文术语, 句式遵循英语逻辑, 不搞文绉绉.
-- 代码开发: 代码、注释、命名全部采用英文, 禁止出现中文标识, 入场首日即开始执行。
-- 内部思考: `Thinking` 和 `Tooling` 段必须美式英语, 示例如 `Thinking(desc: "Validate payload schema...")`, 禁止出现 `Thinking(desc: "检查文件...")` 这种混搭。
-- 会话自检: 发送前检查 `Thinking` 与 `Tooling` 是否混入中文, 若发现立即改成英文; 用户可见输出保持简体中文。
-- 文化取向: 记住用户母语是简体中文, 但工作流程全程对齐美国工程文化, 除用户沟通外一律使用美式英语处理事务。
-- 严格禁止: `Thinking` 字段出现中文字符 => 直接视为违规。
-- "记忆提示词"风格: 只要 `Markdown` 合规就行, 内容保持技术向和精炼, 不为排版对齐或辞藻堆砌浪费时间。
-- [__ai/`**/*.locale.md`](/__ai/) 文件: 所有 [__ai/`**/*.locale.md`](/__ai)  统一用英式中文书写, 保持英文逻辑和术语直译, 全文执行。
+
+## 用户交流
+- 所有用户可见输出统一使用 `简体中文`, 保留行业常见英文术语, 句式遵循英语逻辑, 禁止文绉绉表达。
+
+## 代码开发
+- 所有代码、注释与命名必须使用英文, 禁止出现中文标识, 入场首日立即执行。
+
+## 内部思考
+- `Thinking` 与 `Tooling` 段必须使用美式英语, 正确示例为 `Thinking(desc: "Validate payload schema...")`, 禁止出现 `Thinking(desc: "检查文件...")`。
+
+## 会话自检
+- 在发送响应前检查 `Thinking` 与 `Tooling` 段是否混入中文, 若发现必须立即改为英文; 用户可见输出始终保持简体中文。
+
+## 文化取向
+- 牢记用户母语是简体中文, 但所有工作流程对齐美国工程文化, 除对用户的直接沟通外, 一律使用美式英语处理事务。
+
+## 强制禁止
+- 一旦 `Thinking` 字段出现任何中文字符, 视为直接违规。
+
+## locale 语气
+- `记忆提示词` 内容只需遵循 Markdown 规范, 保持技术向与精炼, 不为排版或辞藻堆砌浪费时间。
+- [__ai/`**/*.locale.md`](/__ai/) 文件必须使用英式中文书写, 保持英文逻辑和术语直译, 全文执行。
 
 
 
@@ -15,12 +29,12 @@
 # 项目工具链配置约束
 
 ## 工具链优先级
-- 采用顺序: 1) 根目录配置文件; 2) `.tool-versions` 或 `mise`; 3) `README` 指南; 4) 现有脚本与 `CI`。
+- 按顺序依赖以下配置来源: 1) 根目录配置文件; 2) `.tool-versions` 或 `mise`; 3) `README` 指南; 4) 现有脚本与 `CI`。
 
 ````xml
 <!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
 <examples>
-  <good-example description="示例: 正确识别并使用项目工具链"
+  <good-example description="正确识别并使用项目工具链"
                 user-input="帮我运行测试">
     <tooling name="Search" 
              params:pattern="Cargo.toml">
@@ -45,16 +59,16 @@
 # 代码质量标准
 
 ## 统一格式规范
-- 遵循项目下 [.idea/codeStyles/Project.xml](/.idea/codeStyles/Project.xml) 的配置
-- 遵循项目下 [.editorconfig](/.editorconfig) 的配置
+- 遵循 [.idea/codeStyles/Project.xml](/.idea/codeStyles/Project.xml) 提供的配置。
+- 遵循 [.editorconfig](/.editorconfig) 提供的配置。
 
 
 
 
 ## 文件命名规范
-- 文件名首选: `PascalCase`命名 或 `camelCase`命名
-- 其次可选择：`snake_case`命名
-- 避免 `kebab-case`。
+- 文件名优先采用 `PascalCase` 或 `camelCase`。
+- 如需使用可选方案, 可采用 `snake_case`。
+- 避免使用 `kebab-case`。
 
 ````xml
 <!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
@@ -94,9 +108,8 @@
 
 
 ## 代码风格约束
-
-- 注释应当置于语句上方, 禁止行尾补充, 以免拉长代码行并降低可读性
-- 条件语句与循环体必须显式使用大括号, 避免因省略而引入严重漏洞
+- 注释必须置于语句上方, 禁止在行尾补充, 以免拉长代码行并降低可读性。
+- 条件语句与循环体必须显式使用大括号, 避免因省略而引入严重漏洞。
 
 ````xml
 <!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
@@ -137,8 +150,8 @@
 
 ## 代码编写技巧
 
-### `Guard Clauses` & `Early Return`
-要求使用 `guard clause` 与 `early return` 减少嵌套层级。
+### Guard Clauses 与 Early Return
+- 强制使用 `guard clause` 与 `early return` 减少嵌套层级。
 
 ````xml
 <!DOCTYPE examples "/__ai/meta/example-schema.dtd">
@@ -172,8 +185,8 @@
 ````
 
 ### 多条件判断优化
-- 条件数量 >= 3 时, 统一改用 `switch` / `match` 或查表方案替代 `if-else` 链。
-- 目标: 提升可读性和可维护性, 减少重复判断。
+- 当分支数量大于等于 3 时, 统一改用 `switch`/`match` 或查表方案替代 `if-else` 链。
+- 目标是提升可读性与可维护性, 减少重复判断。
 
 ````xml
 <!DOCTYPE examples "/__ai/meta/example-schema.dtd">
@@ -238,18 +251,18 @@
 # 开发原则与约束
 
 ## 语言策略
-- 技术选型与架构调整默认优先静态类型语言栈 (如 Rust、TypeScript、Go、Java、Kotlin), 以保证类型安全与长期可维护性。
-- 即便现有项目建立在动态语言上, 提出方案时也要规划向静态类型迁移的路线, 包含阶段目标与风险提示。
-- 禁止主动扩充新的动态语言组件; 若用户坚持动态语言, 需再次确认并完整记录潜在风险。
+- 技术选型与架构调整默认优先静态类型语言栈 (例如 Rust、TypeScript、Go、Java、Kotlin), 以保证类型安全与长期可维护性。
+- 即便现有项目建立在动态语言上, 提案时也要规划向静态类型迁移的路线, 包含阶段目标与风险提示。
+- 禁止主动扩充新的动态语言组件; 若用户坚持动态语言, 必须再次确认并完整记录潜在风险。
 
 
 
 
 ## 禁止重复造轮子
-- 开发前先调查现有功能与架构。
-- 强制复用现有组件、工具或函数, 不得重新实现。
-- 优先审视并优化现有实现与提示词, 通过补充测试、提升可维护性或强化可读性来获得增量价值。
-- 默认策略: 在现有基础上扩展能力而非重写。
+- 开发前必须调查现有功能与架构。
+- 强制复用现有组件、工具或函数, 不得重复实现。
+- 优先审视并优化现有实现与提示词, 通过补充测试、提升可维护性或强化可读性创造增量价值。
+- 默认策略是在现有基础上扩展能力而非重写。
 
 ````xml
 <!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
@@ -300,22 +313,22 @@
 
 ## 文件管理原则
 - 优先编辑现有文件, 避免创建新文件。
-- 新文件必须有充分理由并符合架构规范。
-- 遵循既有目录与模块组织方式。
-- **严格禁止编辑** [AGENTS.md](/AGENTS.md) 或 [CLAUDE.md](/CLAUDE.md) 文件，这些文件由用户亲自维护，任何情况下都不得修改。
+- 新文件必须具备充分理由并符合既有架构规范。
+- 严格遵循既有目录与模块组织方式。
+- 禁止编辑 [AGENTS.md](/AGENTS.md) 或 [CLAUDE.md](/CLAUDE.md), 这些文件由用户亲自维护。
 
 ### 文件创建决策标准
-合理创建新文件:
-- 模块功能独立且规模较大 (>=100 行)。
+合理创建新文件的情况:
+- 模块功能独立且规模较大 (不少于 100 行)。
 - 职责与现有文件明显不同。
 - 需要独立测试文件。
-- 吻合项目的模块化设计。
+- 符合项目的模块化设计。
 
-避免创建新文件:
+应避免创建新文件的情况:
 - 仅包含少量函数或常量。
 - 功能与现有文件高度相关。
 - 只是为了避免单文件过长 (除非确有必要)。
-- 破坏原有组织结构。
+- 可能破坏原有组织结构。
 
 ````xml
 <!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
@@ -361,7 +374,7 @@
 
 ## 错误处理透明化原则
 - 禁止掩盖或镇压任何错误与警告。
-- 禁止镇压警告、私自捕获不抛出、空异常块、忽略错误码、隐藏异常详情、篡改检查器配置。
+- 禁止镇压警告、私自捕获后不抛出、空异常块、忽略错误码、隐藏异常详情、篡改检查器配置。
 
 ### 错误处理规范
 - 透明: 所有错误/警告完整暴露给用户或调用层。
@@ -489,36 +502,36 @@
 
 ## 完成验证要求
 - 严禁未验证就声称完成。
-- 必须以真实验证动作而非主观判断佐证结果。
-- 进度反馈: 任务尚未完成时必须直接说明当前进度与阻塞点, 禁止以“我将以更简单的方式实现”等空泛承诺搪塞, 更不得虚构完成结果; 如卡住应主动请求开发者指导。
+- 必须通过真实验证动作而非主观判断佐证结果。
+- 在任务未完成前必须说明当前进度与阻塞点, 禁止以“我将以更简单的方式实现”等空泛承诺搪塞, 更不得虚构完成结果; 如遇阻塞需主动请求开发者指导。
 
 ## 验证步骤清单
 1. 代码质量验证:
-  - 运行项目定义的 `diagnostic` / `lint` 命令检查语法和类型问题。
-  - 探测项目工具链, 使用对应检查命令:
-    - `Rust`: `cargo clippy`, `cargo fmt --check`。
-    - `Node.js`: 依 `package.json` 运行 `lint` 脚本。
-    - `Gradle`: `build.gradle.kts`, `settings.gradle.kts` 等。
+   - 运行项目定义的 `diagnostic`/`lint` 命令检查语法与类型问题。
+   - 探测项目工具链并运行对应检查命令, 示例:
+     - `Rust`: `cargo clippy`, `cargo fmt --check`。
+     - `Node.js`: 依 `package.json` 执行 `lint` 脚本。
+     - `Gradle`: 参考 `build.gradle.kts`、`settings.gradle.kts` 等配置。
 2. 功能验证:
-  - 按工具链运行测试:
-    - `Rust`: `cargo test`。
-    - `Node.js`: `yarn test` / `pnpm test`。
-    - `Gradle`: `./gradlew test`。
-  - 通过 `Bash` 工具执行必要的手动验证。
-  - 确认所有修改按预期运行。
+   - 按工具链规范运行测试, 示例:
+     - `Rust`: `cargo test`。
+     - `Node.js`: `yarn test` 或 `pnpm test`。
+     - `Gradle`: `./gradlew test`。
+   - 通过 `Bash` 工具执行必要的手动验证。
+   - 确认所有修改按预期运行。
 3. 完整性验证:
-  - 检查是否覆盖用户需求。
-  - 确认 `TodoWrite` 任务全部标记为 `completed`。
-  - 验证改动未破坏既有功能。
+   - 检查是否覆盖用户需求。
+   - 确认 `TodoWrite` 任务全部标记为 `completed`。
+   - 验证改动未破坏既有功能。
 
 
 
 
 
 ## 验证失败处理
-- 如实报告发现的问题.
-- 透明说明失败原因.
-- 给出后续修复计划.
+- 如实报告发现的问题。
+- 透明说明失败原因。
+- 给出后续修复计划。
 
 ````xml
 <!DOCTYPE examples SYSTEM "/__ai/meta/example-schema.dtd">
@@ -555,17 +568,16 @@
 
 
 # 提示词编写规范
-
-- [__ai/locale](/__ai/locale/) 下的 `**/*.locale.md` 属于英式中文提示词文件，面向用户阅读，语言需紧贴美式英语的逻辑与思路，专业术语直接保留英文原文。
-- 这些 `**/*.locale.md` 文件常作为 `AI Agent` 快捷命令、子代理提示词或 `memory prompt file` 的本地化版本，协助用户编辑时，必须优先考虑协助编辑它们。
-- 示例多使用 `xml` 结构呈现，具备高参考价值，遵循示例时优先理解其结构化意图，具体定义可参考 [__ai/meta/example-schema.dtd](/__ai/meta/example-schema.dtd)。
-- 作为 `AI Agent` 协助用户更新或撰写此类文件时，要假设用户是一名程序员，可能正面临混乱项目或陈旧文档，请主动修正并补齐缺漏。
-- 不要直接照搬现有的 `**.locale.md` 内容；请以英文原稿为权威来源，将其翻译成标准美式英语逻辑下的英式中文，确保 locale 版本准确可读。
-- 当用户提出新的规则或想法时, 需立刻在当前正在编辑的 locale 文件中落实更新, 避免延后处理。
-- [__ai/](/__ai/) 除了 `meta/**` 下的文件外，其他无任何参考意义, 它们是由 `AI Agent` 自动生成的工程文件
-- [__ai/meta/](/__ai/meta/) 下拥有一些确切概念的帮助文档定义
-- [__ai/middle/spec/](/__ai/middle/spec/) 下存放当前项目下的 "规范驱动开发" 文档
-- [__ai/middle/spec/SPEC-1-REQUIREMENT.locale.md](/__ai/middle/spec/SPEC-1-REQUIREMENT.locale.md) 下存放当前项目下的 "规范驱动开发 - 需求文档"，它有且只有一份或没有，该项目基于此需求进行开发
+- [__ai/locale](/__ai/locale/) 下的 `**/*.locale.md` 为英式中文提示词文件, 面向用户阅读, 语言需紧贴美式英语的逻辑, 专业术语直接保留英文原文。
+- 这些 `**/*.locale.md` 文件常作为 `AI Agent` 快捷命令、子代理提示词或 `memory prompt file` 的本地化版本, 协助用户编辑时必须优先处理。
+- 示例多使用 `xml` 结构呈现, 具有高参考价值; 遵循示例前务必理解其结构化意图, 具体定义参见 [__ai/meta/example-schema.dtd](/__ai/meta/example-schema.dtd)。
+- 在协助用户更新或撰写此类文件时, 假设用户是一名程序员, 可能面临混乱项目或陈旧文档, 请主动修正并补齐缺漏。
+- 不可直接照搬既有 `**.locale.md` 内容; 必须以英文原稿为权威来源, 翻译为符合美式英语逻辑的英式中文, 确保 locale 版本准确可读。
+- 当用户提出新的规则或想法时, 必须立即在当前编辑的 locale 文件中落实更新, 避免延后处理。
+- [__ai/](/__ai/) 中除 `meta/**` 外的文件通常无参考价值, 它们由 `AI Agent` 自动生成。
+- [__ai/meta/](/__ai/meta/) 下存放确切概念的帮助文档定义。
+- [__ai/middle/spec/](/__ai/middle/spec/) 下存放当前项目的“规范驱动开发”文档。
+- [__ai/middle/spec/SPEC-1-REQUIREMENT.locale.md](/__ai/middle/spec/SPEC-1-REQUIREMENT.locale.md) 为项目的“规范驱动开发 - 需求文档”, 该文件最多仅有一份, 项目开发以此为基准。
 
 ## 文件结构书写示范
 
