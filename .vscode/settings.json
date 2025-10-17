@@ -7,14 +7,7 @@
   },
   "search.exclude": {
     "**/.gradle": true,
-    "**/build": true,
-    "**/build-cache": true,
-    "**/generated": true,
-    "**/.generated": true,
-    "**/node_modules": true,
-    "**/.obsidian": true,
-    "**/.intellijPlatform": true,
-    "**/.playwright-mcp": true
+    "**/build": true
   },
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
