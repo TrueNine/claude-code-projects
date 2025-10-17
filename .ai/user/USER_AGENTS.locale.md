@@ -45,37 +45,16 @@
 # 代码质量标准
 
 ## 统一格式规范
-- 缩进: 固定 `2 spaces`.
-- 编码: `UTF-8`.
-- 行末: `LF`.
+- 遵循项目下 [.idea/codeStyles/Project.xml](/.idea/codeStyles/Project.xml) 的配置
 - 遵循项目下 [.editorconfig](/.editorconfig) 的配置
-
-````xml
-<!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
-<examples>
-  <good-example description="2 空格缩进">
-    ```rust
-    fn main() {
-      println!("Hello World");
-    }
-    ```
-  </good-example>
-
-  <bad-example description="4 空格缩进导致格式错误">
-    ```rust
-    fn main() {
-        println!("Hello World");
-    }
-    ```
-  </bad-example>
-</examples>
-````
 
 
 
 
 ## 文件命名规范
-- 文件名优先顺序: `PascalCase` 或 `camelCase` -> `snake_case` -> 避免 `kebab-case` (除非语言强制)。
+- 文件名首选: `PascalCase`命名 或 `camelCase`命名
+- 其次可选择：`snake_case`命名
+- 避免 `kebab-case`。
 
 ````xml
 <!DOCTYPE examples SYSTEM "/.ai/meta/example-schema.dtd">
@@ -594,16 +573,16 @@
 <!DOCTYPE example SYSTEM "/.ai/meta/example-schema.dtd">
 <example description="使用 md 代码块的嵌套文件列表而不是树形结构">
 ```md
-- [.ai](/.ai/) - AI Agent 工程目录，类似于 src 的源提示词工作目录
-  - [.ai/locale/](/.ai/locale/) - 当前项目映射的记忆提示词
-  - [.ai/user/](/.ai/user/) - 全局用户记忆提示词
-  - [.ai/project/](/.ai/project/) - 项目级别记忆提示词
-  - [.ai/cmd/](/.ai/cmd/) - 自定义命令提示词
-  - [.ai/agents/](/.ai/agents/) - 子代理提示词
-  - [.ai/meta/](/.ai/meta/) - 确切概念的帮助文档定义
-- [README.md](/README.md) - 项目描述文件
-- [AGENTS.md](/AGENTS.md) - AI 代理记忆提示词
-- [.editorconfig](/.editorconfig) - 编辑器配置文件
+- [.ai](/.ai/): AI Agent 工程目录，类似于 src 的源提示词工作目录
+  - [.ai/locale/](/.ai/locale/): 当前项目映射的记忆提示词
+  - [.ai/user/](/.ai/user/): 全局用户记忆提示词
+  - [.ai/project/](/.ai/project/): 项目级别记忆提示词
+  - [.ai/cmd/](/.ai/cmd/): 自定义命令提示词
+  - [.ai/agents/](/.ai/agents/): 子代理提示词
+  - [.ai/meta/](/.ai/meta/): 确切概念的帮助文档定义
+- [README.md](/README.md): 项目描述文件
+- [AGENTS.md](/AGENTS.md): AI 代理记忆提示词
+- [.editorconfig](/.editorconfig): 编辑器配置文件
 ```
 </example>
 ````
@@ -619,26 +598,26 @@
 <examples>
   <good-example description="正确的路径引用格式">
     ```md
-    [.ai/locale](/.ai/locale/) - 当前项目映射的记忆提示词
-    [src/utils](/src/utils/) - 工具函数目录
-    [README.md](/README.md) - 项目描述文件
+    [.ai/locale](/.ai/locale/): 当前项目映射的记忆提示词
+    [src/utils](/src/utils/): 工具函数目录
+    [README.md](/README.md): 项目描述文件
     ```
   </good-example>
 
   <bad-example description="错误的路径引用格式">
     ```md
-    [.ai/locale/](/.ai/locale) - 文件夹链接末尾不使用斜杠
-    /home/user/project/src/utils - 禁止使用绝对路径
-    /c/project/home/user/project/src/utils - 禁止使用绝对路径
-    [src/utils/](/src/utils/) - 文件夹链接末尾不能有斜杠
+    [.ai/locale/](/.ai/locale): 文件夹链接末尾不使用斜杠
+    /home/user/project/src/utils: 禁止使用绝对路径
+    /c/project/home/user/project/src/utils: 禁止使用绝对路径
+    [src/utils/](/src/utils/): 文件夹链接末尾不能有斜杠
     ```
   </bad-example>
 
   <bad-example description="加粗包裹文件引用（禁止）">
     ```md
-    **[.ai/locale](/.ai/locale/)** - 不得使用加粗包裹文件引用
-    **[src/utils](/src/utils)** - 加粗会分散注意力
-    **[README.md](/README.md)** - 禁止此格式
+    **[.ai/locale](/.ai/locale/)**: 不得使用加粗包裹文件引用
+    **[src/utils](/src/utils)**: 加粗会分散注意力
+    **[README.md](/README.md)**: 禁止此格式
     ```
   </bad-example>
 </examples>
