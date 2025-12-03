@@ -1,6 +1,9 @@
 {
-  "chatgpt.openOnStartup": true,
-  "[markdown]": {
-    "editor.wordWrap": "off"
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#6b36ce1a",
+    "titleBar.activeForeground": "#ffffff",
+    "titleBar.inactiveBackground": "#5a2bb11a",
+    "titleBar.inactiveForeground": "#d5c6f1",
+    "titleBar.border": "#6b36ce1a"
   }
 }

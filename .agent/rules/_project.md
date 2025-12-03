@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 This file provides guidance for `AI Agent` when working in this repository.
 
 

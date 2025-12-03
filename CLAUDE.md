@@ -22,15 +22,15 @@ This is a documentation and configuration repository for `AI Agent` workflows, f
 # Project Structure
 
 ```md
-- [.ai/](/.ai/) - Source prompt working directory similar to src
-  - [locale/](/.ai/locale/) - Current project mapping memory prompts
-    - [.ai/](/.ai/locale/.ai/) - Mapping memory prompts for `.ai/`
-    - [meta/](/.ai/locale/meta/) - Chinese version meta information and explanation standards
-  - [user/](/.ai/user/) - Global user memory prompts
-  - [project/](/.ai/project/) - Project-level memory prompts
-  - [cmd/](/.ai/cmd/) - Custom command prompts
-  - [agents/](/.ai/agents/) - Sub-agent prompts
-  - [meta/](/.ai/meta/) - Reference prompt writing standards
+- [__ai/](/__ai/) - Source prompt working directory similar to src
+  - [locale/](/__ai/locale/) - Current project mapping memory prompts
+    - [__ai/](/__ai/locale/__ai/) - Mapping memory prompts for `__ai/`
+    - [meta/](/__ai/locale/meta/) - Chinese version meta information and explanation standards
+  - [user/](/__ai/GLOBAL.locale.md) - Global user memory prompts
+  - [project/](/__ai/project/) - Project-level memory prompts
+  - [cmd/](/__ai/cmd/) - Custom command prompts
+  - [agents/](/__ai/agents/) - Sub-agent prompts
+  - [meta/](/__ai/meta/) - Reference prompt writing standards
 - [cli/](/cli/) - Command line tools
   - [rust/](/cli/rust/) - Rust core tools
 - [hooks/](/hooks/) - Hook scripts
