@@ -24,7 +24,7 @@ pub async fn init(options: Option<InitOptions>) -> NapiResult<()> {
   Ok(())
 }
 
-/// Initialize a new .ai/ repository
+/// Initialize a new __ai/ repository
 #[napi]
 pub async fn init_repository(options: InitOptions) -> NapiResult<String> {
   let _ = options;

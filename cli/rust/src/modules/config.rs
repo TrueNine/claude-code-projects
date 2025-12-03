@@ -152,11 +152,11 @@ impl Default for AgentConfig {
 impl Default for DirectoryMappings {
   fn default() -> Self {
     Self {
-      memory: ".ai/locale".to_string(),
-      user: ".ai/user".to_string(),
-      project: ".ai/project".to_string(),
-      sub_agent: ".ai/sa".to_string(),
-      command: ".ai/cmd".to_string(),
+      memory: "__ai/locale".to_string(),
+      user: "__ai/user".to_string(),
+      project: "__ai/project".to_string(),
+      sub_agent: "__ai/sa".to_string(),
+      command: "__ai/cmd".to_string(),
       backups: ".agents/backups".to_string(),
     }
   }
@@ -166,7 +166,7 @@ impl Default for TemplateSettings {
   fn default() -> Self {
     Self {
       repository: None,
-      local_directory: ".ai/templates".to_string(),
+      local_directory: "__ai/templates".to_string(),
       cache: CacheSettings::default(),
     }
   }

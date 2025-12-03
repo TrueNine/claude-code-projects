@@ -18,7 +18,7 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-  /// Initialize a new .ai/ repository
+  /// Initialize a new __ai/ repository
   Init {
     /// Force overwrite existing files
     #[arg(short, long)]
@@ -87,7 +87,7 @@ async fn main() {
 async fn run(command: Commands) -> Result<()> {
   match command {
     Commands::Init { force, template } => {
-      println!("Initializing .ai/ repository...");
+      println!("Initializing __ai/ repository...");
       println!("Force: {}, Template: {:?}", force, template);
       // TODO: Implement init logic
       Ok(())
